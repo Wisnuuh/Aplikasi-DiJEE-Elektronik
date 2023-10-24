@@ -23,7 +23,7 @@
         header('location: home.php');
     }
 
-    $id = $_GET['id'];
+    $id = $_GET['User_ID'];
     $query = "SELECT * FROM user_detail WHERE id = '$id'";
     $result = mysqli_query($koneksi, $query) or die (mysqli_error($koneksi));
 
