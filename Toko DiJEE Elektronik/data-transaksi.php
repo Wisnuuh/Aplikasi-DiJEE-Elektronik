@@ -128,14 +128,12 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
+                                        <th>Tanggal Penjualan</th>
+                                        <th>Nama Barang</th>
+                                        <th>Total Pembayaran</th>
                                     </tr>
                                 </thead>
-                                <!-- <tfoot>
+                                <tfoot>
                                     <tr>
                                         <th>Name</th>
                                         <th>Position</th>
@@ -144,10 +142,13 @@
                                         <th>Start date</th>
                                         <th>Salary</th>
                                     </tr>
-                                </tfoot> -->
+                                </tfoot>
+                                <tbody>
                                 <?php
 
-                                    $query = "SELECT * FROM detailpembelian";
+                                    $query = "SELECT penjualan.Tgl_Penjualan, detailpenjualan.nama_Barang, penjualan.totalPembayaran
+                                    FROM penjualan
+                                    INNER JOIN detailpenjualan ON penjualan.ID_Penjualan = detailpenjualan.ID_Penjualan;";
                                     $result = mysqli_query($koneksi, $query);
                                     $no = 1;
 
@@ -161,21 +162,17 @@
                                     
                                     while ($row = mysqli_fetch_array($result)) {
                                             
-                                        $userMail = $row['username'];
-                                        $userName = $row['Nama'];
+                                    echo "<tr>";
+                                    echo     "<td>" . $no . "</td>";
+                                    echo     "<td>" . $row['Tgl_Penjualan'] . "</td>";
+                                    echo     "<td>" . $row['nama_Barang'] . "</td>";
+                                    echo     "<td>" . $row['totalPembayaran'] . "</td>";
+                                    echo "</tr>";
+
+                                        $no++; }
+                                    ?>
                                     
-                                ?>
-                                <tbody>
-                                    <tr>
-                                        <td><?php echo $no; ?></td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                    </tr>
                                 </tbody>
-                                <?php } ?>
                             </table>
                         </div>
                     </div>
