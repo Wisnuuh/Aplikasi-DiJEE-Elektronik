@@ -83,7 +83,7 @@
                                         </form>
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a class="btn btn-success fs-5" href="register.html">Buat akun</a></div>
+                                        <div class="small"><a class="btn btn-success fs-5" href="register.php">Buat akun</a></div>
                                     </div>
                                 </div>
                             </div>
