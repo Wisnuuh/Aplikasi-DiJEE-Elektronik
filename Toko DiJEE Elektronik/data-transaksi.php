@@ -83,7 +83,7 @@
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="stok-barang.php">Stok Barang</a>
                                 <a class="nav-link" href="data-supplier.php">Data Supplier</a>
-                                <a class="nav-link" href="data-retur-barang.php">Data Barang</a>
+                                <a class="nav-link" href="data-retur-barang.php" id="dataretur"></a>
                             </nav>
                         </div>
                         <a class="nav-link" href="keuangan.php">
@@ -121,7 +121,7 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fa-solid fa-money-bill-transfer"></i>
-                            Data Transaksi
+                            Data Transaksi Penjualan
                         </div>
                         <div class="card-body">
                             <table id="datatablesSimple">
@@ -129,46 +129,27 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Tanggal Penjualan</th>
-                                        <th>Nama Barang</th>
                                         <th>Total Pembayaran</th>
+                                        <th>Admin</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                 <?php
 
-                                    $query = "SELECT penjualan.Tgl_Penjualan, detailpenjualan.nama_Barang, penjualan.totalPembayaran
+                                    $query = "SELECT penjualan.Tgl_Penjualan, penjualan.totalPembayaran, user.Nama
                                     FROM penjualan
-                                    INNER JOIN detailpenjualan ON penjualan.ID_Penjualan = detailpenjualan.ID_Penjualan;";
+                                    INNER JOIN user ON penjualan.User_ID = user.User_ID ORDER BY penjualan.Tgl_Penjualan DESC;";
                                     $result = mysqli_query($koneksi, $query);
                                     $no = 1;
-
-                                    if ($sesLvl == 1) {
-
-                                        $dis = "";
-                                    } else {
-
-                                        $dis = "disabled";
-                                    }
                                     
                                     while ($row = mysqli_fetch_array($result)) {
                                             
                                     echo "<tr>";
                                     echo     "<td>" . $no . "</td>";
                                     echo     "<td>" . $row['Tgl_Penjualan'] . "</td>";
-                                    echo     "<td>" . $row['nama_Barang'] . "</td>";
                                     echo     "<td>" . $row['totalPembayaran'] . "</td>";
+                                    echo     "<td>" . $row['Nama'] . "</td>";
                                     echo "</tr>";
-
                                         $no++; }
                                     ?>
                                     
@@ -177,17 +158,97 @@
                         </div>
                     </div>
                 </div>
+                <div class="container">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fa-solid fa-money-bill-transfer"></i>
+                            Data Transaksi Pembelian
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple2" >
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal Pembelian</th>
+                                        <th>ID Pembelian</th>
+                                        <th>Total Pembayaran</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+
+                                $query = "SELECT * FROM pembelian ORDER BY Tanggal_Pembelian DESC;";
+                                $result = mysqli_query($koneksi, $query);
+                                $no = 1;
+
+                                while ($row = mysqli_fetch_array($result)) {
+                                        
+                                echo "<tr>";
+                                    echo "<td>" . $no . "</td>";
+                                    echo "<td>" . $row['Tanggal_Pembelian'] . "</td>";
+                                    echo "<td>" . $row['Pembelian_ID'] . "</td>";
+                                    echo "<td>" . $row['Total_Pembayaran'] . "</td>";
+                                echo "</tr>";
+                                    $no++; }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fa-solid fa-money-bill-transfer"></i>
+                            Detail Data Transaksi Pembelian
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple3" >
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Tanggal Pembelian</th>
+                                        <th>ID Pembelian</th>
+                                        <th>Nama Barang</th>
+                                        <th>Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+
+                                $query = "SELECT pembelian.Tanggal_Pembelian, pembelian.Pembelian_ID, detailpembelian.Nama_Barang, detailpembelian.Jumlah
+                                FROM detailpembelian
+                                INNER JOIN pembelian ON detailpembelian.Pembelian_ID = pembelian.Pembelian_ID ORDER BY pembelian.Tanggal_Pembelian DESC;";
+                                $result = mysqli_query($koneksi, $query);
+                                $no = 1;
+
+                                while ($row = mysqli_fetch_array($result)) {
+                                        
+                                echo "<tr>";
+                                    echo "<td>" . $no . "</td>";
+                                    echo "<td>" . $row['Tanggal_Pembelian'] . "</td>";
+                                    echo "<td>" . $row['Pembelian_ID'] . "</td>";
+                                    echo "<td>" . $row['Nama_Barang'] . "</td>";
+                                    echo "<td>" . $row['Jumlah'] . "</td>";
+                                echo "</tr>";
+                                    $no++; }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
+                    <!-- <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Your Website 2023</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;
                             <a href="#">Terms &amp; Conditions</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </footer>
         </div>

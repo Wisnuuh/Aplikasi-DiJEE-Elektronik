@@ -71,9 +71,9 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="stok-barang.php">Stok barang</a>
-                                    <a class="nav-link" href="data-supplier.php">Data supplier</a>
-                                    <a class="nav-link" href="data-retur-barang.php">Data retur barang</a>
+                                    <a class="nav-link" href="stok-barang.php">Stok Barang</a>
+                                    <a class="nav-link" href="data-supplier.php">Data Supplier</a>
+                                    <a class="nav-link" href="data-retur-barang.php" id="dataretur"></a>
                                 </nav>
                             </div>
                             <a class="nav-link" href="keuangan.php">

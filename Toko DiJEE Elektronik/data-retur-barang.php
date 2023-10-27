@@ -73,7 +73,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="stok-barang.php">Stok Barang</a>
                                     <a class="nav-link" href="data-supplier.php">Data Supplier</a>
-                                    <a class="nav-link" href="data-retur-barang.php">Data Barang</a>
+                                    <a class="nav-link" href="data-retur-barang.php" id="dataretur"></a>
                                 </nav>
                             </div>
                             <a class="nav-link" href="keuangan.php">
@@ -105,6 +105,51 @@
                             <li class="breadcrumb-item active">Data Retur Barang</li>
                         </ol>
                     </div>
+                    <div class="container">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fa-solid fa-money-bill-transfer"></i>
+                            Data Retur Barang
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>ID Retur</th>
+                                        <th>Tanggal Pengembalian</th>
+                                        <th>Nama Barang</th>
+                                        <th>Jumlah</th>
+                                        <th>Akhir Garansi</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+
+                                    $query = "SELECT Klaim_ID, nama_Barang, Jumlah, Tgl_Pengembalian, akhir_Garansi, Keterangan FROM incomingclaim;";
+                                    $result = mysqli_query($koneksi, $query);
+                                    $no = 1;
+                                    
+                                    while ($row = mysqli_fetch_array($result)) {
+                                            
+                                    echo "<tr>";
+                                    echo     "<td>" . $no . "</td>";
+                                    echo     "<td>" . $row['Klaim_ID'] . "</td>";
+                                    echo     "<td>" . $row['Tgl_Pengembalian'] . "</td>";
+                                    echo     "<td>" . $row['nama_Barang'] . "</td>";
+                                    echo     "<td>" . $row['Jumlah'] . "</td>";
+                                    echo     "<td>" . $row['akhir_Garansi'] . "</td>";
+                                    echo     "<td>" . $row['Keterangan'] . "</td>";
+                                    echo "</tr>";
+                                        $no++; }
+                                    ?>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">

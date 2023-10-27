@@ -24,3 +24,8 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+function myFunction() {
+    document.getElementById("dataretur").innerHTML = "Data Retur Barang";
+}
+myFunction()

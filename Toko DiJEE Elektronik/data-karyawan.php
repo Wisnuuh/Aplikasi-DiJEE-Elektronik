@@ -73,7 +73,7 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="stok-barang.php">Stok Barang</a>
                                     <a class="nav-link" href="data-supplier.php">Data Supplier</a>
-                                    <a class="nav-link" href="data-retur-barang.php">Data Barang</a>
+                                    <a class="nav-link" href="data-retur-barang.php" id="dataretur">Data Barang</a>
                                 </nav>
                             </div>
                             <a class="nav-link" href="keuangan.php">
