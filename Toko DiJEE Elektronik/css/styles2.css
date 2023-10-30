@@ -1,0 +1,45 @@
+.maincol {
+    background-color: #4FD4CC;
+}
+.form {
+    background-color: #EDF9F2;
+    height: 600px;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+
+.custommargin {
+    margin-top: 80px;
+}
+
+.custommarginreg {
+    margin-top: 20px;
+}
+
+.customjudul {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.namatoko {
+    text-decoration: none;
+    padding-right: 43px;
+    padding-left: 5px;
+    padding-top: 10px;
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+}
+
+.textcolor {
+    color: black;
+}
+
+.iconcolor {
+    color: white;
+}
+
+/* tr {
+    color: white;
+} */
