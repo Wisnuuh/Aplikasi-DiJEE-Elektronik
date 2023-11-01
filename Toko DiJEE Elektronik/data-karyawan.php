@@ -99,15 +99,56 @@
             </nav>
         </div>
         <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">Data Karyawan</h1>
-                    <ol class="breadcrumb mb-4">
-                        <a class="breadcrumb-item active" href="home.php"><li>Dashboard</li></a>
-                        <li class="breadcrumb-item active">Data Karyawan</li>
-                    </ol>
+        <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Data Karyawan</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active"><a href="home.php">Dashboard</a></li>
+                <li class="breadcrumb-item active">Data Karyawan</li>
+            </ol>
+        </div>
+        <div class="container">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                    Data Karyawan
                 </div>
-            </main>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>ID User</th>
+                                    <th>Nama</th>
+                                    <th>Alamat</th>
+                                    <th>Nomor HP</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $query = "SELECT User_ID, Nama, Alamat, Nomor_HP FROM user;";
+                                $result = mysqli_query($koneksi, $query);
+                                $no = 1;
+
+                                while ($row = mysqli_fetch_array($result)) {
+                                    echo "<tr>";
+                                    echo     "<td>" . $no . "</td>";
+                                    echo     "<td>" . $row['User_ID'] . "</td>";
+                                    echo     "<td>" . $row['Nama'] . "</td>";
+                                    echo     "<td>" . $row['Alamat'] . "</td>";
+                                    echo     "<td>" . $row['Nomor_HP'] . "</td>";
+                                    echo "</tr>";
+                                    $no++;
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
                     <div class="d-flex align-items-center justify-content-between small">

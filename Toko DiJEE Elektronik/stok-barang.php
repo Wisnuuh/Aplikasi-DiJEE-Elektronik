@@ -23,12 +23,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Stok Barang | DiJEE Elektronik</title>
+    <title>Data Transaksi | DiJEE Elektronik</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/styles2.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>   
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
+
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand maincol">
         <!-- Navbar Brand-->
@@ -99,38 +100,88 @@
             </nav>
         </div>
         <div id="layoutSidenav_content">
-            <main>
-                <div class="container-fluid px-4">
-                    <h1 class="mt-4">Stok Barang</h1>
-                    <ol class="breadcrumb mb-4">
-                        <a class="breadcrumb-item active" href="home.php"><li>Dashboard</li></a>
-                        <li class="breadcrumb-item active">Data Barang</li>
-                        <li class="breadcrumb-item active">Stok Barang</li>
-                    </ol>
+        <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Data Stok Barang</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active"><a href="home.php">Dashboard</a></li>
+                <li class="breadcrumb-item active">Data Stok Barang</li>
+            </ol>
+        </div>
+        <div class="container">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fa-solid fa-money-bill-transfer"></i>
+                    Data Stok Barang
                 </div>
-            </main>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>ID</th>
+                                    <th>Nama Barang</th>
+                                    <th>Stok</th>
+                                    <th>Garansi</th>
+                                    <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
+                                    <th>Kategori Barang</th>
+                                    <th>ID Supplier</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $query = "SELECT Barang_ID, Nama, Jumlah, Garansi, HargaBeli, HargaJual, Kategori_ID, ID_Supplier FROM barang;";
+                                $result = mysqli_query($koneksi, $query);
+                                $no = 1;
+
+                                while ($row = mysqli_fetch_array($result)) {
+                                    echo "<tr>";
+                                    echo     "<td>" . $no . "</td>";
+                                    echo     "<td>" . $row['Barang_ID'] . "</td>";
+                                    echo     "<td>" . $row['Nama'] . "</td>";
+                                    echo     "<td>" . $row['Jumlah'] . "</td>";
+                                    echo     "<td>" . $row['Garansi'] . "</td>";
+                                    echo     "<td>" . $row['HargaBeli'] . "</td>";
+                                    echo     "<td>" . $row['HargaJual'] . "</td>";
+                                    echo     "<td>" . $row['Kategori_ID'] . "</td>";
+                                    echo     "<td>" . $row['ID_Supplier'] . "</td>";
+                                    echo "</tr>";
+                                    $no++;
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
+                    <!-- <div class="d-flex align-items-center justify-content-between small">
                         <div class="text-muted">Copyright &copy; Your Website 2023</div>
                         <div>
                             <a href="#">Privacy Policy</a>
                             &middot;
                             <a href="#">Terms &amp; Conditions</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </footer>
+            </div>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="assets/demo/chart-area-demo.js"></script>
     <script src="assets/demo/chart-bar-demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
-</body>
+    </body>
 </html>
 
 

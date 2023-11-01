@@ -99,15 +99,55 @@
         </nav>
     </div>
         <div id="layoutSidenav_content">
-            <main>
+        <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Data Supplier</h1>
                     <ol class="breadcrumb mb-4">
                         <a class="breadcrumb-item active" href="home.php"><li>Dashboard</li></a>
-                        <li class="breadcrumb-item active">Data Barang</li>
                         <li class="breadcrumb-item active">Data Supplier</li>
                     </ol>
                 </div>
+                <div class="container">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fa-solid fa-money-bill-transfer"></i>
+                        Data Supplier
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>ID Supplier</th>
+                                    <th>Nama Supplier</th>
+                                    <th>Alamat</th>
+                                    <th>Nomor Telepon/th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+
+                                $query = "SELECT ID_Supplier, Nama_Supplier, Alamat, No_Telp FROM supplier;";
+                                $result = mysqli_query($koneksi, $query);
+                                $no = 1;
+                                
+                                while ($row = mysqli_fetch_array($result)) {
+                                        
+                                echo "<tr>";
+                                echo     "<td>" . $no . "</td>";
+                                echo     "<td>" . $row['ID_Supplier'] . "</td>";
+                                echo     "<td>" . $row['Nama_Supplier'] . "</td>";
+                                echo     "<td>" . $row['Alamat'] . "</td>";
+                                echo     "<td>" . $row['No_Telp'] . "</td>";
+                                echo "</tr>";
+                                    $no++; }
+                                ?>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid px-4">
