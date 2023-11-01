@@ -101,17 +101,17 @@
         <div id="layoutSidenav_content">
         <main>
         <div class="container-fluid px-4">
-            <h1 class="mt-4">Data Pelanggan</h1>
+            <h1 class="mt-4">Data Customer</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item active"><a href="home.php">Dashboard</a></li>
-                <li class="breadcrumb-item active">Data Pelanggan</li>
+                <li class="breadcrumb-item active">Data Customer</li>
             </ol>
         </div>
         <div class="container">
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fa-solid fa-money-bill-transfer"></i>
-                    Data Pelanggan
+                    Data Customer
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
