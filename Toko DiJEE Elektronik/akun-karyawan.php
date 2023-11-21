@@ -48,7 +48,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user fa-2xl"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="akun-karyawan.php" >Profil</a></li>
+                    <li><a class="dropdown-item" href="akun-karyawan.php">Profil</a></li>
                     <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                     <li><hr class="dropdown-divider" /></li>
                     <li><a class="dropdown-item" href="logout.php">Logout</a></li>
@@ -101,64 +101,11 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <img src="assets/img/1.jpeg" alt="" style="width: 600px;">
                     <h1 class="mt-4">Profil</h1>
                     <ol class="breadcrumb mb-4">
                         <a class="breadcrumb-item active" href="home.php"><li>Dashboard</li></a>
                         <li class="breadcrumb-item active">Profil</li>
                     </ol>
-                    <div class="col-md-8 mt-1">
-                        <div class="card mb-3 content">
-                            <h1 class="m-3pt-3">About</h1>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <h5>full name</h5>
-                                    </div>
-                                    <div class="col-md-9 text-secondary">Ayu Dewi</div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <h5>email</h5>
-                                    </div>
-                                    <div class="col-md-9 text-secondary">ayudewi@gmail.com</div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <h5>phone</h5>
-                                    </div>
-                                    <div class="col-md-9 text-secondary">085335887665</div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <h5>address</h5>
-                                    </div>
-                                    <div class="col-md-9 text-secondary">Jln.Prajurit,Jember</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mb-3 content">
-                            <h1 class="m-3">recent projects</h1>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <h5>project name</h5>
-                                    </div>
-                                    <div class="col-md-9 text-secondari">
-                                        project description
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">

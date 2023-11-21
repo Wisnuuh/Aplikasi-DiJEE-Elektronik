@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 19, 2023 at 10:21 AM
+-- Generation Time: Nov 21, 2023 at 02:49 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -43,12 +43,12 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`Barang_ID`, `Nama`, `Jumlah`, `Garansi`, `HargaBeli`, `HargaJual`, `Kategori_ID`, `ID_Supplier`) VALUES
-('1', 'Lampu Led Maxxis 20W', 13, '', 15000, 17500, 1, 1),
-('10', 'Aqua Galon Kosong', 0, '', 30000, 35000, 3, 3),
-('11', 'Aqua Gelas 240ml', 3, '', 21700, 25000, 3, 3),
-('12', 'Arde Besar', 18, '', 27500, 32000, 4, 4),
-('13', 'Arde Kecil', 15, '', 9000, 15000, 4, 4),
-('14', 'Arde Tanggung', 18, '', 13500, 17500, 4, 4),
+('1', 'Lampu Led Maxxis 20W', -2, '', 15000, 17500, 1, 1),
+('10', 'Aqua Galon Kosong', -4, '', 30000, 35000, 3, 3),
+('11', 'Aqua Gelas 240ml', 1, '', 21700, 25000, 3, 3),
+('12', 'Arde Besar', 5, '', 27500, 32000, 4, 4),
+('13', 'Arde Kecil', -9, '', 9000, 15000, 4, 4),
+('14', 'Arde Tanggung', 15, '', 13500, 17500, 4, 4),
 ('15', 'Arpus Soder', 0, '', 2500, 4000, 5, 6),
 ('16', 'Arpus Soder Kuning', 0, '', 3000, 5000, 5, 6),
 ('17', 'Avr Genset Specktek', 0, '', 38000, 100000, 6, 7),
@@ -64,7 +64,7 @@ INSERT INTO `barang` (`Barang_ID`, `Nama`, `Jumlah`, `Garansi`, `HargaBeli`, `Ha
 ('26', 'Box Ampli Humer 200', 0, '', 70000, 85000, 8, 8),
 ('27', 'Box Ampli SJ1000', 0, '', 170000, 200000, 8, 8),
 ('28', 'Box Ampli SJ500', 0, '', 64000, 80000, 8, 8),
-('3', 'Aper Lebar Lubang Besar', 87, '2 bulan', 2000, 5000, 2, 5),
+('3', 'Aper Lebar Lubang Besar', 88, '2 bulan', 2000, 5000, 2, 5),
 ('4', 'Aper Lubang Besar', 90, '', 3000, 5000, 2, 5),
 ('5', 'Aper Lubang Kecil/Besar', 80, '', 3000, 5000, 2, 5),
 ('6', 'Aper Maspion Hitam', 90, '', 2750, 5000, 2, 5),
@@ -83,36 +83,33 @@ CREATE TABLE `detailpembelian` (
   `ID_DetailPembelian` int(11) NOT NULL,
   `Barang_ID` varchar(50) NOT NULL,
   `Pembelian_ID` int(11) NOT NULL,
-  `Nama_Barang` varchar(255) DEFAULT NULL,
-  `hargaBeli` int(11) DEFAULT NULL,
   `Jumlah` int(16) DEFAULT NULL,
-  `subTotal` int(11) DEFAULT NULL,
-  `Garansi` varchar(100) DEFAULT NULL
+  `subTotal` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `detailpembelian`
 --
 
-INSERT INTO `detailpembelian` (`ID_DetailPembelian`, `Barang_ID`, `Pembelian_ID`, `Nama_Barang`, `hargaBeli`, `Jumlah`, `subTotal`, `Garansi`) VALUES
-(1, '1', 1, 'Lampu Led Maxxis 20W', 15000, 10, 150000, 'tidak ada\r\n'),
-(2, '2', 1, 'Lampu Philips Led 10W', 45000, 5, 225000, 'tidak ada\r\n'),
-(3, '7', 2, 'Aqua 1500ml', 4000, 50, 200000, 'tergantung expired'),
-(4, '8', 2, 'Aqua 600ml', 2000, 50, 100000, 'tergantung expired'),
-(5, '9', 2, 'Aqua Air Galon', 18200, 10, 182000, 'tergantung expired'),
-(6, '3', 3, 'Aper Lebar Lubang Besar', 2000, 100, 200000, 'tidak ada'),
-(7, '4', 3, 'Aper Lubang Besar', 3000, 100, 300000, 'tidak ada'),
-(8, '5', 3, 'Aper Lubang Kecil/Besar', 3000, 100, 300000, 'tidak ada'),
-(9, '6', 3, 'Aper Maspion Hitam', 2750, 100, 275000, 'tidak ada'),
-(10, '12', 4, 'Arde Besar', 27500, 20, 550000, 'tidak ada'),
-(11, '13', 4, 'Arde Kecil', 9000, 20, 180000, 'tidak ada'),
-(12, '14', 4, 'Arde Tanggung', 13500, 20, 270000, 'tidak ada'),
-(13, '1', 5, 'Lampu Led Maxxis 20W', 15000, 1, 15000, ''),
-(14, '8', 5, 'Aqua 600ml', 2000, 2, 4000, ''),
-(15, '1', 6, 'Lampu Led Maxxis 20W', 15000, 12, 180000, ''),
-(16, '11', 7, 'Aqua Gelas 240ml', 21700, 5, 108500, ''),
-(17, '1', 8, 'Lampu Led Maxxis 20W', 15000, 2, 30000, ''),
-(18, '2', 9, 'Lampu Philips Led 10W', 45000, 2, 90000, '1 hari');
+INSERT INTO `detailpembelian` (`ID_DetailPembelian`, `Barang_ID`, `Pembelian_ID`, `Jumlah`, `subTotal`) VALUES
+(1, '1', 1, 10, 150000),
+(2, '2', 1, 5, 225000),
+(3, '7', 2, 50, 200000),
+(4, '8', 2, 50, 100000),
+(5, '9', 2, 10, 182000),
+(6, '3', 3, 100, 200000),
+(7, '4', 3, 100, 300000),
+(8, '5', 3, 100, 300000),
+(9, '6', 3, 100, 275000),
+(10, '12', 4, 20, 550000),
+(11, '13', 4, 20, 180000),
+(12, '14', 4, 20, 270000),
+(13, '1', 5, 1, 15000),
+(14, '8', 5, 2, 4000),
+(15, '1', 6, 12, 180000),
+(16, '11', 7, 5, 108500),
+(17, '1', 8, 2, 30000),
+(18, '2', 9, 2, 90000);
 
 --
 -- Triggers `detailpembelian`
@@ -136,8 +133,6 @@ CREATE TABLE `detailpenjualan` (
   `ID_detailPenjualan` int(11) NOT NULL,
   `ID_Penjualan` int(11) NOT NULL,
   `Barang_ID` varchar(50) NOT NULL,
-  `nama_Barang` varchar(100) NOT NULL,
-  `harga_Jual` int(11) NOT NULL,
   `Jumlah` int(11) NOT NULL,
   `subTotal` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -146,53 +141,57 @@ CREATE TABLE `detailpenjualan` (
 -- Dumping data for table `detailpenjualan`
 --
 
-INSERT INTO `detailpenjualan` (`ID_detailPenjualan`, `ID_Penjualan`, `Barang_ID`, `nama_Barang`, `harga_Jual`, `Jumlah`, `subTotal`) VALUES
-(1, 1, '1', 'Lampu Led Maxxis 20W', 17500, 2, 35000),
-(2, 1, '2', 'Lampu Philips Led 10W', 50000, 1, 50000),
-(3, 2, '9', 'Aqua Air Galon', 20000, 2, 40000),
-(4, 2, '4', 'Aper Lubang Besar', 5000, 2, 10000),
-(5, 2, '2', 'Lampu Philips Led 10W', 50000, 1, 50000),
-(6, 3, '12', 'Arde Besar', 32000, 2, 64000),
-(7, 3, '14', 'Arde Tanggung', 17500, 1, 17500),
-(11, 4, '1', 'Lampu Led Maxxis 20W', 17500, 2, 35000),
-(12, 5, '9', 'Aqua Air Galon', 20000, 2, 40000),
-(13, 5, '2', 'Lampu Philips Led 10W', 50000, 1, 50000),
-(14, 6, '1', 'Lampu Led Maxxis 20W', 17500, 2, 35000),
-(15, 7, '3', 'Aper Lebar Lubang Besar', 5000, 2, 10000),
-(16, 8, '3', 'Aper Lebar Lubang Besar\r\n', 5000, 2, 10000),
-(17, 9, '7', 'Aqua 1500ml', 5000, 2, 10000),
-(18, 9, '8', 'Aqua 600ml', 3000, 2, 6000),
-(19, 10, '12', 'Arde Besar', 32000, 2, 64000),
-(20, 10, '13', 'Arde Kecil', 15000, 5, 75000),
-(21, 10, '11', 'Aqua Gelas 240ml', 25000, 2, 50000),
-(22, 11, '4', 'Aper Lubang Besar', 5000, 2, 10000),
-(23, 11, '5', 'Aper Lubang Kecil/Besar', 5000, 2, 10000),
-(24, 11, '6', 'Aper Maspion Hitam', 5000, 2, 10000),
-(25, 12, '4', 'Aper Lubang Besar', 5000, 3, 15000),
-(26, 12, '4', 'Aper Lubang Besar', 5000, 2, 10000),
-(27, 13, '4', 'Aper Lubang Besar', 5000, 2, 10000),
-(28, 13, '6', 'Aper Maspion Hitam', 5000, 2, 10000),
-(29, 14, '1', 'Lampu Led Maxxis 20W', 17500, 2, 35000),
-(30, 14, '5', 'Aper Lubang Kecil/Besar', 5000, 2, 10000),
-(31, 14, '2', 'Lampu Philips Led 10W', 50000, 1, 50000),
-(32, 14, '7', 'Aqua 1500ml', 5000, 10, 50000),
-(33, 15, '5', 'Aper Lubang Kecil/Besar', 5000, 4, 20000),
-(34, 15, '6', 'Aper Maspion Hitam', 5000, 5, 25000),
-(35, 15, '1', 'Lampu Led Maxxis 20W', 17500, 3, 52500),
-(36, 15, '5', 'Aper Lubang Kecil/Besar', 5000, 5, 25000),
-(37, 15, '14', 'Arde Tanggung', 17500, 2, 35000),
-(38, 16, '3', 'Aper Lebar Lubang Besar', 5000, 4, 20000),
-(39, 16, '5', 'Aper Lubang Kecil/Besar', 5000, 3, 15000),
-(40, 17, '1', 'Lampu Led Maxxis 20W', 17500, 2, 35000),
-(41, 17, '8', 'Aqua 600ml', 3000, 4, 12000),
-(42, 18, '6', 'Aper Maspion Hitam', 5000, 1, 5000),
-(43, 18, '4', 'Aper Lubang Besar', 5000, 1, 5000),
-(44, 19, '3', 'Aper Lebar Lubang Besar', 5000, 2, 10000),
-(45, 20, '3', 'Aper Lebar Lubang Besar', 5000, 1, 5000),
-(46, 20, '5', 'Aper Lubang Kecil/Besar', 5000, 2, 10000),
-(47, 21, '5', 'Aper Lubang Kecil/Besar', 5000, 2, 10000),
-(48, 21, '3', 'Aper Lebar Lubang Besar', 5000, 1, 5000),
-(49, 22, '3', 'Aper Lebar Lubang Besar', 5000, 1, 5000);
+INSERT INTO `detailpenjualan` (`ID_detailPenjualan`, `ID_Penjualan`, `Barang_ID`, `Jumlah`, `subTotal`) VALUES
+(3, 2, '9', 2, 40000),
+(4, 2, '4', 2, 10000),
+(5, 2, '2', 1, 50000),
+(6, 3, '12', 2, 64000),
+(7, 3, '14', 1, 17500),
+(11, 4, '1', 2, 35000),
+(12, 5, '9', 2, 40000),
+(13, 5, '2', 1, 50000),
+(14, 6, '1', 2, 35000),
+(15, 7, '3', 2, 10000),
+(16, 8, '3', 2, 10000),
+(17, 9, '7', 2, 10000),
+(18, 9, '8', 2, 6000),
+(19, 10, '12', 2, 64000),
+(20, 10, '13', 5, 75000),
+(21, 10, '11', 2, 50000),
+(22, 11, '4', 2, 10000),
+(23, 11, '5', 2, 10000),
+(24, 11, '6', 2, 10000),
+(25, 12, '4', 3, 15000),
+(26, 12, '4', 2, 10000),
+(27, 13, '4', 2, 10000),
+(28, 13, '6', 2, 10000),
+(29, 14, '1', 2, 35000),
+(30, 14, '5', 2, 10000),
+(31, 14, '2', 1, 50000),
+(32, 14, '7', 10, 50000),
+(33, 15, '5', 4, 20000),
+(34, 15, '6', 5, 25000),
+(35, 15, '1', 3, 52500),
+(36, 15, '5', 5, 25000),
+(37, 15, '14', 2, 35000),
+(38, 16, '3', 4, 20000),
+(39, 16, '5', 3, 15000),
+(40, 17, '1', 2, 35000),
+(41, 17, '8', 4, 12000),
+(42, 18, '6', 1, 5000),
+(43, 18, '4', 1, 5000),
+(44, 19, '3', 2, 10000),
+(45, 20, '3', 1, 5000),
+(46, 20, '5', 2, 10000),
+(47, 21, '5', 2, 10000),
+(48, 21, '3', 1, 5000),
+(49, 22, '3', 1, 5000),
+(63, 31, '1', 1, 0),
+(64, 31, '10', 1, 0),
+(65, 31, '11', 1, 0),
+(66, 31, '12', 1, 0),
+(67, 31, '13', 1, 0),
+(68, 31, '14', 1, 0);
 
 --
 -- Triggers `detailpenjualan`
@@ -353,9 +352,10 @@ INSERT INTO `pembelian` (`Pembelian_ID`, `Tanggal_Pembelian`, `Total_Pembayaran`
 CREATE TABLE `penjualan` (
   `ID_Penjualan` int(11) NOT NULL,
   `Tgl_Penjualan` date DEFAULT NULL,
-  `totalPembayaran` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `pembayaran` int(11) DEFAULT NULL,
   `uangKembalian` int(11) DEFAULT NULL,
-  `Pelanggan_ID` int(11) NOT NULL,
+  `Pelanggan_ID` int(11) DEFAULT NULL,
   `User_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -363,29 +363,29 @@ CREATE TABLE `penjualan` (
 -- Dumping data for table `penjualan`
 --
 
-INSERT INTO `penjualan` (`ID_Penjualan`, `Tgl_Penjualan`, `totalPembayaran`, `uangKembalian`, `Pelanggan_ID`, `User_ID`) VALUES
-(1, '2022-02-03', 85000, 15000, 1, 1),
-(2, '2023-02-10', 100000, 0, 2, 1),
-(3, '2023-02-20', 81500, 18500, 3, 2),
-(4, '2023-05-21', 35000, 15000, 4, 2),
-(5, '2023-05-22', 90000, 10000, 5, 2),
-(6, '2023-05-23', 35000, 0, 6, 2),
-(7, '2023-05-23', 10000, 0, 7, 2),
-(8, '2023-02-25', 10000, 0, 7, 1),
-(9, '2023-05-23', 16000, 4000, 8, 2),
-(10, '2023-05-24', 189000, 11000, 9, 2),
-(11, '2023-05-25', 30000, 10000, 10, 2),
-(12, '2023-05-26', 25000, 25000, 11, 2),
-(13, '2023-05-26', 20000, 10000, 12, 2),
-(14, '2023-05-26', 145000, 5000, 13, 2),
-(15, '2023-05-26', 157500, 42500, 14, 2),
-(16, '2023-05-26', 35000, 15000, 15, 2),
-(17, '2023-05-29', 47000, 3000, 16, 2),
-(18, '2023-05-31', 10000, 0, 18, 2),
-(19, '2023-05-31', 10000, 0, 19, 2),
-(20, '2023-05-31', 15000, 5000, 20, 2),
-(21, '2023-05-31', 15000, 0, 21, 4),
-(22, '2023-05-31', 5000, 0, 22, 4);
+INSERT INTO `penjualan` (`ID_Penjualan`, `Tgl_Penjualan`, `total`, `pembayaran`, `uangKembalian`, `Pelanggan_ID`, `User_ID`) VALUES
+(2, '2023-02-10', NULL, 100000, 0, 2, 1),
+(3, '2023-02-20', NULL, 81500, 18500, 3, 2),
+(4, '2023-05-21', NULL, 35000, 15000, 4, 2),
+(5, '2023-05-22', NULL, 90000, 10000, 5, 2),
+(6, '2023-05-23', NULL, 35000, 0, 6, 2),
+(7, '2023-05-23', NULL, 10000, 0, 7, 2),
+(8, '2023-02-25', NULL, 10000, 0, 7, 1),
+(9, '2023-05-23', NULL, 16000, 4000, 8, 2),
+(10, '2023-05-24', NULL, 189000, 11000, 9, 2),
+(11, '2023-05-25', NULL, 30000, 10000, 10, 2),
+(12, '2023-05-26', NULL, 25000, 25000, 11, 2),
+(13, '2023-05-26', NULL, 20000, 10000, 12, 2),
+(14, '2023-05-26', NULL, 145000, 5000, 13, 2),
+(15, '2023-05-26', NULL, 157500, 42500, 14, 2),
+(16, '2023-05-26', NULL, 35000, 15000, 15, 2),
+(17, '2023-05-29', NULL, 47000, 3000, 16, 2),
+(18, '2023-05-31', NULL, 10000, 0, 18, 2),
+(19, '2023-05-31', NULL, 10000, 0, 19, 2),
+(20, '2023-05-31', NULL, 15000, 5000, 20, 2),
+(21, '2023-05-31', NULL, 15000, 0, 21, 4),
+(22, '2023-05-31', NULL, 5000, 0, 22, 4),
+(31, '2023-11-14', NULL, 0, 0, NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -437,7 +437,8 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`User_ID`, `Nama`, `Alamat`, `Nomor_HP`, `JenisUser_ID`, `username`, `password`) VALUES
 (1, 'Ayu Dewi', 'Jln. Prajurit, jember', '085335887665', 1, 'Pemilik', 'Pemilik'),
 (2, 'Indah Lestari', 'Jln. Mada, jember', '089556773445', 2, 'Admin1', 'Admin1'),
-(4, 'Kartika Ayu', 'Jln.Agus Salim No.43', '089765342516', 2, 'Admin212', 'Admin212');
+(4, 'Kartika Ayu', 'Jln.Agus Salim No.43', '089765342516', 2, 'Admin212', 'Admin212'),
+(8, 'W', 'Jln. XXX', '08123456789', 2, 'Admin3', 'Admin3');
 
 --
 -- Indexes for dumped tables
@@ -533,7 +534,7 @@ ALTER TABLE `detailpembelian`
 -- AUTO_INCREMENT for table `detailpenjualan`
 --
 ALTER TABLE `detailpenjualan`
-  MODIFY `ID_detailPenjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `ID_detailPenjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT for table `jenis_user`
@@ -548,10 +549,16 @@ ALTER TABLE `pelanggan`
   MODIFY `Pelanggan_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3555;
 
 --
+-- AUTO_INCREMENT for table `penjualan`
+--
+ALTER TABLE `penjualan`
+  MODIFY `ID_Penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `User_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `User_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
@@ -575,8 +582,8 @@ ALTER TABLE `detailpembelian`
 -- Constraints for table `detailpenjualan`
 --
 ALTER TABLE `detailpenjualan`
-  ADD CONSTRAINT `detailpenjualan_ibfk_2` FOREIGN KEY (`ID_Penjualan`) REFERENCES `penjualan` (`ID_Penjualan`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `detailpenjualan_ibfk_3` FOREIGN KEY (`Barang_ID`) REFERENCES `barang` (`Barang_ID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `detailpenjualan_ibfk_3` FOREIGN KEY (`Barang_ID`) REFERENCES `barang` (`Barang_ID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `penjualanDetailPenjualan` FOREIGN KEY (`ID_Penjualan`) REFERENCES `penjualan` (`ID_Penjualan`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `incomingclaim`
@@ -588,8 +595,7 @@ ALTER TABLE `incomingclaim`
 -- Constraints for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  ADD CONSTRAINT `penjualan_ibfk_5` FOREIGN KEY (`User_ID`) REFERENCES `user` (`User_ID`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `penjualan_ibfk_6` FOREIGN KEY (`Pelanggan_ID`) REFERENCES `pelanggan` (`Pelanggan_ID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `penjualan_ibfk_5` FOREIGN KEY (`User_ID`) REFERENCES `user` (`User_ID`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user`

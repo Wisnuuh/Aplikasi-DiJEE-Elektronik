@@ -1,5 +1,8 @@
 <?php
 require("koneksi.php");
+
+
+
 function tampil_karyawan($query)
 {
     global $koneksi;
@@ -85,3 +88,76 @@ function hapuskaryawan($id)
 
     return mysqli_affected_rows($koneksi);
 }
+
+function ambil_data($query) {
+
+    global $koneksi;
+    
+    $db = [];
+    $sql_query = mysqli_query($koneksi, $query);
+
+    while ($q = mysqli_fetch_assoc($sql_query)) {
+
+        array_push($db, $q);
+    }
+
+    return $db;
+}
+
+function tambah_data_pesanan() {
+
+    global $koneksi;
+
+    // Nama Pelanggan
+    // $pelanggan = htmlspecialchars($_POST["pelanggan"]);
+
+    // Mengambil Data Qty dan Kode Menu
+    $list_pesanan = [];
+
+    $max_menu = count(ambil_data("SELECT * FROM barang"));
+
+    for ($i = 1; $i <= $max_menu; $i++) {
+
+        if ((int) $_POST["qty$i"] != 0) {
+
+            array_push($list_pesanan, [
+
+                "kode_menu" => $_POST["kode_menu$i"],
+                "qty" => (int) $_POST["qty$i"]
+            ]);
+        }
+    }
+
+    // Cek Jika Memesan Tapi Kosong
+    if (count($list_pesanan) == 0) {
+        echo "<script>
+            alert('Anda belum memesan menu!');
+        </script>";
+        return -1;
+    }
+
+    global $sesID;
+
+    // Tambah Data Transaksi
+    mysqli_query($koneksi, "INSERT INTO penjualan
+                            VALUES ('', NOW(), 0, 0, NULL, 2);"
+
+    );
+
+    $ambilIdPenjualan = mysqli_insert_id($koneksi);
+
+    // Tambah Data Pesanan
+    foreach ($list_pesanan as $lp) {
+
+        $kode_menu = $lp["kode_menu"];
+        $qty = $lp["qty"];
+
+        mysqli_query($koneksi, "INSERT INTO detailpenjualan
+                                VALUES ('', $ambilIdPenjualan, '$kode_menu', '', 0, $qty, 0);
+
+        ");
+    }
+
+    return mysqli_affected_rows($koneksi);
+}
+
