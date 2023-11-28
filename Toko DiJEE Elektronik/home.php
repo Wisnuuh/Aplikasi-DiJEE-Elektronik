@@ -1,6 +1,7 @@
 <?php
 
     require ("koneksi.php");
+    require_once "functions.php";
     // $email = isset($_GET['user_fullname']) ? $_GET['user_fullname'] : "";
 
     session_start();
@@ -13,8 +14,26 @@
     $sesName = $_SESSION ['name'];
     $sesLvl = $_SESSION ['level'];
 
-?>
+    $menu = ambil_data("SELECT * FROM barang");
 
+    if (isset($_POST["pesan"])) {
+
+        $pesanan = tambah_data_pesanan();
+
+        if ($pesanan > 0) {
+            
+            "<script>                    
+                alert('Pesanan Berhasil Dikirim!');           
+            </script>";
+        } else {
+            
+            "<script>                    
+                alert('Pesanan Gagal Dikirim!');                        
+            </script>";
+        }
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +46,9 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/styles2.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>   
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand maincol">
@@ -106,551 +127,100 @@
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                     <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Primary Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                        <div class="col-sm-4">
+                            <div class="card card-primary mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <h5><i class="fa fa-search"></i> Cari Barang</h5>
+                                </div>
+                                <div class="card-body">
+                                    <input type="text" id="cari" class="form-control" name="cari" placeholder="Masukkan: Kode / Nama Barang" onkeyup="cariBarang(event)" autofocus>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Warning Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+
+                        <!--Pencarian-->
+                        <div class="col-sm-8">
+                            <div class="card card-primary mb-3">
+                                <div class="card-header bg-primary text-white">
+                                    <h5><i class="fa fa-search"></i> Hasil Barang</h5>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Success Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-danger text-white mb-4">
-                                <div class="card-body">Danger Card</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                <div class="card-body" id="hasil_barang">
+                                    <!-- Hasil pencarian akan ditampilkan di sini -->
+    
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-area me-1"></i>
-                                    Area Chart Example
+                </div>
+                <!--Keranjang-->
+                <div class="col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header bg-primary text-white">
+                            <div class="row">
+                                <div class="col"><h5><i class="fa fa-shopping-cart"></i>KASIR</h5></div>
+                                <div class="col text-end">
+                                    <button class="btn btn-danger" onclick="hapusSemuaBarang()">
+                                        <b>RESET KERANJANG</b>
+                                    </button>
                                 </div>
-                                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                
                             </div>
                         </div>
-                        <div class="col-xl-6">
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-bar me-1"></i>
-                                    Bar Chart Example
+                        <form action="proses.php" method="post">
+                            <div class="card-body">
+                                <div id="keranjang" class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td><b>Tanggal</b></td>
+                                            <td>
+                                                <input type="hidden" readonly="readonly" class="form-control bg-secondary bg-opacity-25" value="<?php echo date("Y-m-d");?>" name="tgl">
+                                                <?php echo date("j F Y");?>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table class="table table-bordered w-100" id="example1">
+                                        <thead>
+                                            <tr>
+                                                <td> ID</td>
+                                                <td> Nama Barang</td>
+                                                <td> Harga</td>
+                                                <td style="width:10%;"> Jumlah</td>
+                                                <td style="width:20%;"> SubTotal</td>
+                                                <td> Kasir</td>
+                                                <td> Aksi</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                                <div class="justify-content-end">
+                                    <table class="row table table-bordered">
+                                        <tr>
+                                            <td><b>Total</b></td>
+                                            
+                                            <td class="col-8" id="total-keseluruhan-text">
+                                                <!-- Rp0 -->
+                                                <input type="hidden" id="total-keseluruhan-input" name="totalKeseluruhan" value="">
+                                                <span id="total-keseluruhan-text"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Bayar</b></td>
+                                            <td ><input id="inputPembayaran" type="number" min='1' value='' onchange="hitungKembalian()"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Kembalian</b></td>
+                                            <td class="col-8" id="uang-kembalian">
+                                                <input type="hidden" id="inputKembalian" name="kembalian" value="">
+                                                <span id="kembalianText">Rp0</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <button class="btn btn-primary mb-3 float-end" onclick="kirimData()" style="width: 8rem;"><b>Proses</b></button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
-                            DataTable Example
-                        </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Office</th>
-                                        <th>Age</th>
-                                        <th>Start date</th>
-                                        <th>Salary</th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        <td>61</td>
-                                        <td>2011/04/25</td>
-                                        <td>$320,800</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>Accountant</td>
-                                        <td>Tokyo</td>
-                                        <td>63</td>
-                                        <td>2011/07/25</td>
-                                        <td>$170,750</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ashton Cox</td>
-                                        <td>Junior Technical Author</td>
-                                        <td>San Francisco</td>
-                                        <td>66</td>
-                                        <td>2009/01/12</td>
-                                        <td>$86,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Cedric Kelly</td>
-                                        <td>Senior Javascript Developer</td>
-                                        <td>Edinburgh</td>
-                                        <td>22</td>
-                                        <td>2012/03/29</td>
-                                        <td>$433,060</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Airi Satou</td>
-                                        <td>Accountant</td>
-                                        <td>Tokyo</td>
-                                        <td>33</td>
-                                        <td>2008/11/28</td>
-                                        <td>$162,700</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Brielle Williamson</td>
-                                        <td>Integration Specialist</td>
-                                        <td>New York</td>
-                                        <td>61</td>
-                                        <td>2012/12/02</td>
-                                        <td>$372,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Herrod Chandler</td>
-                                        <td>Sales Assistant</td>
-                                        <td>San Francisco</td>
-                                        <td>59</td>
-                                        <td>2012/08/06</td>
-                                        <td>$137,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rhona Davidson</td>
-                                        <td>Integration Specialist</td>
-                                        <td>Tokyo</td>
-                                        <td>55</td>
-                                        <td>2010/10/14</td>
-                                        <td>$327,900</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Colleen Hurst</td>
-                                        <td>Javascript Developer</td>
-                                        <td>San Francisco</td>
-                                        <td>39</td>
-                                        <td>2009/09/15</td>
-                                        <td>$205,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sonya Frost</td>
-                                        <td>Software Engineer</td>
-                                        <td>Edinburgh</td>
-                                        <td>23</td>
-                                        <td>2008/12/13</td>
-                                        <td>$103,600</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jena Gaines</td>
-                                        <td>Office Manager</td>
-                                        <td>London</td>
-                                        <td>30</td>
-                                        <td>2008/12/19</td>
-                                        <td>$90,560</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Quinn Flynn</td>
-                                        <td>Support Lead</td>
-                                        <td>Edinburgh</td>
-                                        <td>22</td>
-                                        <td>2013/03/03</td>
-                                        <td>$342,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Charde Marshall</td>
-                                        <td>Regional Director</td>
-                                        <td>San Francisco</td>
-                                        <td>36</td>
-                                        <td>2008/10/16</td>
-                                        <td>$470,600</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Haley Kennedy</td>
-                                        <td>Senior Marketing Designer</td>
-                                        <td>London</td>
-                                        <td>43</td>
-                                        <td>2012/12/18</td>
-                                        <td>$313,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tatyana Fitzpatrick</td>
-                                        <td>Regional Director</td>
-                                        <td>London</td>
-                                        <td>19</td>
-                                        <td>2010/03/17</td>
-                                        <td>$385,750</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Michael Silva</td>
-                                        <td>Marketing Designer</td>
-                                        <td>London</td>
-                                        <td>66</td>
-                                        <td>2012/11/27</td>
-                                        <td>$198,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Paul Byrd</td>
-                                        <td>Chief Financial Officer (CFO)</td>
-                                        <td>New York</td>
-                                        <td>64</td>
-                                        <td>2010/06/09</td>
-                                        <td>$725,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gloria Little</td>
-                                        <td>Systems Administrator</td>
-                                        <td>New York</td>
-                                        <td>59</td>
-                                        <td>2009/04/10</td>
-                                        <td>$237,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bradley Greer</td>
-                                        <td>Software Engineer</td>
-                                        <td>London</td>
-                                        <td>41</td>
-                                        <td>2012/10/13</td>
-                                        <td>$132,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dai Rios</td>
-                                        <td>Personnel Lead</td>
-                                        <td>Edinburgh</td>
-                                        <td>35</td>
-                                        <td>2012/09/26</td>
-                                        <td>$217,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jenette Caldwell</td>
-                                        <td>Development Lead</td>
-                                        <td>New York</td>
-                                        <td>30</td>
-                                        <td>2011/09/03</td>
-                                        <td>$345,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Yuri Berry</td>
-                                        <td>Chief Marketing Officer (CMO)</td>
-                                        <td>New York</td>
-                                        <td>40</td>
-                                        <td>2009/06/25</td>
-                                        <td>$675,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Caesar Vance</td>
-                                        <td>Pre-Sales Support</td>
-                                        <td>New York</td>
-                                        <td>21</td>
-                                        <td>2011/12/12</td>
-                                        <td>$106,450</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Doris Wilder</td>
-                                        <td>Sales Assistant</td>
-                                        <td>Sidney</td>
-                                        <td>23</td>
-                                        <td>2010/09/20</td>
-                                        <td>$85,600</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Angelica Ramos</td>
-                                        <td>Chief Executive Officer (CEO)</td>
-                                        <td>London</td>
-                                        <td>47</td>
-                                        <td>2009/10/09</td>
-                                        <td>$1,200,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gavin Joyce</td>
-                                        <td>Developer</td>
-                                        <td>Edinburgh</td>
-                                        <td>42</td>
-                                        <td>2010/12/22</td>
-                                        <td>$92,575</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jennifer Chang</td>
-                                        <td>Regional Director</td>
-                                        <td>Singapore</td>
-                                        <td>28</td>
-                                        <td>2010/11/14</td>
-                                        <td>$357,650</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Brenden Wagner</td>
-                                        <td>Software Engineer</td>
-                                        <td>San Francisco</td>
-                                        <td>28</td>
-                                        <td>2011/06/07</td>
-                                        <td>$206,850</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Fiona Green</td>
-                                        <td>Chief Operating Officer (COO)</td>
-                                        <td>San Francisco</td>
-                                        <td>48</td>
-                                        <td>2010/03/11</td>
-                                        <td>$850,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shou Itou</td>
-                                        <td>Regional Marketing</td>
-                                        <td>Tokyo</td>
-                                        <td>20</td>
-                                        <td>2011/08/14</td>
-                                        <td>$163,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Michelle House</td>
-                                        <td>Integration Specialist</td>
-                                        <td>Sidney</td>
-                                        <td>37</td>
-                                        <td>2011/06/02</td>
-                                        <td>$95,400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Suki Burks</td>
-                                        <td>Developer</td>
-                                        <td>London</td>
-                                        <td>53</td>
-                                        <td>2009/10/22</td>
-                                        <td>$114,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Prescott Bartlett</td>
-                                        <td>Technical Author</td>
-                                        <td>London</td>
-                                        <td>27</td>
-                                        <td>2011/05/07</td>
-                                        <td>$145,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gavin Cortez</td>
-                                        <td>Team Leader</td>
-                                        <td>San Francisco</td>
-                                        <td>22</td>
-                                        <td>2008/10/26</td>
-                                        <td>$235,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Martena Mccray</td>
-                                        <td>Post-Sales support</td>
-                                        <td>Edinburgh</td>
-                                        <td>46</td>
-                                        <td>2011/03/09</td>
-                                        <td>$324,050</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Unity Butler</td>
-                                        <td>Marketing Designer</td>
-                                        <td>San Francisco</td>
-                                        <td>47</td>
-                                        <td>2009/12/09</td>
-                                        <td>$85,675</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Howard Hatfield</td>
-                                        <td>Office Manager</td>
-                                        <td>San Francisco</td>
-                                        <td>51</td>
-                                        <td>2008/12/16</td>
-                                        <td>$164,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hope Fuentes</td>
-                                        <td>Secretary</td>
-                                        <td>San Francisco</td>
-                                        <td>41</td>
-                                        <td>2010/02/12</td>
-                                        <td>$109,850</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Vivian Harrell</td>
-                                        <td>Financial Controller</td>
-                                        <td>San Francisco</td>
-                                        <td>62</td>
-                                        <td>2009/02/14</td>
-                                        <td>$452,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Timothy Mooney</td>
-                                        <td>Office Manager</td>
-                                        <td>London</td>
-                                        <td>37</td>
-                                        <td>2008/12/11</td>
-                                        <td>$136,200</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jackson Bradshaw</td>
-                                        <td>Director</td>
-                                        <td>New York</td>
-                                        <td>65</td>
-                                        <td>2008/09/26</td>
-                                        <td>$645,750</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Olivia Liang</td>
-                                        <td>Support Engineer</td>
-                                        <td>Singapore</td>
-                                        <td>64</td>
-                                        <td>2011/02/03</td>
-                                        <td>$234,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bruno Nash</td>
-                                        <td>Software Engineer</td>
-                                        <td>London</td>
-                                        <td>38</td>
-                                        <td>2011/05/03</td>
-                                        <td>$163,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Sakura Yamamoto</td>
-                                        <td>Support Engineer</td>
-                                        <td>Tokyo</td>
-                                        <td>37</td>
-                                        <td>2009/08/19</td>
-                                        <td>$139,575</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Thor Walton</td>
-                                        <td>Developer</td>
-                                        <td>New York</td>
-                                        <td>61</td>
-                                        <td>2013/08/11</td>
-                                        <td>$98,540</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Finn Camacho</td>
-                                        <td>Support Engineer</td>
-                                        <td>San Francisco</td>
-                                        <td>47</td>
-                                        <td>2009/07/07</td>
-                                        <td>$87,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Serge Baldwin</td>
-                                        <td>Data Coordinator</td>
-                                        <td>Singapore</td>
-                                        <td>64</td>
-                                        <td>2012/04/09</td>
-                                        <td>$138,575</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Zenaida Frank</td>
-                                        <td>Software Engineer</td>
-                                        <td>New York</td>
-                                        <td>63</td>
-                                        <td>2010/01/04</td>
-                                        <td>$125,250</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Zorita Serrano</td>
-                                        <td>Software Engineer</td>
-                                        <td>San Francisco</td>
-                                        <td>56</td>
-                                        <td>2012/06/01</td>
-                                        <td>$115,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jennifer Acosta</td>
-                                        <td>Junior Javascript Developer</td>
-                                        <td>Edinburgh</td>
-                                        <td>43</td>
-                                        <td>2013/02/01</td>
-                                        <td>$75,650</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Cara Stevens</td>
-                                        <td>Sales Assistant</td>
-                                        <td>New York</td>
-                                        <td>46</td>
-                                        <td>2011/12/06</td>
-                                        <td>$145,600</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hermione Butler</td>
-                                        <td>Regional Director</td>
-                                        <td>London</td>
-                                        <td>47</td>
-                                        <td>2011/03/21</td>
-                                        <td>$356,250</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Lael Greer</td>
-                                        <td>Systems Administrator</td>
-                                        <td>London</td>
-                                        <td>21</td>
-                                        <td>2009/02/27</td>
-                                        <td>$103,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Jonas Alexander</td>
-                                        <td>Developer</td>
-                                        <td>San Francisco</td>
-                                        <td>30</td>
-                                        <td>2010/07/14</td>
-                                        <td>$86,500</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shad Decker</td>
-                                        <td>Regional Director</td>
-                                        <td>Edinburgh</td>
-                                        <td>51</td>
-                                        <td>2008/11/13</td>
-                                        <td>$183,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Michael Bruce</td>
-                                        <td>Javascript Developer</td>
-                                        <td>Singapore</td>
-                                        <td>29</td>
-                                        <td>2011/06/27</td>
-                                        <td>$183,000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Donna Snider</td>
-                                        <td>Customer Support</td>
-                                        <td>New York</td>
-                                        <td>27</td>
-                                        <td>2011/01/25</td>
-                                        <td>$112,000</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </main>
@@ -668,6 +238,261 @@
             </footer>
         </div>
     </div>
+    
+    <!--Buat Cari Script-->
+    <script>
+        var selectedBarangID = "";
+        function cariBarang(event) {
+            var input = document.getElementById("cari").value;
+            if (input.trim() !== "") {
+                // Menggunakan AJAX untuk mengirim permintaan pencarian ke server
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Menampilkan hasil pencarian di div "hasil_barang"
+                        document.getElementById("hasil_barang").innerHTML = this.responseText;
+                    }
+                };
+                // Ganti "proses_pencarian.php" dengan nama file PHP yang melakukan pencarian di database
+                xmlhttp.open("GET", "proses_pencarian.php?cari=" + input, true);
+                xmlhttp.send();
+            } else {
+                // Jika input kosong, hapus hasil pencarian
+                document.getElementById("hasil_barang").innerHTML = "";
+            }
+        }
+
+        // Menambahkan event listener untuk memicu pencarian saat nilai input berubah
+        document.getElementById("cari").addEventListener("input", cariBarang);
+
+        function ambilJumlahBarang() {
+            var jumlahInputs = document.querySelectorAll('.jumlah-barang');
+            var jumlahBarang = [];
+
+            jumlahInputs.forEach(function(input) {
+                jumlahBarang.push({
+                    id: input.getAttribute('data-id'),
+                    jumlah: input.value
+                });
+            });
+
+            return jumlahBarang;
+        }
+        function kirimDataKePHP(ids) {
+            // Mendapatkan nilai Total, Pembayaran, dan Kembalian
+            var totalKeseluruhan = parseFloat(document.getElementById('total-keseluruhan-text').innerText.replace('Rp', ''));
+            var pembayaran = parseFloat(document.getElementById('inputPembayaran').value);
+            var kembalian = parseFloat(document.getElementById('inputKembalian').value);
+
+            // Menggunakan AJAX untuk mengirim nilai ke server PHP
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "proses.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Response dari server (jika diperlukan)
+                    console.log(xhr.responseText);
+                }
+            };
+
+            // Menyiapkan data untuk dikirim ke server
+            var data = "ids=" + encodeURIComponent(ids.join(',')) + "&total=" + totalKeseluruhan + "&pembayaran=" + pembayaran + "&kembalian=" + kembalian;
+
+            // Kirim data ke server
+            xhr.send(data);
+        }
+
+        function pilihBarang(id, nama, harga, subtotal, kasir) {
+
+            // Menyimpan ID barang yang dipilih ke variabel global
+            selectedBarangID = id;
+
+            // Menggunakan AJAX untuk mengirim nilai ID ke server PHP
+            kirimDataKePHP([id]);
+
+            // Di sini Anda dapat menangani logika penambahan barang ke dalam keranjang
+
+            // Misalnya, kita akan menambahkan baris baru ke dalam tabel "example1"
+            var table = document.getElementById("example1").getElementsByTagName('tbody')[0];
+            var newRow = table.insertRow(table.rows.length);
+
+            // Di sini Anda dapat menambahkan data ke dalam sel-sel baris baru
+            var cell1 = newRow.insertCell(0);
+            var cell2 = newRow.insertCell(1);
+            var cell3 = newRow.insertCell(2);
+            var cell4 = newRow.insertCell(3);
+            var cell5 = newRow.insertCell(4);
+            var cell6 = newRow.insertCell(5);
+            var cell7 = newRow.insertCell(6);
+
+            // Contoh penambahan data ke dalam sel-sel
+            cell1.innerHTML = '<input type="hidden" name="ids[id][]" value="'+id+'"><label name="id">'+id+'</label>';  // Nomor urut
+            cell2.innerHTML = nama;  // Nama Barang
+            cell3.innerHTML = harga;  // Anda perlu menggantinya dengan harga barang yang sesuai
+            cell4.innerHTML = "<input type='number' min='1' value='1' class='form-control jumlah-barang' name='jumlahBarang[]' onchange='hitungSubtotal(this); updateTotalKeseluruhan();'>";  // Input jumlah
+            cell5.innerHTML = subtotal;  // Anda perlu menggantinya dengan logika perhitungan subtotal yang sesuai
+            cell6.innerHTML = kasir;  // Nama kasir atau informasi lainnya
+            cell7.innerHTML = "<button class='btn btn-danger btn-sm' onclick='hapusBaris(this); updateTotalKeseluruhan();'>Hapus</button>";  // Tombol hapus
+
+            updateTotalKeseluruhan();
+        }
+        function hapusBaris(button) {
+            // Mendapatkan baris tempat tombol "Hapus" ditekan
+            var row = button.parentNode.parentNode;
+
+            // Menghapus baris dari tabel
+            row.parentNode.removeChild(row);
+
+            // Di sini Anda dapat menambahkan logika tambahan, seperti memperbarui subtotal atau total keseluruhan
+            // ...
+
+            // Contoh: Menampilkan pesan setelah menghapus barang
+            alert("Barang dihapus dari keranjang");
+        }
+        function hapusSemuaBarang() {
+
+            // Dapatkan referensi ke tabel
+            var table = document.getElementById("example1").getElementsByTagName('tbody')[0];
+
+            // Menyimpan pilihan konfirmasi
+            var konfirmasi = confirm("Hapus semua barang dari keranjang?");
+
+            // Jika iya maka data akan dihapus, jika tidak maka akan dilewati
+            if (konfirmasi) {
+
+                // Hapus semua baris dari tabel
+                while (table.rows.length > 0) {
+                    table.deleteRow(0);
+                }
+            }
+        }
+        function hitungTotalKeseluruhan() {
+            var table = document.getElementById("example1").getElementsByTagName('tbody')[0];
+            var total = 0;
+
+            // Iterasi melalui setiap baris dan tambahkan subtotal ke total keseluruhan
+            for (var i = 0; i < table.rows.length; i++) {
+                var subtotal = parseFloat(table.rows[i].cells[4].innerHTML);
+                total += subtotal;
+            }
+
+            return total;
+        }
+
+        function updateTotalKeseluruhan() {
+            // Hitung total keseluruhan
+            var totalKeseluruhan = hitungTotalKeseluruhan();
+
+            // Tampilkan total keseluruhan pada span
+            var totalText = document.getElementById("total-keseluruhan-text");
+            totalText.textContent = "Rp" + totalKeseluruhan.toLocaleString();
+
+            // Update value of hidden input
+            var totalInput = document.getElementById("total-keseluruhan-input");
+            totalInput.value = totalKeseluruhan;
+        }
+
+        function hitungTotalKeseluruhan() {
+    var table = document.getElementById("example1").getElementsByTagName('tbody')[0];
+    var total = 0;
+
+    // Iterasi melalui setiap baris dan tambahkan subtotal ke total keseluruhan
+    for (var i = 0; i < table.rows.length; i++) {
+        var subtotal = parseFloat(table.rows[i].cells[4].innerHTML);
+        total += subtotal;
+    }
+
+    return total;
+}
+
+function updateTotalKeseluruhan() {
+    // Hitung total keseluruhan
+    var totalKeseluruhan = hitungTotalKeseluruhan();
+
+    // Tampilkan total keseluruhan pada span
+    var totalText = document.getElementById("total-keseluruhan-text");
+    totalText.textContent = "Rp" + totalKeseluruhan.toLocaleString();
+
+    // Update value of hidden input
+    var totalInput = document.getElementById("total-keseluruhan-input");
+    totalInput.value = totalKeseluruhan;
+}
+
+function hitungSubtotal(input) {
+    // Dapatkan baris tempat input jumlah berada
+    var row = input.parentNode.parentNode;
+
+    // Dapatkan harga dan jumlah barang dari sel-sel terkait
+    var harga = parseFloat(row.cells[2].innerHTML);
+    var jumlah = parseFloat(input.value);
+
+    // Hitung subtotal
+    var subtotal = harga * jumlah;
+
+    // Tampilkan subtotal pada sel subtotal
+    row.cells[4].innerHTML = subtotal;
+
+    // Update total keseluruhan setelah menghitung subtotal
+    updateTotalKeseluruhan();
+}
+
+// Mendengarkan perubahan pada input pembayaran
+document.getElementById('inputPembayaran').addEventListener('input', function() {
+    hitungKembalian();
+});
+
+updateTotalKeseluruhan();
+
+function hitungKembalian() {
+    // Mendapatkan nilai total keseluruhan
+    var totalKeseluruhan = parseFloat(document.getElementById('total-keseluruhan-text').innerText.replace('Rp', '').replace(',', ''));
+
+    // Mendapatkan nilai pembayaran
+    var pembayaran = parseFloat(document.getElementById('inputPembayaran').value);
+
+    // Hitung kembalian
+    var kembalian = pembayaran - totalKeseluruhan;
+
+    // Tampilkan kembalian pada elemen dengan ID 'kembalianText'
+    document.getElementById('kembalianText').innerText = "Rp" + kembalian.toLocaleString();
+
+    // Set nilai input kembalian (yang tersembunyi)
+    document.getElementById('inputKembalian').value = kembalian;
+
+    // Update total keseluruhan setelah menghitung kembalian
+    updateTotalKeseluruhan();
+}
+
+        function kirimData() {
+            // Mengambil nilai dari semua input di dalam form
+            var ids = [];
+            var jumlahBarang = [];
+
+            $("#myForm input[name='ids[id][]']").each(function() {
+                ids.push($(this).val());
+            });
+
+            // Mengambil nilai dari semua input jumlah-barang di dalam form
+            $("#myForm input[name='jumlahBarang']").each(function() {
+                jumlahBarang.push($(this).val());
+            });
+
+            // Kirim data ke server menggunakan jQuery
+            $.ajax({
+                type: "POST",
+                url: "proses.php",
+                data: {
+                    ids: ids,
+                    jumlahBarang: jumlahBarang
+                },
+                success: function (response) {
+                    // Tampilkan respons dari server jika diperlukan
+                    console.log(response);
+                }
+            });
+        }
+    </script>
+    <!--End Buat Cari Script-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
@@ -677,61 +502,3 @@
     <script src="js/datatables-simple-demo.js"></script>
 </body>
 </html>
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Selamat Datang <?php echo $email; ?></h1>
-    <h1>Selamat Datang <?php echo $sesName; ?></h1>
-    <table border="1">
-        <tr style="text-align: center;">
-            <td>No</td>
-            <td>Email</td>
-            <td>Nama</td>
-            <td>Edit</td>
-        </tr>
-        <?php
-
-            $query = "SELECT * FROM user";
-            $result = mysqli_query($koneksi, $query);
-            $no = 1;
-
-            if ($sesLvl == 1) {
-
-                $dis = "";
-            } else {
-
-                $dis = "disabled";
-            }
-            
-            while ($row = mysqli_fetch_array($result)) {
-                    
-                $userMail = $row['username'];
-                $userName = $row['Nama'];
-
-        ?>
-
-        <tr>
-            <td><?php echo $no; ?></td>
-            <td><?php echo $userMail; ?></td>
-            <td><?php echo $userName; ?></td>
-            <td><a href="edit.php?id=<?php echo $row['User_ID'];?>"
-                style="text-decoration: none; color:black;">
-                <input type="button" value="edit" <?php echo $dis; ?>></a>
-                <a href="hapus.php?id=<?php echo $row['User_ID'];?>"
-                style="text-decoration: none; color:black;">
-                <input type="button" value="hapus" <?php echo $dis; ?>></a>
-            </td>
-        </tr>
-        <?php
-        $no++;
-            }
-        ?>
-    </table>
-    <br>
-    <p><a href="logout.php">Log out</a></p>
-</body>
-</html> -->

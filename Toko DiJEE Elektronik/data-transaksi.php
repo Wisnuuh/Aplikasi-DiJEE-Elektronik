@@ -129,7 +129,7 @@
                                 <tbody>
                                 <?php
 
-                                    $query = "SELECT penjualan.Tgl_Penjualan, penjualan.totalPembayaran, user.Nama
+                                    $query = "SELECT penjualan.Tgl_Penjualan, penjualan.pembayaran, user.Nama
                                     FROM penjualan
                                     INNER JOIN user ON penjualan.User_ID = user.User_ID ORDER BY penjualan.Tgl_Penjualan DESC;";
                                     $result = mysqli_query($koneksi, $query);
@@ -140,7 +140,7 @@
                                     echo "<tr>";
                                     echo     "<td>" . $no . "</td>";
                                     echo     "<td>" . $row['Tgl_Penjualan'] . "</td>";
-                                    echo     "<td>" . $row['totalPembayaran'] . "</td>";
+                                    echo     "<td>" . $row['pembayaran'] . "</td>";
                                     echo     "<td>" . $row['Nama'] . "</td>";
                                     echo "</tr>";
                                         $no++; }
