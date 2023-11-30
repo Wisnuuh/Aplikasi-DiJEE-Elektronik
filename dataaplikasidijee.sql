@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2023 at 02:49 AM
+-- Generation Time: Nov 30, 2023 at 04:08 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `barang` (
-  `Barang_ID` varchar(50) NOT NULL,
+  `Barang_ID` int(11) NOT NULL,
   `Nama` varchar(255) DEFAULT NULL,
   `Jumlah` int(255) DEFAULT NULL,
   `Garansi` varchar(255) DEFAULT NULL,
@@ -43,35 +43,36 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`Barang_ID`, `Nama`, `Jumlah`, `Garansi`, `HargaBeli`, `HargaJual`, `Kategori_ID`, `ID_Supplier`) VALUES
-('1', 'Lampu Led Maxxis 20W', -2, '', 15000, 17500, 1, 1),
-('10', 'Aqua Galon Kosong', -4, '', 30000, 35000, 3, 3),
-('11', 'Aqua Gelas 240ml', 1, '', 21700, 25000, 3, 3),
-('12', 'Arde Besar', 5, '', 27500, 32000, 4, 4),
-('13', 'Arde Kecil', -9, '', 9000, 15000, 4, 4),
-('14', 'Arde Tanggung', 15, '', 13500, 17500, 4, 4),
-('15', 'Arpus Soder', 0, '', 2500, 4000, 5, 6),
-('16', 'Arpus Soder Kuning', 0, '', 3000, 5000, 5, 6),
-('17', 'Avr Genset Specktek', 0, '', 38000, 100000, 6, 7),
-('18', 'Avr Genset Yamamoto', 0, '', 45000, 125000, 6, 7),
-('19', 'Box Adaptor 1A', 0, '', 3750, 6000, 7, 8),
-('2', 'Lampu Philips Led 10W', 6, '1 hari', 45000, 50000, 1, 2),
-('20', 'Box Adaptor 3A', 0, '', 6500, 10000, 7, 8),
-('21', 'Box Adaptor 5A', 0, '', 7000, 12500, 7, 8),
-('22', 'Box Ampli AG 02', 0, '', 46000, 60000, 8, 8),
-('23', 'Box Ampli AG 03', 0, '', 47000, 60000, 8, 8),
-('24', 'Box Ampli AG 04', 0, '', 46000, 60000, 8, 8),
-('25', 'Box Ampli Besar', 0, '', 57500, 75000, 8, 8),
-('26', 'Box Ampli Humer 200', 0, '', 70000, 85000, 8, 8),
-('27', 'Box Ampli SJ1000', 0, '', 170000, 200000, 8, 8),
-('28', 'Box Ampli SJ500', 0, '', 64000, 80000, 8, 8),
-('3', 'Aper Lebar Lubang Besar', 88, '2 bulan', 2000, 5000, 2, 5),
-('4', 'Aper Lubang Besar', 90, '', 3000, 5000, 2, 5),
-('5', 'Aper Lubang Kecil/Besar', 80, '', 3000, 5000, 2, 5),
-('6', 'Aper Maspion Hitam', 90, '', 2750, 5000, 2, 5),
-('7', 'Aqua 1500ml', 38, '', 4000, 5000, 3, 3),
-('8', 'Aqua 600ml', 44, '', 2000, 3000, 3, 3),
-('8991102387262', 'tango', 5, '1 tahun', 5000, 10000, 1, 1),
-('9', 'Aqua Air Galon', 10, '', 18200, 20000, 3, 3);
+(1, 'Lampu Led Maxxis 20W', -7, '', 15000, 17500, 1, 1),
+(2, 'Lampu Philips Led 10W', -13, '1 hari', 45000, 50000, 1, 2),
+(3, 'Aper Lebar Lubang Besar', 85, '2 bulan', 2000, 5000, 2, 5),
+(4, 'Aper Lubang Besar', 84, '', 3000, 5000, 2, 5),
+(5, 'Aper Lubang Kecil/Besar', 80, '', 3000, 5000, 2, 5),
+(6, 'Aper Maspion Hitam', 90, '', 2750, 5000, 2, 5),
+(7, 'Aqua 1500ml', 36, '', 4000, 5000, 3, 3),
+(8, 'Aqua 600ml', 44, '', 2000, 3000, 3, 3),
+(9, 'Aqua Air Galon', 8, '', 18200, 20000, 3, 3),
+(10, 'Aqua Galon Kosong', -4, '', 30000, 35000, 3, 3),
+(11, 'Aqua Gelas 240ml', -2, '', 21700, 25000, 3, 3),
+(12, 'Arde Besar', 4, '', 27500, 32000, 4, 4),
+(13, 'Arde Kecil', -18, '', 9000, 15000, 4, 4),
+(14, 'Arde Tanggung', 9, '', 13500, 17500, 4, 4),
+(15, 'Arpus Soder', -1, '', 2500, 4000, 5, 6),
+(16, 'Arpus Soder Kuning', -2, '', 3000, 5000, 5, 6),
+(17, 'Avr Genset Specktek', 0, '', 38000, 100000, 6, 7),
+(18, 'Avr Genset Yamamoto', -1, '', 45000, 125000, 6, 7),
+(19, 'Box Adaptor 1A', 0, '', 3750, 6000, 7, 8),
+(20, 'Box Adaptor 3A', -2, '', 6500, 10000, 7, 8),
+(21, 'Box Adaptor 5A', 0, '', 7000, 12500, 7, 8),
+(22, 'Box Ampli AG 02', 0, '', 46000, 60000, 8, 8),
+(23, 'Box Ampli AG 03', 0, '', 47000, 60000, 8, 8),
+(24, 'Box Ampli AG 04', 0, '', 46000, 60000, 8, 8),
+(25, 'Box Ampli Besar', -6, '', 57500, 75000, 8, 8),
+(26, 'Box Ampli Humer 200', 0, '', 70000, 85000, 8, 8),
+(27, 'Box Ampli SJ1000', 0, '', 170000, 200000, 8, 8),
+(28, 'Box Ampli SJ500', 0, '', 64000, 80000, 8, 8),
+(29, 'tango', 5, '1 tahun', 5000, 10000, 1, 1),
+(30, 'Barang contoh', 10, '', 15000, 17000, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -81,7 +82,7 @@ INSERT INTO `barang` (`Barang_ID`, `Nama`, `Jumlah`, `Garansi`, `HargaBeli`, `Ha
 
 CREATE TABLE `detailpembelian` (
   `ID_DetailPembelian` int(11) NOT NULL,
-  `Barang_ID` varchar(50) NOT NULL,
+  `Barang_ID` int(11) NOT NULL,
   `Pembelian_ID` int(11) NOT NULL,
   `Jumlah` int(16) DEFAULT NULL,
   `subTotal` int(11) DEFAULT NULL
@@ -92,24 +93,25 @@ CREATE TABLE `detailpembelian` (
 --
 
 INSERT INTO `detailpembelian` (`ID_DetailPembelian`, `Barang_ID`, `Pembelian_ID`, `Jumlah`, `subTotal`) VALUES
-(1, '1', 1, 10, 150000),
-(2, '2', 1, 5, 225000),
-(3, '7', 2, 50, 200000),
-(4, '8', 2, 50, 100000),
-(5, '9', 2, 10, 182000),
-(6, '3', 3, 100, 200000),
-(7, '4', 3, 100, 300000),
-(8, '5', 3, 100, 300000),
-(9, '6', 3, 100, 275000),
-(10, '12', 4, 20, 550000),
-(11, '13', 4, 20, 180000),
-(12, '14', 4, 20, 270000),
-(13, '1', 5, 1, 15000),
-(14, '8', 5, 2, 4000),
-(15, '1', 6, 12, 180000),
-(16, '11', 7, 5, 108500),
-(17, '1', 8, 2, 30000),
-(18, '2', 9, 2, 90000);
+(1, 1, 1, 10, 150000),
+(2, 2, 1, 5, 225000),
+(3, 7, 2, 50, 200000),
+(4, 8, 2, 50, 100000),
+(5, 9, 2, 10, 182000),
+(6, 3, 3, 100, 200000),
+(7, 4, 3, 100, 300000),
+(8, 5, 3, 100, 300000),
+(9, 6, 3, 100, 275000),
+(10, 12, 4, 20, 550000),
+(11, 13, 4, 20, 180000),
+(12, 14, 4, 20, 270000),
+(13, 1, 5, 1, 15000),
+(14, 8, 5, 2, 4000),
+(15, 1, 6, 12, 180000),
+(16, 11, 7, 5, 108500),
+(17, 1, 8, 2, 30000),
+(18, 2, 9, 2, 90000),
+(19, 30, 10, 5, 75000);
 
 --
 -- Triggers `detailpembelian`
@@ -132,7 +134,7 @@ DELIMITER ;
 CREATE TABLE `detailpenjualan` (
   `ID_detailPenjualan` int(11) NOT NULL,
   `ID_Penjualan` int(11) NOT NULL,
-  `Barang_ID` varchar(50) NOT NULL,
+  `Barang_ID` int(11) NOT NULL,
   `Jumlah` int(11) NOT NULL,
   `subTotal` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -142,56 +144,85 @@ CREATE TABLE `detailpenjualan` (
 --
 
 INSERT INTO `detailpenjualan` (`ID_detailPenjualan`, `ID_Penjualan`, `Barang_ID`, `Jumlah`, `subTotal`) VALUES
-(3, 2, '9', 2, 40000),
-(4, 2, '4', 2, 10000),
-(5, 2, '2', 1, 50000),
-(6, 3, '12', 2, 64000),
-(7, 3, '14', 1, 17500),
-(11, 4, '1', 2, 35000),
-(12, 5, '9', 2, 40000),
-(13, 5, '2', 1, 50000),
-(14, 6, '1', 2, 35000),
-(15, 7, '3', 2, 10000),
-(16, 8, '3', 2, 10000),
-(17, 9, '7', 2, 10000),
-(18, 9, '8', 2, 6000),
-(19, 10, '12', 2, 64000),
-(20, 10, '13', 5, 75000),
-(21, 10, '11', 2, 50000),
-(22, 11, '4', 2, 10000),
-(23, 11, '5', 2, 10000),
-(24, 11, '6', 2, 10000),
-(25, 12, '4', 3, 15000),
-(26, 12, '4', 2, 10000),
-(27, 13, '4', 2, 10000),
-(28, 13, '6', 2, 10000),
-(29, 14, '1', 2, 35000),
-(30, 14, '5', 2, 10000),
-(31, 14, '2', 1, 50000),
-(32, 14, '7', 10, 50000),
-(33, 15, '5', 4, 20000),
-(34, 15, '6', 5, 25000),
-(35, 15, '1', 3, 52500),
-(36, 15, '5', 5, 25000),
-(37, 15, '14', 2, 35000),
-(38, 16, '3', 4, 20000),
-(39, 16, '5', 3, 15000),
-(40, 17, '1', 2, 35000),
-(41, 17, '8', 4, 12000),
-(42, 18, '6', 1, 5000),
-(43, 18, '4', 1, 5000),
-(44, 19, '3', 2, 10000),
-(45, 20, '3', 1, 5000),
-(46, 20, '5', 2, 10000),
-(47, 21, '5', 2, 10000),
-(48, 21, '3', 1, 5000),
-(49, 22, '3', 1, 5000),
-(63, 31, '1', 1, 0),
-(64, 31, '10', 1, 0),
-(65, 31, '11', 1, 0),
-(66, 31, '12', 1, 0),
-(67, 31, '13', 1, 0),
-(68, 31, '14', 1, 0);
+(3, 2, 9, 2, 40000),
+(4, 2, 4, 2, 10000),
+(5, 2, 2, 1, 50000),
+(6, 3, 12, 2, 64000),
+(7, 3, 14, 1, 17500),
+(11, 4, 1, 2, 35000),
+(12, 5, 9, 2, 40000),
+(13, 5, 2, 1, 50000),
+(14, 6, 1, 2, 35000),
+(15, 7, 3, 2, 10000),
+(16, 8, 3, 2, 10000),
+(17, 9, 7, 2, 10000),
+(18, 9, 8, 2, 6000),
+(19, 10, 12, 2, 64000),
+(20, 10, 13, 5, 75000),
+(21, 10, 11, 2, 50000),
+(22, 11, 4, 2, 10000),
+(23, 11, 5, 2, 10000),
+(24, 11, 6, 2, 10000),
+(25, 12, 4, 3, 15000),
+(26, 12, 4, 2, 10000),
+(27, 13, 4, 2, 10000),
+(28, 13, 6, 2, 10000),
+(29, 14, 1, 2, 35000),
+(30, 14, 5, 2, 10000),
+(31, 14, 2, 1, 50000),
+(32, 14, 7, 10, 50000),
+(33, 15, 5, 4, 20000),
+(34, 15, 6, 5, 25000),
+(35, 15, 1, 3, 52500),
+(36, 15, 5, 5, 25000),
+(37, 15, 14, 2, 35000),
+(38, 16, 3, 4, 20000),
+(39, 16, 5, 3, 15000),
+(40, 17, 1, 2, 35000),
+(41, 17, 8, 4, 12000),
+(42, 18, 6, 1, 5000),
+(43, 18, 4, 1, 5000),
+(44, 19, 3, 2, 10000),
+(45, 20, 3, 1, 5000),
+(46, 20, 5, 2, 10000),
+(47, 21, 5, 2, 10000),
+(48, 21, 3, 1, 5000),
+(49, 22, 3, 1, 5000),
+(63, 31, 1, 1, 0),
+(64, 31, 10, 1, 0),
+(65, 31, 11, 1, 0),
+(66, 31, 12, 1, 0),
+(67, 31, 13, 1, 0),
+(68, 31, 14, 1, 0),
+(81, 50, 13, 1, 15000),
+(82, 50, 2, 4, 200000),
+(83, 53, 13, 1, 15000),
+(84, 53, 2, 4, 200000),
+(85, 60, 1, 3, 52500),
+(86, 60, 2, 1, 50000),
+(87, 60, 3, 1, 5000),
+(92, 73, 25, 2, 150000),
+(93, 73, 2, 3, 150000),
+(94, 73, 4, 1, 5000),
+(95, 74, 25, 2, 150000),
+(96, 74, 2, 3, 150000),
+(97, 74, 4, 1, 5000),
+(98, 75, 25, 2, 150000),
+(99, 75, 2, 3, 150000),
+(100, 75, 4, 1, 5000),
+(101, 93, 20, 2, 20000),
+(102, 93, 3, 1, 5000),
+(103, 94, 4, 1, 5000),
+(104, 94, 14, 2, 35000),
+(105, 94, 11, 3, 75000),
+(106, 95, 3, 1, 5000),
+(107, 95, 13, 1, 15000),
+(108, 96, 4, 2, 10000),
+(109, 97, 18, 1, 125000),
+(110, 97, 14, 2, 35000),
+(111, 97, 13, 2, 30000),
+(112, 98, 2, 1, 50000),
+(113, 98, 1, 2, 35000);
 
 --
 -- Triggers `detailpenjualan`
@@ -213,7 +244,7 @@ DELIMITER ;
 
 CREATE TABLE `incomingclaim` (
   `Klaim_ID` int(11) NOT NULL,
-  `Barang_ID` varchar(50) NOT NULL,
+  `Barang_ID` int(11) NOT NULL,
   `nama_Barang` varchar(100) NOT NULL,
   `Jumlah` int(11) NOT NULL,
   `Tgl_Pengembalian` date NOT NULL,
@@ -226,7 +257,7 @@ CREATE TABLE `incomingclaim` (
 --
 
 INSERT INTO `incomingclaim` (`Klaim_ID`, `Barang_ID`, `nama_Barang`, `Jumlah`, `Tgl_Pengembalian`, `akhir_Garansi`, `Keterangan`) VALUES
-(1, '3', 'Aper Lebar Lubang Besar', 1, '2023-05-23', '2023-07-23', 'barang rusak dan kabel putus');
+(1, 3, 'Aper Lebar Lubang Besar', 1, '2023-05-23', '2023-07-23', 'barang rusak dan kabel putus');
 
 -- --------------------------------------------------------
 
@@ -341,7 +372,8 @@ INSERT INTO `pembelian` (`Pembelian_ID`, `Tanggal_Pembelian`, `Total_Pembayaran`
 (6, '2023-05-21', 180000),
 (7, '2023-05-21', 108500),
 (8, '2023-05-21', 30000),
-(9, '2022-05-10', 100000);
+(9, '2022-05-10', 100000),
+(10, '2023-11-29', 0);
 
 -- --------------------------------------------------------
 
@@ -385,7 +417,61 @@ INSERT INTO `penjualan` (`ID_Penjualan`, `Tgl_Penjualan`, `total`, `pembayaran`,
 (20, '2023-05-31', NULL, 15000, 5000, 20, 2),
 (21, '2023-05-31', NULL, 15000, 0, 21, 4),
 (22, '2023-05-31', NULL, 5000, 0, 22, 4),
-(31, '2023-11-14', NULL, 0, 0, NULL, 2);
+(31, '2023-11-14', NULL, 0, 0, NULL, 2),
+(42, '2023-11-25', 312500, 320000, 7500, 0, 4),
+(43, '2023-11-25', 85000, 100000, 15000, 0, 4),
+(44, '2023-11-25', 95000, 100000, 5000, 0, 4),
+(45, '2023-11-25', 95000, 100000, 5000, 0, 4),
+(46, '2023-11-25', 85000, 100000, 15000, 0, 4),
+(47, '2023-11-25', 85000, 90000, 5000, 0, 4),
+(48, '2023-11-25', 130000, 150000, 20000, 0, 4),
+(49, '2023-11-25', 137500, 150000, 12500, 0, 4),
+(50, '2023-11-25', 272500, 300000, 27500, 0, 4),
+(51, '2023-11-25', 52500, 70000, 17500, 0, 4),
+(52, '2023-11-25', 89000, 100000, 11000, 0, 4),
+(53, '0000-00-00', 0, 0, 0, 0, 4),
+(54, '2023-11-25', 82000, 100000, 18000, 0, 4),
+(55, '0000-00-00', 0, 0, 0, 0, 4),
+(59, '0000-00-00', 0, 0, 0, 0, 2),
+(60, '0000-00-00', 0, 0, 0, 0, 2),
+(61, '0000-00-00', 0, 0, 0, 0, 4),
+(62, '0000-00-00', 0, 0, 0, 0, 4),
+(63, '2023-11-25', 0, 0, 5000, 0, 4),
+(64, '2023-11-25', 55000, 60000, 5000, 0, 4),
+(65, '2023-11-25', 75000, 75000, 0, 0, 4),
+(66, '2023-11-25', 77500, 100000, 22500, 0, 4),
+(67, '2023-11-25', 135000, 150000, 15000, 0, 4),
+(68, '2023-11-25', 80000, 100000, 20000, 0, 4),
+(69, '2023-11-27', 0, 0, 0, 0, 2),
+(70, '2023-11-27', 0, 0, 0, 0, 2),
+(71, '2023-11-27', 0, 0, 0, 0, 2),
+(72, '2023-11-27', 0, 0, 0, 0, 2),
+(73, '2023-11-27', 0, 0, 0, 0, 2),
+(74, '2023-11-27', 0, 0, 0, 0, 2),
+(75, '2023-11-27', 0, 0, 0, 0, 2),
+(76, '2023-11-27', 70000, 100000, 30000, 0, 4),
+(77, '2023-11-27', 150000, 160000, 10000, 0, 4),
+(78, '2023-11-27', 17500, 20000, 2500, 0, 4),
+(79, '2023-11-28', 215000, 220000, 5000, 0, 1),
+(80, '2023-11-28', 67500, 100000, 32500, 0, 1),
+(81, '2023-11-28', 90000, 100000, 10000, 0, 1),
+(82, '2023-11-28', 17500, 20000, 2500, 0, 1),
+(83, '2023-11-28', 85000, 100000, 15000, 0, 1),
+(84, '2023-11-28', 85000, 100000, 15000, 0, 1),
+(85, '2023-11-28', 85000, 100000, 15000, 0, 1),
+(86, '2023-11-28', 0, 0, 5000, 0, 4),
+(87, '2023-11-28', 0, 0, 10000, 0, 4),
+(88, '2023-11-28', 89000, 100000, 11000, 0, 4),
+(89, '2023-11-28', 60000, 70000, 10000, 0, 4),
+(90, '2023-11-28', 60000, 70000, 10000, 0, 4),
+(91, '2023-11-28', 20000, 50000, 30000, 0, 4),
+(92, '2023-11-28', 20000, 50000, 30000, 0, 4),
+(93, '2023-11-28', 25000, 50000, 25000, 0, 4),
+(94, '2023-11-28', 115000, 120000, 5000, 0, 4),
+(95, '2023-11-29', 20000, 20000, 0, 0, 1),
+(96, '2023-11-29', 10000, 10000, 0, 0, 4),
+(97, '2023-11-29', 190000, 200000, 10000, 0, 4),
+(98, '2023-11-29', 85000, 100000, 15000, 0, 4);
 
 -- --------------------------------------------------------
 
@@ -525,16 +611,22 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `barang`
+--
+ALTER TABLE `barang`
+  MODIFY `Barang_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
 -- AUTO_INCREMENT for table `detailpembelian`
 --
 ALTER TABLE `detailpembelian`
-  MODIFY `ID_DetailPembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `ID_DetailPembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `detailpenjualan`
 --
 ALTER TABLE `detailpenjualan`
-  MODIFY `ID_detailPenjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `ID_detailPenjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `jenis_user`
@@ -549,10 +641,16 @@ ALTER TABLE `pelanggan`
   MODIFY `Pelanggan_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3555;
 
 --
+-- AUTO_INCREMENT for table `pembelian`
+--
+ALTER TABLE `pembelian`
+  MODIFY `Pembelian_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `ID_Penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `ID_Penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -575,21 +673,21 @@ ALTER TABLE `barang`
 -- Constraints for table `detailpembelian`
 --
 ALTER TABLE `detailpembelian`
-  ADD CONSTRAINT `detailpembelian_ibfk_2` FOREIGN KEY (`Pembelian_ID`) REFERENCES `pembelian` (`Pembelian_ID`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `detailpembelian_ibfk_3` FOREIGN KEY (`Barang_ID`) REFERENCES `barang` (`Barang_ID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `detailPembelianBarang` FOREIGN KEY (`Barang_ID`) REFERENCES `barang` (`Barang_ID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `detailPembelianPembelian` FOREIGN KEY (`Pembelian_ID`) REFERENCES `pembelian` (`Pembelian_ID`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `detailpenjualan`
 --
 ALTER TABLE `detailpenjualan`
-  ADD CONSTRAINT `detailpenjualan_ibfk_3` FOREIGN KEY (`Barang_ID`) REFERENCES `barang` (`Barang_ID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `detailPenjualanBarang` FOREIGN KEY (`Barang_ID`) REFERENCES `barang` (`Barang_ID`) ON UPDATE CASCADE,
   ADD CONSTRAINT `penjualanDetailPenjualan` FOREIGN KEY (`ID_Penjualan`) REFERENCES `penjualan` (`ID_Penjualan`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `incomingclaim`
 --
 ALTER TABLE `incomingclaim`
-  ADD CONSTRAINT `incomingclaim_ibfk_1` FOREIGN KEY (`Barang_ID`) REFERENCES `barang` (`Barang_ID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `claimBarang` FOREIGN KEY (`Barang_ID`) REFERENCES `barang` (`Barang_ID`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `penjualan`
