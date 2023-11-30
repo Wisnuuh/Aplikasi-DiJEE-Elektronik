@@ -16,9 +16,6 @@ $sesLvl = $_SESSION['level'];
 
 
 $kategories = tampil_kategori("SELECT * FROM kategori");
-$suppliers = tampil_kategori("SELECT * FROM supplier");
-$barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Supplier ,barang.Nama as 'barang', Jumlah, Garansi, HargaBeli, HargaJual, kategori.Nama as 'kategori', supplier.Nama_Supplier as 'supplier'
- FROM barang JOIN supplier ON supplier.ID_Supplier = barang.ID_Supplier JOIN kategori ON kategori.Kategori_ID = barang.Kategori_ID");
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +27,7 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Data Barang | DiJEE Elektronik</title>
+    <title>Kategori Barang | DiJEE Elektronik</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/styles2.css" rel="stylesheet" />
@@ -114,21 +111,21 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Data Stok Barang</h1>
+                    <h1 class="mt-4">Data Kategori Barang</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active"><a href="home.php">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Data Stok Barang</li>
+                        <li class="breadcrumb-item active">Data Kategori Barang</li>
                     </ol>
                 </div>
                 <div class="container">
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fa-solid fa-money-bill-transfer"></i>
-                            Data Stok Barang
+                            Data Kategori Barang
                         </div>
                         <div class="card-body">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                                tambah barang
+                                tambah Kategori barang
                             </button>
                             <div class="table-responsive">
                                 <table id="datatablesSimple">
@@ -137,47 +134,28 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
                                             <th>No</th>
                                             <th>ID</th>
                                             <th>Kategori</th>
-                                            <th>Supplier</th>
-                                            <th>Nama Barang</th>
-                                            <th>Stok</th>
-                                            <th>Garansi</th>
-                                            <th>Harga Beli</th>
-                                            <th>Harga Jual</th>
+                                            <th>Deskripsi</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        $query = "SELECT Barang_ID, barang.Nama as 'barang', Jumlah, Garansi, HargaBeli, HargaJual, kategori.Nama as 'kategori', supplier.Nama_Supplier as 'supplier' FROM barang JOIN supplier ON supplier.ID_Supplier = barang.ID_Supplier JOIN kategori ON kategori.Kategori_ID = barang.Kategori_ID";
-                                        $result = mysqli_query($koneksi, $query);
-                                        $no = 1;
-
-                                        while ($row = mysqli_fetch_array($result)) {
-                                            echo "<tr>";
-                                            echo     "<td>" . $no . "</td>";
-                                            echo     "<td>" . $row['Barang_ID'] . "</td>";
-                                            echo     "<td>" . $row['kategori'] . "</td>";
-                                            echo     "<td>" . $row['supplier'] . "</td>";
-                                            echo     "<td>" . $row['barang'] . "</td>";
-                                            echo     "<td>" . $row['Jumlah'] . "</td>";
-                                            echo     "<td>" . $row['Garansi'] . "</td>";
-                                            echo     "<td>" . $row['HargaBeli'] . "</td>";
-                                            echo     "<td>" . $row['HargaJual'] . "</td>";
-                                            echo     "<td>";
-                                            echo         '<ul class="list-inline">';
-                                            echo             '<li class="list-inline-item">';
-                                            echo            '<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit' . $row['Barang_ID'] . '">edit</button>';
-
-                                            echo             '</li>';
-                                            echo             '<li class="list-inline-item">';
-                                            echo                 '<button class="btn btn-md btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#hapus' . $row['Barang_ID'] . '">hapus</button>';
-                                            echo             '</li>';
-                                            echo         '</ul>';
-                                            echo     "</td>";
-                                            echo "</tr>";
-                                            $no++;
-                                        }
-                                        ?>
+                                    <?php foreach ($kategories as $kategori) : ?>
+                                        <tr>
+                                            <td><?= $kategori["Kategori_ID"] ?></td>
+                                            <td><?= $kategori["Nama"] ?></td>
+                                            <td><?= $kategori["Deskripsi"] ?></td>
+                                            <td>
+                                                <ul class="list-inline">
+                                                    <li class="list-inline-item">
+                                                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?= $kategori['Kategori_ID'] ?>">edit</button>
+                                                    </li>
+                                                    <li class="list-inline-item">
+                                                        <button class="btn btn-md btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#hapus<?= $kategori['Kategori_ID'] ?>">hapus</button>
+                                                    </li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -211,42 +189,12 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
                 <form action="" method="post">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="nama" class="form-label">nama barang</label>
-                            <input type="name" name="nama" class="form-control" id="nama" required>
+                            <label for="kategori" class="form-label">kategori barang</label>
+                            <input type="name" name="kategori" class="form-control" id="kategori" required>
                         </div>
                         <div class="mb-3">
-                            <label for="jumlah" class="form-label">jumlah</label>
-                            <input type="number" name="jumlah" class="form-control" id="jumlah" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="garansi" class="form-label">garansi</label>
-                            <input type="text" name="garansi" class="form-control" id="garansi" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="harga_beli" class="form-label">harga beli</label>
-                            <input type="number" name="harga_beli" class="form-control" id="harga_beli" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="harga_jual" class="form-label">harga jual</label>
-                            <input type="number" name="harga_jual" class="form-control" id="harga_jual" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="kategori">Pilih kategori:</label>
-                            <select name="kategori" id="kategori" required>
-                                <option>Pilih kategori</option>
-                                <?php foreach ($kategories as $kategori) : ?>
-                                    <option value="<?= $kategori["Kategori_ID"] ?>"><?= $kategori["Nama"] ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="supplier">Pilih supplier:</label>
-                            <select name="supplier" id="supplier" required>
-                                <option>Pilih kategori</option>
-                                <?php foreach ($suppliers as $supplier) : ?>
-                                    <option value="<?= $supplier["ID_Supplier"] ?>"><?= $supplier["Nama_Supplier"] ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                            <label for="deskripsi" class="form-label">deskripsi</label>
+                            <input type="text" name="deskripsi" class="form-control" id="deskripsi" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -259,8 +207,8 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
     </div>
 
     <!-- modal update -->
-    <?php foreach ($barangs as $barang) : ?>
-        <div class="modal fade" id="edit<?= $barang['Barang_ID'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <?php foreach ($kategories as $kategori) : ?>
+        <div class="modal fade" id="edit<?= $kategori["Kategori_ID"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -269,55 +217,19 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
                     </div>
                     <form action="" method="post">
                         <div class="modal-body">
-                            <input type="hidden" name="ID" value="<?= $barang['Barang_ID'] ?>">
+                            <input type="hidden" name="ID" value="<?= $kategori["Kategori_ID"] ?>">
                             <div class="mb-3">
-                                <label for="nama" class="form-label">nama barang</label>
-                                <input type="name" name="nama" class="form-control" id="nama" value="<?= $barang['barang'] ?>" required>
+                                <label for="kategori" class="form-label">kategori barang</label>
+                                <input type="name" name="kategori" class="form-control" id="kategori" value="<?= $kategori["Nama"] ?>" required>
                             </div>
                             <div class="mb-3">
-                                <label for="jumlah" class="form-label">jumlah</label>
-                                <input type="number" name="jumlah" class="form-control" id="jumlah" value="<?= $barang['Jumlah'] ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="garansi" class="form-label">garansi</label>
-                                <input type="text" name="garansi" class="form-control" id="garansi" value="<?= $barang['Garansi']  ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="harga_beli" class="form-label">harga beli</label>
-                                <input type="number" name="harga_beli" class="form-control" id="harga_beli" value="<?= $barang['HargaBeli']  ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="harga_jual" class="form-label">harga jual</label>
-                                <input type="number" name="harga_jual" class="form-control" id="harga_jual" value="<?= $barang['HargaJual'] ?>" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="kategori" class="form-label">Pilih kategori:</label>
-                                <select name="kategori" id="kategori" class="form-control" required>
-                                    <?php foreach ($kategories as $kategori) : ?>
-                                        <?php if ($kategori["Kategori_ID"] === $barang['Kategori_ID']) : ?>
-                                            <option selected value="<?= $kategori["Kategori_ID"] ?>"><?= $barang['kategori'] ?></option>
-                                        <?php else : ?>
-                                            <option value="<?= $kategori["Kategori_ID"] ?>"><?= $kategori["Nama"] ?></option>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="supplier" class="form-label">Pilih supplier:</label>
-                                <select name="supplier" id="supplier" class="form-control" required>
-                                    <?php foreach ($suppliers as $supplier) : ?>
-                                        <?php if ($supplier["ID_Supplier"] === $barang['ID_Supplier']) : ?>
-                                            <option selected value="<?= $supplier["ID_Supplier"] ?>"><?= $barang['supplier'] ?></option>
-                                        <?php else : ?>
-                                            <option value="<?= $supplier["ID_Supplier"] ?>"><?= $supplier["Nama_Supplier"] ?></option>
-                                        <?php endif; ?>
-                                    <?php endforeach; ?>
-                                </select>
+                                <label for="deskripsi" class="form-label">deskripsi</label>
+                                <input type="text" name="deskripsi" class="form-control" id="deskripsi" value="<?= $kategori["Deskripsi"] ?>" required>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" name="edit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" name="edit_kategori" class="btn btn-primary">Save changes</button>
                         </div>
                     </form>
                 </div>
@@ -325,8 +237,8 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
         </div>
     <?php endforeach; ?>
 
-    <?php foreach ($barangs as $barang) : ?>
-        <div class="modal fade zoomIn" id="hapus<?= $barang['Barang_ID'] ?>" tabindex="-1" aria-hidden="true">
+    <?php foreach ($kategories as $kategori) : ?>
+        <div class="modal fade zoomIn" id="hapus<?= $kategori["Kategori_ID"] ?>" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -342,8 +254,8 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
                         <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                             <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Batal</button>
                             <form action="" method="POST" style="display: inline;">
-                                <input type="hidden" value="<?= $barang['Barang_ID'] ?>" name="id">
-                                <button type="submit" name="hapus_barang" class="btn w-sm btn-danger">Ya, Hapus!</button>
+                                <input type="hidden" value="<?= $kategori["Kategori_ID"] ?>" name="id">
+                                <button type="submit" name="hapus_kategori" class="btn w-sm btn-danger">Ya, Hapus!</button>
                             </form>
                         </div>
                     </div>
@@ -370,7 +282,7 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
 
 // tambah barang
 if (isset($_POST["submit"])) {
-    if (tambahBarang($_POST) > 0) {
+    if (tambahKategori($_POST) > 0) {
         echo "
             <script>
                 Swal.fire({
@@ -378,7 +290,7 @@ if (isset($_POST["submit"])) {
                     title: 'Berhasil',
                     text: 'Data berhasil ditambahkan'
                 }).then(function (){
-                    document.location.href = 'stok-barang.php';
+                    document.location.href = 'kategori-barang.php';
                 });
             </script>
         ";
@@ -390,7 +302,7 @@ if (isset($_POST["submit"])) {
                 title: 'Gagal',
                 text: 'Data gagal ditambahkan'
             }).then(function (){
-                document.location.href = 'stok-barang.php';
+                document.location.href = 'kategori-barang.php';
             });
             </script>
         ";
@@ -400,9 +312,9 @@ if (isset($_POST["submit"])) {
 
 
 // edit barang
-if (isset($_POST["edit"])) {
+if (isset($_POST["edit_kategori"])) {
     // var_dump($_POST);
-    if (edit_barang($_POST)) {
+    if (edit_kategori($_POST)) {
         echo "
             <script>
                 Swal.fire({
@@ -410,7 +322,7 @@ if (isset($_POST["edit"])) {
                     title: 'Berhasil',
                     text: 'Data berhasil diupdate'
                 }).then(function (){
-                    document.location.href = 'stok-barang.php';
+                    document.location.href = 'kategori-barang.php';
                 });
             </script>
         ";
@@ -422,7 +334,7 @@ if (isset($_POST["edit"])) {
                 title: 'Gagal',
                 text: 'Data gagal diupdate'
             }).then(function (){
-                document.location.href = 'stok-barang.php';
+                document.location.href = 'kategori-barang.php';
             });
             </script>
         ";
@@ -430,9 +342,9 @@ if (isset($_POST["edit"])) {
 }
 
 // hapus data barang
-if (isset($_POST["hapus_barang"])) {
+if (isset($_POST["hapus_kategori"])) {
     $id = $_POST["id"];
-    if (hapusBarang($id) > 0) {
+    if (hapusKategori($id) > 0) {
         echo "
         <script>
         Swal.fire({
@@ -440,7 +352,7 @@ if (isset($_POST["hapus_barang"])) {
             title: 'Berhasil',
             text: 'Data barang berhasil dihapus'
         }).then(function () {
-            document.location.href = 'stok-barang.php';
+            document.location.href = 'kategori-barang.php';
         });
         </script> 
     ";
@@ -452,7 +364,7 @@ if (isset($_POST["hapus_barang"])) {
             title: 'Gagal',
             text: 'data barang gagal di hapus!'
           }).then(function () {
-            document.location.href = 'stok-barang.php'; 
+            document.location.href = 'kategori-barang.php'; 
         });
         </script>
     ";
