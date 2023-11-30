@@ -35,7 +35,7 @@ while ($row = mysqli_fetch_assoc($resultcari)) {
     echo "<td style='padding: 5px;'><strong>Garansi</strong><br>" . $row['Garansi'] . "</td>";
 
     // Tambahkan tombol pada setiap baris dengan aksi JavaScript
-    echo "<td style='padding: 5px;'><button class='btn btn-primary' onclick='pilihBarang(\"" . $row['Barang_ID'] . "\", \"" . $row['Nama'] . "\", \"" . $row['HargaJual'] . "\", \"" . $row['HargaJual'] . "\", \"" . $sesName . "\")'>Pilih</button></td>";
+    echo "<td style='padding: 5px;'><button class='btn btn-primary' onclick='pilihBarang(\"" . $row['Barang_ID'] . "\", \"" . $row['Nama'] . "\", \"" . $row['HargaJual'] . "\", \"" . $row['HargaJual'] . "\")'>Pilih</button></td>";
 
     echo "</tr>";
 }

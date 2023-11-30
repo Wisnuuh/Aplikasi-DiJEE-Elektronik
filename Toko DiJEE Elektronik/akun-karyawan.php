@@ -17,6 +17,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -27,77 +28,14 @@
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/styles2.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>   
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
+
 <body class="sb-nav-fixed">
-<nav class="sb-topnav navbar navbar-expand maincol">
-        <!-- Navbar Brand-->
-        <img class="ms-3" src="assets/img/logo dijee.png" alt="" style="width: 40px;">
-        <a class="h4 namatoko" href="home.php">Toko DiJEE</a>
-        <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 p" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-            </div>
-        </form>
-        <!-- Navbar-->
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4 d-flex justify-content-end">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user fa-2xl"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="akun-karyawan.php">Profil</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-    <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion maincol" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
-                    <div class="nav grid gap-3">
-                        <div class="sb-sidenav-menu-heading textcolor">Utama</div>
-                        <a class="nav-link textcolor" href="home.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-house fa-lg iconcolor"></i></div>
-                            Dashboard
-                        </a>
-                        <a class="nav-link collapsed textcolor" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns fa-lg iconcolor"></i></div>
-                            Data Barang
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down fa-lg iconcolor"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link textcolor" href="stok-barang.php">Stok Barang</a>
-                                <a class="nav-link textcolor" href="data-supplier.php">Data Supplier</a>
-                                <a class="nav-link textcolor" href="data-retur-barang.php" id="dataretur"></a>
-                            </nav>
-                        </div>
-                        <a class="nav-link textcolor" href="keuangan.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-sack-dollar fa-lg iconcolor"></i></div>
-                            Keuangan
-                        </a>
-                        <a class="nav-link textcolor" href="data-karyawan.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-user-group fa-lg iconcolor"></i></div>
-                            Data Karyawan
-                        </a>
-                        <a class="nav-link textcolor" href="data-customer.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-users fa-lg iconcolor"></i></div>
-                            Data Customer
-                        </a>
-                        <a class="nav-link textcolor" href="data-transaksi.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-money-bill-transfer fa-lg iconcolor"></i></div>
-                            Data Transaksi
-                        </a>
-                    </div>
-                </div>
-            </nav>
-        </div>
+
+<!-- Memanggil navbar -->
+<?php require_once "navbar.php"; ?>
+
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -106,6 +44,41 @@
                         <a class="breadcrumb-item active" href="home.php"><li>Dashboard</li></a>
                         <li class="breadcrumb-item active">Profil</li>
                     </ol>
+                </div>
+                <img src="assets/img/1.jpeg" alt="" style="width: 600px;">
+                <div class="col-md-8 mt-1">
+                    <div class="card mb-3 content">
+                        <h1 class="m-3pt-3">About</h1>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5>full name</h5>
+                                </div>
+                                <div class="col-md-9 text-secondary">Ayu Dewi</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5>email</h5>
+                                </div>
+                                <div class="col-md-9 text-secondary">ayudewi@gmail.com</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5>phone</h5>
+                                </div>
+                                <div class="col-md-9 text-secondary">085335887665</div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h5>address</h5>
+                                </div>
+                                <div class="col-md-9 text-secondary">Jln.Prajurit,Jember</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">

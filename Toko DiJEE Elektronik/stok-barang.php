@@ -18,7 +18,53 @@ $sesLvl = $_SESSION['level'];
 $kategories = tampil_kategori("SELECT * FROM kategori");
 $suppliers = tampil_kategori("SELECT * FROM supplier");
 $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Supplier ,barang.Nama as 'barang', Jumlah, Garansi, HargaBeli, HargaJual, kategori.Nama as 'kategori', supplier.Nama_Supplier as 'supplier'
- FROM barang JOIN supplier ON supplier.ID_Supplier = barang.ID_Supplier JOIN kategori ON kategori.Kategori_ID = barang.Kategori_ID");
+FROM barang JOIN supplier ON supplier.ID_Supplier = barang.ID_Supplier JOIN kategori ON kategori.Kategori_ID = barang.Kategori_ID");
+
+if (isset($_POST['tambah'])) {
+    // Ambil nilai dari form
+    $tgl_input = $_POST["tgl_input"];
+    $nama_barang = $_POST["nama_barang"];
+    $harga_beli = $_POST["harga_beli"];
+    $harga_jual = $_POST["harga_jual"];
+    $id_kategori = $_POST["pilihKategori"];
+    $stok = $_POST["stok"];
+    $garansi = $_POST["garansi"];
+    $id_supplier = $_POST["pilihSupplier"];
+    $totalBayar = $_POST["totalBayar"];
+    // var_dump($_POST);
+
+    // Insert data kedalam barang
+    $inputBarang = mysqli_query($koneksi,
+    "INSERT INTO barang VALUES 
+    ('', '$nama_barang', '$stok', '$garansi', '$harga_beli', '$harga_jual', '$id_kategori', '$id_supplier');"
+    );
+
+    // Mengambil ID Barang yang baru diinputkan
+    $IDterbaru = mysqli_insert_id($koneksi);
+
+    // Menampung ID yang baru diinputkan
+    $IDbarangTerbaru = $IDterbaru;
+
+    // Menyimpan pembelian ke database
+    $inputPembelian = mysqli_query($koneksi, "INSERT INTO pembelian VALUES ('', '$tgl_input','$totalBayar')");
+
+    // Mengambil ID Barang yang baru diinputkan dari tabel pembelian
+    $IDterbaru = mysqli_insert_id($koneksi);
+
+    // Menampung ID pembelian yang baru diinputkan
+    $IDpembelianTerbaru = $IDterbaru;
+
+    // Melakukan query untuk SELECT hargajual barang
+    $hasil = mysqli_query($koneksi, "SELECT * FROM barang WHERE Barang_ID = $IDbarangTerbaru;");
+    $hargaBeli = $hasil->fetch_assoc();
+    $subtotalHargaBeli = $hargaBeli['HargaBeli'] * $stok;
+
+    $inputDetailPembelian = mysqli_query($koneksi,
+    "INSERT INTO detailpembelian VALUES
+    ('', '$IDbarangTerbaru', '$IDpembelianTerbaru', '$stok', '$subtotalHargaBeli');"
+    );
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -38,79 +84,8 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
 </head>
 
 <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand maincol">
-        <!-- Navbar Brand-->
-        <img class="ms-3" src="assets/img/logo dijee.png" alt="" style="width: 40px;">
-        <a class="h4 namatoko" href="home.php">Toko DiJEE</a>
-        <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 p" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-            </div>
-        </form>
-        <!-- Navbar-->
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4 d-flex justify-content-end">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user fa-2xl"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="akun-karyawan.php">Profil</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
-                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-    <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion maincol" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
-                    <div class="nav grid gap-3">
-                        <div class="sb-sidenav-menu-heading textcolor">Utama</div>
-                        <a class="nav-link textcolor" href="home.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-house fa-lg iconcolor"></i></div>
-                            Dashboard
-                        </a>
-                        <a class="nav-link collapsed textcolor" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns fa-lg iconcolor"></i></div>
-                            Data Barang
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down fa-lg iconcolor"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link textcolor" href="kategori-barang.php">Kategori Barang</a>
-                                <a class="nav-link textcolor" href="stok-barang.php">Stok Barang</a>
-                                <a class="nav-link textcolor" href="data-supplier.php">Data Supplier</a>
-                                <a class="nav-link textcolor" href="data-retur-barang.php" id="dataretur"></a>
-                            </nav>
-                        </div>
-                        <a class="nav-link textcolor" href="keuangan.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-sack-dollar fa-lg iconcolor"></i></div>
-                            Keuangan
-                        </a>
-                        <a class="nav-link textcolor" href="data-karyawan.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-user-group fa-lg iconcolor"></i></div>
-                            Data Karyawan
-                        </a>
-                        <a class="nav-link textcolor" href="data-customer.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-users fa-lg iconcolor"></i></div>
-                            Data Customer
-                        </a>
-                        <a class="nav-link textcolor" href="data-transaksi.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-money-bill-transfer fa-lg iconcolor"></i></div>
-                            Data Transaksi
-                        </a>
-
-                    </div>
-
-                </div>
-            </nav>
-        </div>
+    <!-- Memanggil navbar -->
+    <?php require_once "navbar.php"; ?>
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -119,6 +94,92 @@ $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Suppli
                         <li class="breadcrumb-item active"><a href="home.php">Dashboard</a></li>
                         <li class="breadcrumb-item active">Data Stok Barang</li>
                     </ol>
+                </div>
+                <!-- Inputan Barang -->
+                <div class="container">
+                    <div class="col mb-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fa-solid fa-box"></i>
+                                Tambah Barang
+                            </div>
+                            <div class="card-body py-4">
+                            <form method="POST" name="tambah" class="px-4">
+                                <div class="form-group row mb-0">
+                                    <label class="col-sm-4 col-form-label col-form-label-sm"><b>Tanggal Inputtan Barang :</b></label>
+                                    <div class="col-sm-8 mb-2">
+                                        <input type="text" class="form-control form-control-sm" value="<?php echo date("j F Y"); ?>" readonly>
+                                        <input type="hidden" class="form-control form-control-sm" name="tgl_input" value="<?php echo date("Y-m-d"); ?>">
+                                    </div>
+                                    
+                                    <label class="col-sm-4 col-form-label col-form-label-sm"><b>Nama Barang :</b></label>
+                                    <div class="col-sm-8 mb-2">
+                                        <input type="text" class="form-control form-control-sm" name="nama_barang">
+                                    </div>
+                                    <label class="col-sm-4 col-form-label col-form-label-sm"><b>Jumlah Stok :</b></label>
+                                    <div class="col-sm-8 mb-2">
+                                        <input type="number" class="form-control form-control-sm" name="stok">
+                                    </div>
+                                    <label class="col-sm-4 col-form-label col-form-label-sm"><b>Garansi :</b></label>
+                                    <div class="col-sm-8 mb-2">
+                                        <input type="text" class="form-control form-control-sm" name="garansi">
+                                    </div>
+                                    <label class="col-sm-4 col-form-label col-form-label-sm"><b>Harga Beli :</b></label>
+                                    <div class="col-sm-8 mb-2">
+                                        <input type="number" class="form-control form-control-sm" name="harga_beli">
+                                    </div>
+                                    <label class="col-sm-4 col-form-label col-form-label-sm"><b>Harga Jual :</b></label>
+                                    <div class="col-sm-8 mb-2">
+                                        <input type="number" class="form-control form-control-sm" name="harga_jual">
+                                    </div>
+                                    <label class="col-sm-4 col-form-label col-form-label-sm"><b>Kategori :</b></label>
+                                    <div class="col-sm-8 mb-2">
+                                        <select class="form-select" name="pilihKategori">
+                                            <option selected disabled>Pilih Kategori</option>
+                                            <?php
+                                            // Kode untuk mengambil data supplier dari database
+                                            $koneksi = mysqli_connect($server, $username, $password, $db);
+                                            // Query untuk mengambil data supplier
+                                            $query = "SELECT Kategori_ID, Nama FROM kategori";
+                                            $result = mysqli_query($koneksi, $query);
+
+                                            // Loop untuk membangun opsi dari hasil query
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                echo "<option value='" . $row['Kategori_ID'] . "'>" . $row['Nama'] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <label class="col-sm-4 col-form-label col-form-label-sm"><b>Supplier :</b></label>
+                                    <div class="col-sm-8 mb-2">
+                                        <select class="form-select" name="pilihSupplier">
+                                            <option selected disabled>Pilih Supplier</option>
+                                            <?php
+                                            // Kode untuk mengambil data supplier dari database
+                                            $koneksi = mysqli_connect($server, $username, $password, $db);
+                                            // Query untuk mengambil data supplier
+                                            $query = "SELECT id_supplier, nama_supplier FROM supplier";
+                                            $result = mysqli_query($koneksi, $query);
+
+                                            // Loop untuk membangun opsi dari hasil query
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                echo "<option value='" . $row['id_supplier'] . "'>" . $row['nama_supplier'] . "</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <!-- <label class="col-sm-4 col-form-label col-form-label-sm"><b>Total Bayar :</b></label>
+                                    <div class="col-sm-8 mb-2">
+                                        <input type="number" class="form-control form-control-sm" name="totalBayar">
+                                    </div> -->
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-primary" name="tambah">Tambah</button>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="container">
                     <div class="card mb-4">

@@ -14,111 +14,28 @@
     $sesName = $_SESSION ['name'];
     $sesLvl = $_SESSION ['level'];
 
-    $menu = ambil_data("SELECT * FROM barang");
-
-    if (isset($_POST["pesan"])) {
-
-        $pesanan = tambah_data_pesanan();
-
-        if ($pesanan > 0) {
-            
-            "<script>                    
-                alert('Pesanan Berhasil Dikirim!');           
-            </script>";
-        } else {
-            
-            "<script>                    
-                alert('Pesanan Gagal Dikirim!');                        
-            </script>";
-        }
-    }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>DiJEE Elektronik</title>
+    <title>Dashboard | DiJEE Elektronik</title>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
     <link href="css/styles2.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
+
 <body class="sb-nav-fixed">
-    <nav class="sb-topnav navbar navbar-expand maincol">
-        <!-- Navbar Brand-->
-        <img class="ms-3" src="assets/img/logo dijee.png" alt="" style="width: 40px;">
-        <a class="h4 namatoko" href="home.php">Toko DiJEE</a>
-        <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 p" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
-                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
-            </div>
-        </form>
-        <!-- Navbar-->
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4 d-flex justify-content-end">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user fa-2xl"></i></a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="akun-karyawan.php">Profil</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                    <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-    <div id="layoutSidenav">
-        <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion maincol" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
-                    <div class="nav grid gap-3">
-                        <div class="sb-sidenav-menu-heading textcolor">Utama</div>
-                        <a class="nav-link textcolor" href="home.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-house fa-lg iconcolor"></i></div>
-                            Dashboard
-                        </a>
-                        <a class="nav-link collapsed textcolor" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns fa-lg iconcolor"></i></div>
-                            Data Barang
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down fa-lg iconcolor"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link textcolor" href="stok-barang.php">Stok Barang</a>
-                                <a class="nav-link textcolor" href="data-supplier.php">Data Supplier</a>
-                                <a class="nav-link textcolor" href="data-retur-barang.php" id="dataretur"></a>
-                            </nav>
-                        </div>
-                        <a class="nav-link textcolor" href="keuangan.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-sack-dollar fa-lg iconcolor"></i></div>
-                            Keuangan
-                        </a>
-                        <a class="nav-link textcolor" href="data-karyawan.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-user-group fa-lg iconcolor"></i></div>
-                            Data Karyawan
-                        </a>
-                        <a class="nav-link textcolor" href="data-customer.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-users fa-lg iconcolor"></i></div>
-                            Data Customer
-                        </a>
-                        <a class="nav-link textcolor" href="data-transaksi.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-money-bill-transfer fa-lg iconcolor"></i></div>
-                            Data Transaksi
-                        </a>
-                    </div>
-                </div>
-            </nav>
-        </div>
+
+<!-- Memanggil navbar -->
+<?php require_once "navbar.php"; ?>
+
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -126,10 +43,13 @@
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
-                    <div class="row">
+                </div>
+                <!-- Hak akses pemilik dan karyawan -->
+                <div <?php $akses = ($sesID == 1) ? 'style="display: none;"' : 'style=""'; echo $akses; ?>>
+                    <div class="row px-4">
                         <div class="col-sm-4">
                             <div class="card card-primary mb-3">
-                                <div class="card-header bg-primary text-white">
+                                <div class="card-header text-white maincol">
                                     <h5><i class="fa fa-search"></i> Cari Barang</h5>
                                 </div>
                                 <div class="card-body">
@@ -139,106 +59,98 @@
                         </div>
 
                         <!--Pencarian-->
-                        <div class="col-sm-8">
+                        <div class="col-sm-8 px-4">
                             <div class="card card-primary mb-3">
-                                <div class="card-header bg-primary text-white">
+                                <div class="card-header text-white maincol">
                                     <h5><i class="fa fa-search"></i> Hasil Barang</h5>
                                 </div>
                                 <div class="card-body" id="hasil_barang">
                                     <!-- Hasil pencarian akan ditampilkan di sini -->
-    
+
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!--Keranjang-->
-                <div class="col-sm-12">
-                    <div class="card card-primary">
-                        <div class="card-header bg-primary text-white">
-                            <div class="row">
-                                <div class="col"><h5><i class="fa fa-shopping-cart"></i>KASIR</h5></div>
-                                <div class="col text-end">
-                                    <button class="btn btn-danger" onclick="hapusSemuaBarang()">
-                                        <b>RESET KERANJANG</b>
-                                    </button>
+                    <!--Keranjang-->
+                    <div class="col-sm-12 px-4">
+                        <div class="card card-primary">
+                            <div class="card-header text-white maincol">
+                                <div class="row">
+                                    <div class="col"><h5><i class="fa fa-shopping-cart"></i>KASIR</h5></div>
+                                    <div class="col text-end">
+                                        <button class="btn btn-danger" onclick="hapusSemuaBarang()">
+                                            <b>RESET KERANJANG</b>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <form action="proses.php" method="post">
-                            <div class="card-body">
-                                <div id="keranjang" class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td><b>Tanggal</b></td>
-                                            <td>
-                                                <input type="hidden" readonly="readonly" class="form-control bg-secondary bg-opacity-25" value="<?php echo date("Y-m-d");?>" name="tgl">
-                                                <?php echo date("j F Y");?>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <table class="table table-bordered w-100" id="example1">
-                                        <thead>
+                            <form action="proses.php" method="post">
+                                <div class="card-body">
+                                    <div id="keranjang" class="table-responsive">
+                                        <table class="table table-bordered">
                                             <tr>
-                                                <td> ID</td>
-                                                <td> Nama Barang</td>
-                                                <td> Harga</td>
-                                                <td style="width:10%;"> Jumlah</td>
-                                                <td style="width:20%;"> SubTotal</td>
-                                                <td> Kasir</td>
-                                                <td> Aksi</td>
+                                                <td><b>Tanggal</b></td>
+                                                <td>
+                                                    <input type="hidden" readonly="readonly" class="form-control bg-secondary bg-opacity-25" value="<?php echo date("Y-m-d");?>" name="tgl">
+                                                    <?php echo date("j F Y");?>
+                                                </td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                        </table>
+                                        <table class="table table-bordered w-100" id="example1">
+                                            <thead>
+                                                <tr>
+                                                    <td> ID</td>
+                                                    <td> Nama Barang</td>
+                                                    <td> Harga</td>
+                                                    <td style="width:10%;"> Jumlah</td>
+                                                    <td style="width:20%;"> SubTotal</td>
+                                                    <td> Aksi</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="justify-content-end">
+                                        <table class="row table table-bordered">
+                                            <tr>
+                                                <td><b>Kasir</b></td>
+                                                <td class="col-8">
+                                                    <?php echo $sesName; ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Total</b></td>
+                                                
+                                                <td class="col-8" id="total-keseluruhan-text">
+                                                    <!-- Rp0 -->
+                                                    <input type="hidden" id="total-keseluruhan-input" name="totalKeseluruhan" value="">
+                                                    <span id="total-keseluruhan-text"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Bayar</b></td>
+                                                <td ><input id="inputPembayaran" name="bayar" type="number" min='1' value='' onchange="hitungKembalian()"></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Kembalian</b></td>
+                                                <td class="col-8" id="uang-kembalian">
+                                                    <input type="hidden" id="inputKembalian" name="kembalian" value="">
+                                                    <span id="kembalianText">Rp0</span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <button class="btn btn-primary mb-3 float-end" onclick="kirimData()" style="width: 8rem;"><b>Proses</b></button>
                                 </div>
-                                <div class="justify-content-end">
-                                    <table class="row table table-bordered">
-                                        <tr>
-                                            <td><b>Total</b></td>
-                                            
-                                            <td class="col-8" id="total-keseluruhan-text">
-                                                <!-- Rp0 -->
-                                                <input type="hidden" id="total-keseluruhan-input" name="totalKeseluruhan" value="">
-                                                <span id="total-keseluruhan-text"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Bayar</b></td>
-                                            <td ><input id="inputPembayaran" type="number" min='1' value='' onchange="hitungKembalian()"></td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Kembalian</b></td>
-                                            <td class="col-8" id="uang-kembalian">
-                                                <input type="hidden" id="inputKembalian" name="kembalian" value="">
-                                                <span id="kembalianText">Rp0</span>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                <button class="btn btn-primary mb-3 float-end" onclick="kirimData()" style="width: 8rem;"><b>Proses</b></button>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </main>
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
-    
     <!--Buat Cari Script-->
     <script>
         var selectedBarangID = "";
@@ -302,7 +214,7 @@
             xhr.send(data);
         }
 
-        function pilihBarang(id, nama, harga, subtotal, kasir) {
+        function pilihBarang(id, nama, harga, subtotal) {
 
             // Menyimpan ID barang yang dipilih ke variabel global
             selectedBarangID = id;
@@ -323,7 +235,6 @@
             var cell4 = newRow.insertCell(3);
             var cell5 = newRow.insertCell(4);
             var cell6 = newRow.insertCell(5);
-            var cell7 = newRow.insertCell(6);
 
             // Contoh penambahan data ke dalam sel-sel
             cell1.innerHTML = '<input type="hidden" name="ids[id][]" value="'+id+'"><label name="id">'+id+'</label>';  // Nomor urut
@@ -331,8 +242,7 @@
             cell3.innerHTML = harga;  // Anda perlu menggantinya dengan harga barang yang sesuai
             cell4.innerHTML = "<input type='number' min='1' value='1' class='form-control jumlah-barang' name='jumlahBarang[]' onchange='hitungSubtotal(this); updateTotalKeseluruhan();'>";  // Input jumlah
             cell5.innerHTML = subtotal;  // Anda perlu menggantinya dengan logika perhitungan subtotal yang sesuai
-            cell6.innerHTML = kasir;  // Nama kasir atau informasi lainnya
-            cell7.innerHTML = "<button class='btn btn-danger btn-sm' onclick='hapusBaris(this); updateTotalKeseluruhan();'>Hapus</button>";  // Tombol hapus
+            cell6.innerHTML = "<button class='btn btn-danger btn-sm' onclick='hapusBaris(this); updateTotalKeseluruhan();'>Hapus</button>";  // Tombol hapus
 
             updateTotalKeseluruhan();
         }
@@ -392,76 +302,50 @@
             totalInput.value = totalKeseluruhan;
         }
 
-        function hitungTotalKeseluruhan() {
-    var table = document.getElementById("example1").getElementsByTagName('tbody')[0];
-    var total = 0;
+        function hitungSubtotal(input) {
+            // Dapatkan baris tempat input jumlah berada
+            var row = input.parentNode.parentNode;
 
-    // Iterasi melalui setiap baris dan tambahkan subtotal ke total keseluruhan
-    for (var i = 0; i < table.rows.length; i++) {
-        var subtotal = parseFloat(table.rows[i].cells[4].innerHTML);
-        total += subtotal;
-    }
+            // Dapatkan harga dan jumlah barang dari sel-sel terkait
+            var harga = parseFloat(row.cells[2].innerHTML);
+            var jumlah = parseFloat(input.value);
 
-    return total;
-}
+            // Hitung subtotal
+            var subtotal = harga * jumlah;
 
-function updateTotalKeseluruhan() {
-    // Hitung total keseluruhan
-    var totalKeseluruhan = hitungTotalKeseluruhan();
+            // Tampilkan subtotal pada sel subtotal
+            row.cells[4].innerHTML = subtotal;
 
-    // Tampilkan total keseluruhan pada span
-    var totalText = document.getElementById("total-keseluruhan-text");
-    totalText.textContent = "Rp" + totalKeseluruhan.toLocaleString();
+            // Update total keseluruhan setelah menghitung subtotal
+            updateTotalKeseluruhan();
+        }
 
-    // Update value of hidden input
-    var totalInput = document.getElementById("total-keseluruhan-input");
-    totalInput.value = totalKeseluruhan;
-}
+        // Mendengarkan perubahan pada input pembayaran
+        document.getElementById('inputPembayaran').addEventListener('input', function() {
+            hitungKembalian();
+        });
 
-function hitungSubtotal(input) {
-    // Dapatkan baris tempat input jumlah berada
-    var row = input.parentNode.parentNode;
+        updateTotalKeseluruhan();
 
-    // Dapatkan harga dan jumlah barang dari sel-sel terkait
-    var harga = parseFloat(row.cells[2].innerHTML);
-    var jumlah = parseFloat(input.value);
+        function hitungKembalian() {
+            // Mendapatkan nilai total keseluruhan
+            var totalKeseluruhan = parseFloat(document.getElementById('total-keseluruhan-text').innerText.replace('Rp', '').replace(',', ''));
 
-    // Hitung subtotal
-    var subtotal = harga * jumlah;
+            // Mendapatkan nilai pembayaran
+            var pembayaran = parseFloat(document.getElementById('inputPembayaran').value);
 
-    // Tampilkan subtotal pada sel subtotal
-    row.cells[4].innerHTML = subtotal;
+            // Hitung kembalian
+            var kembalian = pembayaran - totalKeseluruhan;
 
-    // Update total keseluruhan setelah menghitung subtotal
-    updateTotalKeseluruhan();
-}
+            // Tampilkan kembalian pada elemen dengan ID 'kembalianText'
+            document.getElementById('kembalianText').innerText = "Rp" + kembalian.toLocaleString();
 
-// Mendengarkan perubahan pada input pembayaran
-document.getElementById('inputPembayaran').addEventListener('input', function() {
-    hitungKembalian();
-});
+            // Set nilai input kembalian (yang tersembunyi)
+            document.getElementById('inputKembalian').value = kembalian;
 
-updateTotalKeseluruhan();
-
-function hitungKembalian() {
-    // Mendapatkan nilai total keseluruhan
-    var totalKeseluruhan = parseFloat(document.getElementById('total-keseluruhan-text').innerText.replace('Rp', '').replace(',', ''));
-
-    // Mendapatkan nilai pembayaran
-    var pembayaran = parseFloat(document.getElementById('inputPembayaran').value);
-
-    // Hitung kembalian
-    var kembalian = pembayaran - totalKeseluruhan;
-
-    // Tampilkan kembalian pada elemen dengan ID 'kembalianText'
-    document.getElementById('kembalianText').innerText = "Rp" + kembalian.toLocaleString();
-
-    // Set nilai input kembalian (yang tersembunyi)
-    document.getElementById('inputKembalian').value = kembalian;
-
-    // Update total keseluruhan setelah menghitung kembalian
-    updateTotalKeseluruhan();
-}
+            // Update total keseluruhan setelah menghitung kembalian
+            updateTotalKeseluruhan();
+        }
 
         function kirimData() {
             // Mengambil nilai dari semua input di dalam form
