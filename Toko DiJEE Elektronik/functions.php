@@ -1,8 +1,6 @@
 <?php
 require("koneksi.php");
 
-
-
 function tampil_karyawan($query)
 {
     global $koneksi;
@@ -77,7 +75,6 @@ function editKaryawan($data)
     return mysqli_affected_rows($koneksi);
 }
 
-
 // hapus karyawan
 function hapuskaryawan($id)
 {
@@ -89,10 +86,163 @@ function hapuskaryawan($id)
     return mysqli_affected_rows($koneksi);
 }
 
-function ambil_data($query) {
+
+function tampil_kategori($query)
+{
+    global $koneksi;
+
+    // data ditampung
+    $result = mysqli_query($koneksi, $query);
+
+    $kategories = [];
+    while ($kategori = mysqli_fetch_assoc($result)) {
+        $kategories[] = $kategori;
+    }
+    return $kategories;
+}
+
+function tambahKategori($data)
+{
+    global $koneksi;
+
+    // Menghasilkan angka acak 5 digit
+    $random_number = mt_rand(0, 99999);
+
+    // Menggunakan str_pad untuk memastikan panjang angka tetap 5 digit
+    $id = str_pad($random_number, 5, '0', STR_PAD_LEFT);
+    $nama = $data["kategori"];
+    $deskripsi = $data["deskripsi"];
+
+    $query = "INSERT INTO `kategori`(`Kategori_ID`, `Nama`, `Deskripsi`) VALUES 
+    ('$id','$nama','$deskripsi')";
+
+    mysqli_query($koneksi, $query);
+
+    return mysqli_affected_rows($koneksi);
+}
+
+function edit_kategori($data)
+{
+    global $koneksi;
+
+    $id = $data["ID"];
+    $nama = $data["kategori"];
+    $deskripsi = $data["deskripsi"];
+
+    $query = "UPDATE `kategori` SET `Nama`='$nama',`Deskripsi`='$deskripsi' WHERE Kategori_ID = $id";
+    $result = mysqli_query($koneksi, $query);
+
+    if (!$result) {
+        die('Error' . mysqli_error($koneksi));
+    }
+
+    return mysqli_affected_rows($koneksi);
+}
+
+function hapusKategori($id)
+{
+    global $koneksi;
+
+    $query = "DELETE FROM `kategori` WHERE Kategori_ID = $id";
+    mysqli_query($koneksi, $query);
+
+    return mysqli_affected_rows($koneksi);
+}
+
+function tampil_supplier($query)
+{
+    global $koneksi;
+
+    // data ditampung
+    $result = mysqli_query($koneksi, $query);
+
+    $suppliers = [];
+    while ($supplier = mysqli_fetch_assoc($result)) {
+        $suppliers[] = $supplier;
+    }
+    return $suppliers;
+}
+
+function tambahBarang($data)
+{
+    global $koneksi;
+
+    // Menghasilkan angka acak 5 digit
+    $random_number = mt_rand(0, 99999);
+
+    // Menggunakan str_pad untuk memastikan panjang angka tetap 5 digit
+    $id = str_pad($random_number, 5, '0', STR_PAD_LEFT);
+    $nama = $data["nama"];
+    $jumlah = $data["jumlah"];
+    $garansi = $data["garansi"];
+    $harga_beli = $data["harga_beli"];
+    $harga_jual = $data["harga_jual"];
+    $kategori = $data["kategori"];
+    $supplier = $data["supplier"];
+
+    $query = "INSERT INTO `barang`(`Barang_ID`, `Nama`, `Jumlah`, `Garansi`, `HargaBeli`, `HargaJual`, `Kategori_ID`, `ID_Supplier`) VALUES 
+    ('$id','$nama','$jumlah','$garansi','$harga_beli','$harga_jual','$kategori','$supplier')";
+
+    mysqli_query($koneksi, $query);
+
+    return mysqli_affected_rows($koneksi);
+}
+
+function tampil_barang($query)
+{
+    global $koneksi;
+
+    // data ditampung
+    $result = mysqli_query($koneksi, $query);
+
+    $barangs = [];
+    //masukkan satu per satu record $barangs
+    while ($barang = mysqli_fetch_assoc($result)) {
+        $barangs[] = $barang;
+    }
+    return $barangs;
+}
+
+// edit karyawan
+function edit_barang($data)
+{
+    global $koneksi;
+
+    $idbarang = $data["ID"];
+    $nama = $data["nama"];
+    $jumlah = $data["jumlah"];
+    $garansi = $data["garansi"];
+    $harga_beli = $data["harga_beli"];
+    $harga_jual = $data["harga_jual"];
+    $kategori = $data["kategori"];
+    $supplier = $data["supplier"];
+
+    $query = "UPDATE `barang` SET `Nama`='$nama',`Jumlah`='$jumlah',`Garansi`='$garansi',`HargaBeli`='$harga_beli',`HargaJual`='$harga_jual',`Kategori_ID`='$kategori',`ID_Supplier`='$supplier' WHERE Barang_ID = '$idbarang'";
+    $result = mysqli_query($koneksi, $query);
+
+    if (!$result) {
+        die('Error' . mysqli_error($koneksi));
+    }
+
+    return mysqli_affected_rows($koneksi);
+}
+
+// hapus karyawan
+function hapusBarang($id)
+{
+    global $koneksi;
+
+    $query = "DELETE FROM `barang` WHERE Barang_ID = '$id'";
+    mysqli_query($koneksi, $query);
+
+    return mysqli_affected_rows($koneksi);
+}
+
+function ambil_data($query)
+{
 
     global $koneksi;
-    
+
     $db = [];
     $sql_query = mysqli_query($koneksi, $query);
 
@@ -104,7 +254,8 @@ function ambil_data($query) {
     return $db;
 }
 
-function tambah_data_pesanan() {
+function tambah_data_pesanan()
+{
 
     global $koneksi;
 
@@ -136,10 +287,12 @@ function tambah_data_pesanan() {
         return -1;
     }
 
-    global $sesID;
+    global $sesID; // $sesID belum didefinisikan dalam potongan kode yang diberikan
 
     // Tambah Data Transaksi
-    mysqli_query($koneksi, "INSERT INTO penjualan
+    mysqli_query(
+        $koneksi,
+        "INSERT INTO penjualan
                             VALUES ('', NOW(), 0, 0, NULL, 2);"
 
     );
@@ -160,4 +313,3 @@ function tambah_data_pesanan() {
 
     return mysqli_affected_rows($koneksi);
 }
-
