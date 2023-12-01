@@ -64,7 +64,7 @@ $jenisKaryawans = tampil_jenisKaryawan("SELECT * FROM jenis_user");
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
                                 tambah karyawan
                             </button>
-                            <table id="datatablesSimple" class="table ">
+                            <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
                                         <th>ID</th>

@@ -188,9 +188,11 @@ if (isset($_POST['tambah'])) {
                             Data Stok Barang
                         </div>
                         <div class="card-body">
+                            <div class="d-flex justify-content-end mb-3">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
                                 tambah barang
                             </button>
+                            </div>
                             <div class="table-responsive">
                                 <table id="datatablesSimple">
                                     <thead>
@@ -341,7 +343,7 @@ if (isset($_POST['tambah'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="garansi" class="form-label">garansi</label>
-                                <input type="text" name="garansi" class="form-control" id="garansi" value="<?= $barang['Garansi']  ?>" required>
+                                <input type="text" name="garansi" class="form-control" id="garansi" value="<?= $barang['Garansi']  ?>" >
                             </div>
                             <div class="mb-3">
                                 <label for="harga_beli" class="form-label">harga beli</label>
@@ -512,7 +514,7 @@ if (isset($_POST["hapus_barang"])) {
             icon: 'error',
             title: 'Gagal',
             text: 'data barang gagal di hapus!'
-          }).then(function () {
+        }).then(function () {
             document.location.href = 'stok-barang.php'; 
         });
         </script>
@@ -522,62 +524,3 @@ if (isset($_POST["hapus_barang"])) {
 
 
 ?>
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Selamat Datang <?php echo $email; ?></h1>
-    <h1>Selamat Datang <?php echo $sesName; ?></h1>
-    <table border="1">
-        <tr style="text-align: center;">
-            <td>No</td>
-            <td>Email</td>
-            <td>Nama</td>
-            <td>Edit</td>
-        </tr>
-        <?php
-
-        $query = "SELECT * FROM user";
-        $result = mysqli_query($koneksi, $query);
-        $no = 1;
-
-        if ($sesLvl == 1) {
-
-            $dis = "";
-        } else {
-
-            $dis = "disabled";
-        }
-
-        while ($row = mysqli_fetch_array($result)) {
-
-            $userMail = $row['username'];
-            $userName = $row['Nama'];
-
-        ?>
-
-        <tr>
-            <td><?php echo $no; ?></td>
-            <td><?php echo $userMail; ?></td>
-            <td><?php echo $userName; ?></td>
-            <td><a href="edit.php?id=<?php echo $row['User_ID']; ?>"
-                style="text-decoration: none; color:black;">
-                <input type="button" value="edit" <?php echo $dis; ?>></a>
-                <a href="hapus.php?id=<?php echo $row['User_ID']; ?>"
-                style="text-decoration: none; color:black;">
-                <input type="button" value="hapus" <?php echo $dis; ?>></a>
-            </td>
-        </tr>
-        <?php
-            $no++;
-        }
-        ?>
-    </table>
-    <br>
-    <p><a href="logout.php">Log out</a></p>
-</body>
-</html> -->

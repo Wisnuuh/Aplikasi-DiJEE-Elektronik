@@ -14,6 +14,9 @@
     $sesName = $_SESSION ['name'];
     $sesLvl = $_SESSION ['level'];
 
+    $akses = ($sesLvl != 1) ? 'style=""' : 'style="display: none;"';
+    $akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +48,7 @@
                     </ol>
                 </div>
                 <!-- Hak akses pemilik dan karyawan -->
-                <div <?php $akses = ($sesID == 1) ? 'style="display: none;"' : 'style=""'; echo $akses; ?>>
+                <div <?php  echo $akses; ?>>
                     <div class="row px-4">
                         <div class="col-sm-4">
                             <div class="card card-primary mb-3">

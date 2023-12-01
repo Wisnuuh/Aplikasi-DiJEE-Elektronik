@@ -66,7 +66,7 @@ if(isset($_POST['proses'])) {
     }
 
     // Redirect setelah selesai mengolah data
-    header('Location: print.php');
+    header('Location: home.php');
 }
 
 ?>
@@ -208,14 +208,13 @@ if(isset($_POST['proses'])) {
                                         </table>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary float-end" name="proses">Proses</button>
+                                <button class="btn btn-primary float-end" name="proses" target="_blank">Proses</button>
                                 <tr>
 								<td>
                                     <a href="print.php" target="_blank" class="btn btn-secondary">
                                         <i class="fa fa-print"></i> Print Untuk Bukti Pembayaran
                                     </a>
                                 </td>
-
 							</tr>
                             </div>
                         </div>

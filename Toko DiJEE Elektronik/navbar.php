@@ -1,4 +1,9 @@
-    <nav class="sb-topnav navbar navbar-expand maincol">
+<?php 
+$akses = ($sesLvl != 1) ? 'style=""' : 'style="display: none;"';
+$akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
+?>
+
+<nav class="sb-topnav navbar navbar-expand maincol">
         <!-- Navbar Brand-->
         <img class="ms-3" src="assets/img/logo dijee.png" alt="" style="width: 40px;">
         <a class="h4 namatoko" href="home.php">Toko DiJEE</a>
@@ -49,11 +54,11 @@
                                 <a class="nav-link textcolor" href="data-retur-barang.php" id="dataretur"></a>
                             </nav>
                         </div>
-                        <a class="nav-link textcolor" href="keuangan.php">
+                        <a class="nav-link textcolor" href="keuangan.php" <?php echo $akses2; ?>>
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-sack-dollar fa-lg iconcolor"></i></div>
                             Keuangan
                         </a>
-                        <a class="nav-link textcolor" href="data-karyawan.php">
+                        <a class="nav-link textcolor" href="data-karyawan.php" <?php echo $akses2; ?>>
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-user-group fa-lg iconcolor"></i></div>
                             Data Karyawan
                         </a>
@@ -61,7 +66,7 @@
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-users fa-lg iconcolor"></i></div>
                             Data Customer
                         </a>
-                        <a class="nav-link textcolor" href="laporan.php">
+                        <a class="nav-link textcolor" href="laporan.php" <?php echo $akses2; ?>>
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-money-bill-transfer fa-lg iconcolor"></i></div>
                             Laporan 
                         </a>
