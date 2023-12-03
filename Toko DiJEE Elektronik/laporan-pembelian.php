@@ -161,10 +161,10 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="datatablesSimple4">
+                                <table class="table table-bordered" id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <td>ID Pembelian.</td>
+                                            <td>ID pembelian</td>
                                             <td>Tanggal</td>
                                             <td>Jumlah</td>
                                             <td>Total</td>
@@ -202,20 +202,18 @@
                                     }
 
                                     $no = 1;
-                                    while ($data = mysqli_fetch_array($tampil)):
+                                    while ($data = mysqli_fetch_array($tampil)) {
 
                                     ?>
-                                    <tr>
-                                        <td><?= $data['Pembelian_ID'] ?></td>
-                                        <td><?= $data['formatted_date'] ?></td>
-                                        <td><?= $data['Jumlah'] ?></td>
-                                        <td><?= $data['Total_Pembayaran'] ?></td>
-                                        <td><?= $data['Nama'] ?></td>
-                                    </tr>
+                                        <tr>
+                                            <td><?= $data['Pembelian_ID'] ?></td>
+                                            <td><?= $data['formatted_date'] ?></td>
+                                            <td><?= $data['Jumlah'] ?></td>
+                                            <td><?= $data['Total_Pembayaran'] ?></td>
+                                            <td><?= $data['Nama'] ?></td>
+                                        </tr>
                                     <?php
-
-                                    $no++;
-                                    endwhile;
+                                    }
 
                                     ?>
                                     </tbody>

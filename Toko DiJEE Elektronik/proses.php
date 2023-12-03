@@ -37,7 +37,7 @@ if(isset($_POST['proses'])) {
     $kembali = $_POST['kembalian'];
 
     // Melakukan query untuk INSERT ke tabel 'penjualan'
-    $query = "INSERT INTO penjualan VALUES ('', '$tglPenjualan', '$totalbayar', '$bayar', '$kembali', '', '$sesID')";
+    $query = "INSERT INTO penjualan VALUES ('', '$tglPenjualan', '$totalbayar', '$bayar', '$kembali', '$sesID')";
     $result = mysqli_query($koneksi, $query);
 
     // Mendapatkan ID terakhir yang dihasilkan oleh query INSERT sebelumnya
@@ -66,7 +66,6 @@ if(isset($_POST['proses'])) {
     }
 
     echo '<script>window.open("print.php", "_blank"); window.location.href = "home.php";</script>';
-    exit();
 
     // Redirect setelah selesai mengolah data
     // header('Location: home.php');
@@ -211,7 +210,7 @@ if(isset($_POST['proses'])) {
                                         </table>
                                     </div>
                                 </div>
-                                ><button class="btn btn-primary  float-end" name="proses">Proses</button>
+                                <button class="btn btn-primary  float-end" name="proses">Proses</button>
                             </div>
                         </div>
                     </div>

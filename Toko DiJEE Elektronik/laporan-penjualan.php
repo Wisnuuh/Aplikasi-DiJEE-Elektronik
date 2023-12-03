@@ -161,7 +161,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="datatablesSimple4">
+                                <table class="table table-bordered" id="datatablesSimple">
                                     <thead>
                                         <tr>
                                             <td>ID Penjualan</td>
