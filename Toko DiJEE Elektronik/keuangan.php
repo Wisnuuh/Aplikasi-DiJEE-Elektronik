@@ -40,7 +40,6 @@
                         <a class="breadcrumb-item active" href="home.php"><li>Dashboard</li></a>
                         <li class="breadcrumb-item active">Keuangan</li>
                     </ol>
-                    <iframe title="Report Section" width="980" height="700" src="https://app.powerbi.com/view?r=eyJrIjoiMjJjNjViM2UtOTFmMi00NzE3LTlkYzMtYzU5NTBkYzU4M2QwIiwidCI6IjUyNjNjYzgxLTU5MTItNDJjNC1hYmMxLWQwZjFiNjY4YjUzMCIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
