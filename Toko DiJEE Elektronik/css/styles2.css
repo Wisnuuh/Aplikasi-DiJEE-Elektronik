@@ -43,3 +43,19 @@
 /* tr {
     color: white;
 } */
+
+.tabel {
+    border-style: solid;
+    border-width: 1px;
+    border-collapse: collapse;
+}
+
+.harga {
+    text-align: right;
+}
+
+#ukurannota {
+    width: 148mm;
+    height: 210mm;
+    margin: 0 auto; /* Pusatkan halaman di tengah */
+}

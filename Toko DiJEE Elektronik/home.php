@@ -1,21 +1,21 @@
 <?php
 
-    require ("koneksi.php");
-    require_once "functions.php";
-    // $email = isset($_GET['user_fullname']) ? $_GET['user_fullname'] : "";
+require ("koneksi.php");
+require_once "functions.php";
+// $email = isset($_GET['user_fullname']) ? $_GET['user_fullname'] : "";
 
-    session_start();
+session_start();
 
-    if(!isset($_SESSION['id'])){
-        $_SESSION['msg'] = 'anda harus login untuk mengakses halaman ini';
-        header('Location: login.php');
-    }
-    $sesID = $_SESSION ['id'];
-    $sesName = $_SESSION ['name'];
-    $sesLvl = $_SESSION ['level'];
+if(!isset($_SESSION['id'])){
+    $_SESSION['msg'] = 'anda harus login untuk mengakses halaman ini';
+    header('Location: login.php');
+}
+$sesID = $_SESSION ['id'];
+$sesName = $_SESSION ['name'];
+$sesLvl = $_SESSION ['level'];
 
-    $akses = ($sesLvl != 1) ? 'style=""' : 'style="display: none;"';
-    $akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
+$akses = ($sesLvl != 1) ? 'style=""' : 'style="display: none;"';
+$akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
 
 ?>
 <!DOCTYPE html>
@@ -50,7 +50,7 @@
                 <!-- Hak akses pemilik dan karyawan -->
                 <div <?php  echo $akses2; ?>>
                 <div class="container-fluid px-4">
-                    <iframe title="aplikasidijee" width="980" height="700" src="https://app.powerbi.com/view?r=eyJrIjoiNmRjYjFhNTktZTgyYS00NWY2LWFmNDgtMzk3OTNhNmM2NDU4IiwidCI6IjUyNjNjYzgxLTU5MTItNDJjNC1hYmMxLWQwZjFiNjY4YjUzMCIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+                    <iframe title="aplikasidijee" width="1030" height="700" src="https://app.powerbi.com/view?r=eyJrIjoiNmRjYjFhNTktZTgyYS00NWY2LWFmNDgtMzk3OTNhNmM2NDU4IiwidCI6IjUyNjNjYzgxLTU5MTItNDJjNC1hYmMxLWQwZjFiNjY4YjUzMCIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
                 </div>
                 </div>
                 <div <?php  echo $akses; ?>>

@@ -167,11 +167,8 @@ function tambahBarang($data)
 {
     global $koneksi;
 
-    // Menghasilkan angka acak 5 digit
-    $random_number = mt_rand(0, 99999);
-
     // Menggunakan str_pad untuk memastikan panjang angka tetap 5 digit
-    $id = str_pad($random_number, 5, '0', STR_PAD_LEFT);
+    $tgl_input = $data["tgl_input"];
     $nama = $data["nama"];
     $jumlah = $data["jumlah"];
     $garansi = $data["garansi"];
@@ -180,10 +177,36 @@ function tambahBarang($data)
     $kategori = $data["kategori"];
     $supplier = $data["supplier"];
 
-    $query = "INSERT INTO `barang`(`Barang_ID`, `Nama`, `Jumlah`, `Garansi`, `HargaBeli`, `HargaJual`, `Kategori_ID`, `ID_Supplier`) VALUES 
-    ('$id','$nama','$jumlah','$garansi','$harga_beli','$harga_jual','$kategori','$supplier')";
+    $query = "INSERT INTO `barang` VALUES 
+    ('','$nama','$jumlah','$garansi','$harga_beli','$harga_jual','$kategori','$supplier')";
 
     mysqli_query($koneksi, $query);
+
+    // Mengambil ID Barang yang baru diinputkan
+    $IDterbaru = mysqli_insert_id($koneksi);
+
+    // Menampung ID yang baru diinputkan
+    $IDbarangTerbaru = $IDterbaru;
+
+    // Melakukan query untuk SELECT hargajual barang
+    $hasil = mysqli_query($koneksi, "SELECT * FROM barang WHERE Barang_ID = $IDbarangTerbaru;");
+    $hargaBeli = $hasil->fetch_assoc();
+    $totalBayar = $hargaBeli['HargaBeli'] * $jumlah;
+    
+    // Menyimpan pembelian ke database
+    $inputPembelian = mysqli_query($koneksi, "INSERT INTO pembelian VALUES ('', '$tgl_input','$totalBayar')");
+
+    // Mengambil ID Barang yang baru diinputkan dari tabel pembelian
+    $IDterbaru = mysqli_insert_id($koneksi);
+
+    // Menampung ID pembelian yang baru diinputkan
+    $IDpembelianTerbaru = $IDterbaru;
+
+    // Menyimpan detail pembelian ke database
+    $inputDetailPembelian = mysqli_query($koneksi,
+    "INSERT INTO detailpembelian VALUES
+    ('', '$IDbarangTerbaru', '$IDpembelianTerbaru', '$jumlah', '$totalBayar');"
+    );
 
     return mysqli_affected_rows($koneksi);
 }
@@ -203,31 +226,58 @@ function tampil_barang($query)
     return $barangs;
 }
 
-// edit karyawan
+// edit barang
 function edit_barang($data)
 {
     global $koneksi;
 
     $idbarang = $data["ID"];
+    $tgl_input = $data["tgl_input"];
     $nama = $data["nama"];
     $jumlah = $data["jumlah"];
+    $tambahStok = $data['tambahstok'];
     $garansi = $data["garansi"];
     $harga_beli = $data["harga_beli"];
     $harga_jual = $data["harga_jual"];
     $kategori = $data["kategori"];
     $supplier = $data["supplier"];
 
-    $query = "UPDATE `barang` SET `Nama`='$nama',`Jumlah`='$jumlah',`Garansi`='$garansi',`HargaBeli`='$harga_beli',`HargaJual`='$harga_jual',`Kategori_ID`='$kategori',`ID_Supplier`='$supplier' WHERE Barang_ID = '$idbarang'";
-    $result = mysqli_query($koneksi, $query);
+    if ($tambahStok > 0) {
 
-    if (!$result) {
-        die('Error' . mysqli_error($koneksi));
+        // Ambil jumlah terakhir
+        $ambilStok = mysqli_query($koneksi, "SELECT * FROM barang WHERE Barang_ID = '$idbarang'");
+        $row = $ambilStok->fetch_assoc();
+
+        // tambah stok
+        $tambahJumlah = $row['Jumlah'];
+        $inputTotal = $row['HargaBeli'] * $tambahStok;
+        
+        // eksekusi query
+        $inputstok = mysqli_query($koneksi, "UPDATE barang SET Jumlah = '$tambahJumlah + $tambahStok' WHERE Barang_ID = '$idbarang';");
+
+        // input tabel pembelian
+        $inputpembelian = mysqli_query($koneksi, "INSERT INTO pembelian VALUES ('', '$tgl_input', '$inputTotal');");
+
+        // Mengambil ID Barang yang baru diinputkan
+        $IDterbaru = mysqli_insert_id($koneksi);
+
+        // input tabel detail pembelian
+        $inputdetailpembelian = mysqli_query($koneksi, "INSERT INTO detailpembelian VALUES ('', '$idbarang', '$IDterbaru', '$tambahStok', '$inputTotal');");
+
+    } else {
+
+        $query = "UPDATE `barang` SET `Nama`='$nama',`Jumlah`='$jumlah',`Garansi`='$garansi',`HargaBeli`='$harga_beli',`HargaJual`='$harga_jual',`Kategori_ID`='$kategori',`ID_Supplier`='$supplier' WHERE Barang_ID = '$idbarang'";
+        $result = mysqli_query($koneksi, $query);
+
+        if (!$result) {
+            die('Error' . mysqli_error($koneksi));
+        }
     }
 
     return mysqli_affected_rows($koneksi);
 }
 
-// hapus karyawan
+// hapus barang
 function hapusBarang($id)
 {
     global $koneksi;
@@ -238,78 +288,38 @@ function hapusBarang($id)
     return mysqli_affected_rows($koneksi);
 }
 
-function ambil_data($query)
-{
+function tambahSupplier($data) {
 
     global $koneksi;
 
-    $db = [];
-    $sql_query = mysqli_query($koneksi, $query);
+    $nama = $data['namaSupp'];
+    $alamat = $data['alamatSupp'];
+    $noHP = $data['noSupp'];
 
-    while ($q = mysqli_fetch_assoc($sql_query)) {
+    $query = "INSERT INTO supplier VALUES ('', '$nama', '$alamat', '$noHP');";
+    $result = mysqli_query($koneksi, $query);
 
-        array_push($db, $q);
-    }
-
-    return $db;
 }
 
-function tambah_data_pesanan()
-{
+function edit_supplier($data) {
 
     global $koneksi;
 
-    // Nama Pelanggan
-    // $pelanggan = htmlspecialchars($_POST["pelanggan"]);
+    $idSupplier = $data["ID"];
+    $namaSuppllier = $data["nama"];
+    $alamatSuppllier = $data["alamat"];
+    $noHP = $data["nomorTelfon"];
+    
+    $result = mysqli_query($koneksi, "UPDATE supplier SET Nama_Supplier = '$namaSuppllier', Alamat = '$alamatSuppllier', No_Telp = '$noHP' WHERE ID_Supplier = '$idSupplier' ");
+}
 
-    // Mengambil Data Qty dan Kode Menu
-    $list_pesanan = [];
+// hapus barang
+function hapusSupplier($id)
+{
+    global $koneksi;
 
-    $max_menu = count(ambil_data("SELECT * FROM barang"));
-
-    for ($i = 1; $i <= $max_menu; $i++) {
-
-        if ((int) $_POST["qty$i"] != 0) {
-
-            array_push($list_pesanan, [
-
-                "kode_menu" => $_POST["kode_menu$i"],
-                "qty" => (int) $_POST["qty$i"]
-            ]);
-        }
-    }
-
-    // Cek Jika Memesan Tapi Kosong
-    if (count($list_pesanan) == 0) {
-        echo "<script>
-            alert('Anda belum memesan menu!');
-        </script>";
-        return -1;
-    }
-
-    global $sesID; // $sesID belum didefinisikan dalam potongan kode yang diberikan
-
-    // Tambah Data Transaksi
-    mysqli_query(
-        $koneksi,
-        "INSERT INTO penjualan
-                            VALUES ('', NOW(), 0, 0, NULL, 2);"
-
-    );
-
-    $ambilIdPenjualan = mysqli_insert_id($koneksi);
-
-    // Tambah Data Pesanan
-    foreach ($list_pesanan as $lp) {
-
-        $kode_menu = $lp["kode_menu"];
-        $qty = $lp["qty"];
-
-        mysqli_query($koneksi, "INSERT INTO detailpenjualan
-                                VALUES ('', $ambilIdPenjualan, '$kode_menu', '', 0, $qty, 0);
-
-        ");
-    }
+    $query = "DELETE FROM `supplier` WHERE ID_Supplier = '$id'";
+    mysqli_query($koneksi, $query);
 
     return mysqli_affected_rows($koneksi);
 }

@@ -12,48 +12,41 @@ $sesLvl = $_SESSION ['level'];
 
 $PilihID = isset($_GET['id']) ? $_GET['id'] : null;
 
+$tanggal = mysqli_query($koneksi, "SELECT date_format(Tgl_Penjualan, '%d %M %Y') as formatted_date FROM penjualan where id_penjualan = $PilihID");
+$ambil_tgl = $tanggal->fetch_assoc();
+
+// Menampilkan kasir yang bertugas pada transaksi
+$kasir = mysqli_query($koneksi, "SELECT penjualan.User_ID, user.Nama FROM penjualan JOIN user ON penjualan.User_ID = user.User_ID WHERE ID_Penjualan = '$PilihID'");
+$ambilKasir = $kasir->fetch_assoc();
+$namaKasir = $ambilKasir['Nama'];
 
 ?>
 <html>
 <head>
     <title>print</title>
     <link rel="stylesheet" href="assets/css/bootstrap.css">
-    <style>
-        @media print {
-            body {
-                width: 21cm;
-                height: 29.7cm;
-                margin: 0 auto;
-                margin-bottom: 0.5cm;
-                font-size: 12pt;
-            }
-
-            table {
-                font-size: 10pt;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles2.css">
 </head>
 
-<body>
-    <div class="container">
+<body id="ukurannota">
+    <div class="d-flex align-items-center">
+    <div class="container" style="width: 100%;">
         <div class="row">
-            <div class="col-sm-4"></div>
             <div class="col-sm-4">
                 <center>
                     <p><?php echo "DIJEE ELETRONIK" ?></p>
-                    <p><?php echo "Jl." ?></p>
+                    <p><?php echo "Jl. Ambulu, Purwojari, Dukuh Dempok, Kec. Wuluhan" ?></p>
                     <?php date_default_timezone_set('Asia/Jakarta'); ?>
-                    <?php echo "<p>" . date("j F Y, G:i") . "</p>"; ?>
-                    <p>Kasir : <?php echo htmlentities($sesName); ?></p>
+                    <p><?php echo  $ambil_tgl['formatted_date']; ?></p>
+                    <p>Kasir : <?php echo htmlentities($namaKasir); ?></p>
                 </center>
-                <table class="table table-bordered" style="width:100%;">
-                    <tr>
-                        <td>No.</td>
-                        <td>Nama Produk</td>
-                        <td>Harga</td>
-                        <td>Jumlah</td>
-                        <td>SubTotal</td>
+                <table class="tabel" class="table table-bordered" style="width:100%;">
+                    <tr class="trBold">
+                        <th class="tabel">No.</th>
+                        <th class="tabel">Nama Produk</th>
+                        <th class="tabel">Harga</th>
+                        <th class="tabel">Jumlah</th>
+                        <th class="tabel">SubTotal</th>
                     </tr>
                     <?php
                     
@@ -78,11 +71,11 @@ $PilihID = isset($_GET['id']) ? $_GET['id'] : null;
                         $no = 1;
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr>";
-                            echo "<td>" . $no . "</td>";
-                            echo "<td>" . $row['Nama'] . "</td>";
-                            echo "<td>" . $row['HargaJual'] . "</td>";
-                            echo "<td>" . $row['Jumlah'] . "</td>";
-                            echo "<td>" . $row['subTotal'] . "</td>"; // Corrected case here
+                            echo "<td class='tabel'>" . $no . "</td>";
+                            echo "<td class='tabel'>" . $row['Nama'] . "</td>";
+                            echo "<td class='tabel harga'>" . "Rp" . number_format( $row['HargaJual']) . "</td>";
+                            echo "<td class='tabel' style='text-align: center;'>" . $row['Jumlah'] . "</td>";
+                            echo "<td class='tabel harga'>" . "Rp" . number_format($row['subTotal']) . "</td>"; // Corrected case here
                             echo "</tr>";
                         
                             $no++;
@@ -91,39 +84,42 @@ $PilihID = isset($_GET['id']) ? $_GET['id'] : null;
                     } else {
                         echo "<tr><td colspan='5'>Tidak ada data penjualan</td></tr>";
                     }
-
-                    ?>
-                </table>
-                <?php
-                // Query untuk mendapatkan data pembayaran dan kembalian
+                    
+                    // Query untuk mendapatkan data pembayaran dan kembalian
                 $query_pembayaran = "SELECT total, pembayaran, uangKembalian FROM penjualan WHERE ID_Penjualan = '$PilihID'";
                 $result_pembayaran = $koneksi->query($query_pembayaran);
-
-                if ($result_pembayaran === false) {
-                    // Query execution failed
-                    die("Error executing query: " . $conn->error);
-                }
 
                 if ($result_pembayaran->num_rows > 0) {
                     $row_pembayaran = $result_pembayaran->fetch_assoc();
                     $total = $row_pembayaran['total'];
                     $pembayaran = $row_pembayaran['pembayaran'];
                     $kembalian = $row_pembayaran['uangKembalian'];
-
-                    echo '<div class="pull-right">';
-                    echo 'Total : Rp.' . number_format($total) . ',<br />';
-                    echo 'Bayar : Rp.' . number_format($pembayaran) . ',<br />';
-                    echo 'Kembali : Rp.' . number_format($kembalian) . ',';
-                    echo '</div>';
+                    ?>
+                    <tr>
+                        <th colspan="4" class='tabel '>Total</th>
+                        <td class='tabel harga'><?php echo 'Rp' . number_format($total); ?></td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class='tabel '>Bayar</th>
+                        <td class='tabel harga'><?php echo 'Rp' . number_format($pembayaran); ?></td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class='tabel '>Kembali</th>
+                        <td class='tabel harga'><?php echo 'Rp' . number_format($kembalian) ; ?></td>
+                    </tr>
+                </table>
+                <div class="mt-5">
+                <?php
                 }
                 ?>
-                <div class="clearfix"></div>
+                </div>
                 <center>
                     <p>Terima Kasih Telah berbelanja di toko kami !</p>
                 </center>
             </div>
             <div class="col-sm-4"></div>
         </div>
+    </div>
     </div>
     <script>
         window.print();

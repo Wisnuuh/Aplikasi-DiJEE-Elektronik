@@ -14,4 +14,8 @@ window.addEventListener('DOMContentLoaded', event => {
     if (datatablesSimple3) {
         new simpleDatatables.DataTable(datatablesSimple3);
     }
+    const datatablesSimple4 = document.getElementById('datatablesSimple4');
+    if (datatablesSimple4) {
+        new simpleDatatables.DataTable(datatablesSimple4);
+    }
 });

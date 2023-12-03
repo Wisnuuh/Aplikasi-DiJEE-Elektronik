@@ -65,8 +65,11 @@ if(isset($_POST['proses'])) {
         $kurangiStok = mysqli_query($koneksi, "UPDATE barang SET Jumlah = '$minStok' WHERE Barang_ID = '$idbarang'");
     }
 
+    echo '<script>window.open("print.php", "_blank"); window.location.href = "home.php";</script>';
+    exit();
+
     // Redirect setelah selesai mengolah data
-    header('Location: home.php');
+    // header('Location: home.php');
 }
 
 ?>
@@ -148,7 +151,7 @@ if(isset($_POST['proses'])) {
                                         <tbody>
                                         <?php 
 
-                                        foreach(@$ids['id'] as $key => $barangID) {
+                                        foreach($ids['id'] as $key => $barangID) {
                                             $sqlSelect = "SELECT * FROM barang WHERE Barang_ID = '$barangID'";
                                             $result = $koneksi->query($sqlSelect);
 
@@ -208,14 +211,7 @@ if(isset($_POST['proses'])) {
                                         </table>
                                     </div>
                                 </div>
-                                <button class="btn btn-primary float-end" name="proses" target="_blank">Proses</button>
-                                <tr>
-								<td>
-                                    <a href="print.php" target="_blank" class="btn btn-secondary">
-                                        <i class="fa fa-print"></i> Print Untuk Bukti Pembayaran
-                                    </a>
-                                </td>
-							</tr>
+                                ><button class="btn btn-primary  float-end" name="proses">Proses</button>
                             </div>
                         </div>
                     </div>
@@ -224,6 +220,8 @@ if(isset($_POST['proses'])) {
             </div>
         </main>
     </div>
+    <script>
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>

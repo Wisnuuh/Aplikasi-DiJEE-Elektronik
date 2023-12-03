@@ -45,10 +45,13 @@
                         <li class="breadcrumb-item active">Profil</li>
                     </ol>
                 </div>
-                <img src="assets/img/1.jpeg" alt="" style="width: 600px;">
-                <div class="col-md-8 mt-1">
+                
+                <div class="col mt-1 px-4">
                     <div class="card mb-3 content">
-                        <h1 class="m-3pt-3">About</h1>
+                    <div class="d-flex justify-content-between">
+                        <h1 class="m-3 pt-3">About</h1>
+                        <i class="fa-solid fa-circle-user fa-4x m-3 pt-3" style="font-size: 5em;"></i>
+                        </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3">

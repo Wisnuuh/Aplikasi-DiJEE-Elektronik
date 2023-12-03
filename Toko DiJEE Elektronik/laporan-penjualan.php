@@ -54,15 +54,14 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">Laporan</h1>
+                    <h1 class="mt-4">Laporan Penjualan</h1>
                     <ol class="breadcrumb mb-4">
                         <a class="breadcrumb-item active" href="home.php">
                             <li>Dashboard</li>
                         </a>
-                        <li class="breadcrumb-item active">Laporan</li>
+                        <li class="breadcrumb-item active">Laporan Penjualan</li>
                     </ol>
                 </div>
-
                 <!-- Tombol Cari -->
                 <div class="col mb-3 px-4">
                     <div class="card shadow">
@@ -114,15 +113,10 @@
                                                     ?>
                                                     </td>
                                                     <td>
-                                                    <input type="hidden" name="periode" value="ya">
-                                                    <button class="btn btn-primary">
-                                                        <i class="fa fa-search"></i> Cari
-                                                    </button>
-                                                    <?php if (!empty($_GET['cari'])) { ?>
-                                                        <a href="excel.php?cari=yes" class="btn btn-info"><i class="fa fa-download"></i> Excel</a>
-                                                    <?php } else { ?>
-                                                        <a href="excel.php" class="btn btn-info"><i class="fa fa-download"></i> Excel</a>
-                                                    <?php } ?>
+                                                        <input type="hidden" name="periode" value="ya">
+                                                        <button class="btn btn-primary">
+                                                            <i class="fa fa-search"></i> Cari
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -146,15 +140,6 @@
                                                         <button class="btn btn-primary">
                                                             <i class="fa fa-search"></i> Cari
                                                         </button>
-
-                                                        <?php if(!empty($_GET['hari'])){?>
-                                                        <a href="excel.php?hari=cek&tgl=<?= $_POST['hari'];?>" class="btn btn-info"><i
-                                                                class="fa fa-download"></i>
-                                                            Excel</a>
-                                                        <?php }else{?>
-                                                        <a href="excel.php" class="btn btn-info"><i class="fa fa-download"></i>
-                                                            Excel</a>
-                                                        <?php }?>
                                                     </td>
                                                 </tr>
                                             </table>
@@ -176,7 +161,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="datatablesSimple4">
                                     <thead>
                                         <tr>
                                             <td>ID Penjualan</td>
@@ -193,21 +178,21 @@
                                         $bulan = $_POST['bln'];
                                         $tahun = $_POST['thn'];
 
-                                        $tampil = mysqli_query($koneksi, "SELECT penjualan.ID_Penjualan, penjualan.Tgl_Penjualan, penjualan.total, user.Nama 
+                                        $tampil = mysqli_query($koneksi, "SELECT penjualan.ID_Penjualan, DATE_FORMAT(penjualan.Tgl_Penjualan, '%d %M %Y') as formatted_date, penjualan.total, user.Nama 
                                                                             FROM penjualan 
-                                                                            JOIN user ON penjualan.User_ID = user.User_ID 
+                                                                            JOIN user ON penjualan.User_ID = user.User_ID
                                                                             WHERE MONTH(penjualan.Tgl_Penjualan) = '$bulan' AND YEAR(penjualan.Tgl_Penjualan) = '$tahun'
                                                                             ORDER BY penjualan.Tgl_Penjualan DESC");
                                     } elseif (isset($_GET['hari']) && $_GET['hari'] == 'cek') {
                                         $tanggal = $_POST['hari'];
 
-                                        $tampil = mysqli_query($koneksi, "SELECT penjualan.ID_Penjualan, penjualan.Tgl_Penjualan, penjualan.total, user.Nama 
+                                        $tampil = mysqli_query($koneksi, "SELECT penjualan.ID_Penjualan, DATE_FORMAT(penjualan.Tgl_Penjualan, '%d %M %Y') as formatted_date, penjualan.total, user.Nama 
                                                                             FROM penjualan 
                                                                             JOIN user ON penjualan.User_ID = user.User_ID  
                                                                             WHERE DATE(penjualan.Tgl_Penjualan) = '$tanggal'
                                                                             ORDER BY penjualan.Tgl_Penjualan DESC");
                                     } else {
-                                        $tampil = mysqli_query($koneksi, "SELECT penjualan.ID_Penjualan, penjualan.Tgl_Penjualan, penjualan.total, user.Nama 
+                                        $tampil = mysqli_query($koneksi, "SELECT penjualan.ID_Penjualan, DATE_FORMAT(penjualan.Tgl_Penjualan, '%d %M %Y') as formatted_date, penjualan.total, user.Nama 
                                                                             FROM penjualan 
                                                                             JOIN user ON penjualan.User_ID = user.User_ID
                                                                             ORDER BY penjualan.Tgl_Penjualan DESC");
@@ -219,7 +204,7 @@
                                     ?>
                                     <tr>
                                         <td><?= $data['ID_Penjualan'] ?></td>
-                                        <td><?= $data['Tgl_Penjualan'] ?></td>
+                                        <td><?= $data['formatted_date'] ?></td>
                                         <td><?= $data['total'] ?></td>
                                         <td><?= $data['Nama'] ?></td>
                                         <td>

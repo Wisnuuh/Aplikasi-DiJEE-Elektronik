@@ -1,7 +1,7 @@
 <?php
 
     require ("koneksi.php");
-    // $email = isset($_GET['user_fullname']) ? $_GET['user_fullname'] : "";
+    require_once "functions.php";
 
     session_start();
 
@@ -12,6 +12,8 @@
     $sesID = $_SESSION ['id'];
     $sesName = $_SESSION ['name'];
     $sesLvl = $_SESSION ['level'];
+
+    $tampilSupp = tampil_supplier("SELECT * FROM supplier");
 
 ?>
 
@@ -48,14 +50,19 @@
                         Data Supplier
                     </div>
                     <div class="card-body">
+                        <div class="d-flex justify-content-end mb-3">
+                            <button type="button" class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                                Tambah Supplier
+                            </button>
+                        </div>
                         <table id="datatablesSimple">
                             <thead>
                                 <tr>
-                                    <th>No</th>
                                     <th>ID Supplier</th>
                                     <th>Nama Supplier</th>
                                     <th>Alamat</th>
-                                    <th>Nomor Telepon/th>
+                                    <th>Nomor Telepon</th>
+                                    <th>Acton</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,13 +75,23 @@
                                 while ($row = mysqli_fetch_array($result)) {
                                         
                                 echo "<tr>";
-                                echo     "<td>" . $no . "</td>";
                                 echo     "<td>" . $row['ID_Supplier'] . "</td>";
                                 echo     "<td>" . $row['Nama_Supplier'] . "</td>";
                                 echo     "<td>" . $row['Alamat'] . "</td>";
                                 echo     "<td>" . $row['No_Telp'] . "</td>";
+                                echo     "<td>";
+                                echo         '<ul class="list-inline">';
+                                echo             '<li class="list-inline-item">';
+                                echo            '<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editSupp' . $row['ID_Supplier'] . '">Edit</button>';
+
+                                echo             '</li>';
+                                echo             '<li class="list-inline-item">';
+                                echo                 '<button class="btn btn-md btn-danger remove-item-btn" data-bs-toggle="modal" data-bs-target="#hapusSupp' . $row['ID_Supplier'] . '">Hapus</button>';
+                                echo             '</li>';
+                                echo         '</ul>';
+                                echo     "</td>";
                                 echo "</tr>";
-                                    $no++; }
+                                }
                                 ?>
                                 
                             </tbody>
@@ -82,19 +99,101 @@
                     </div>
                 </div>
             </div>
-        </main>
-        <footer class="py-4 bg-light mt-auto">
-            <div class="container-fluid px-4">
-                <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                    <div>
-                        <a href="#">Privacy Policy</a>
-                        &middot;
-                        <a href="#">Terms &amp; Conditions</a>
+            <!-- modal tambah supplier -->
+            <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Tambah Supplier</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form action="" method="post">
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="nama" class="form-label">Nama Supplier:</label>
+                                    <input type="name" name="namaSupp" class="form-control" id="nama" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="alamatsupp" class="form-label">Alamat:</label>
+                                    <input type="text" name="alamatSupp" class="form-control" id="alamatsupp" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="garansi" class="form-label">No Telepon:</label>
+                                    <input type="number" name="noSupp" class="form-control" id="garansi">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                <button type="submit" name="submit" class="btn btn-primary">Tambah</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </footer>
+
+            <!-- modal update -->
+            <?php foreach ($tampilSupp as $suppliers) : ?>
+                <div class="modal fade" id="editSupp<?= $suppliers['ID_Supplier'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Update Barang</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form action="" method="post">
+                                <div class="modal-body">
+                                    <input type="hidden" name="ID" value="<?= $suppliers['ID_Supplier'] ?>">
+                                    <div class="mb-3">
+                                        <label for="nama" class="form-label">Nama Supplier:</label>
+                                        <input type="name" name="nama" class="form-control" id="nama" value="<?= $suppliers['Nama_Supplier'] ?>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="jumlah" class="form-label">Alamat:</label>
+                                        <input type="text" name="alamat" class="form-control" id="jumlah" value="<?= $suppliers['Alamat'] ?>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="jumlah" class="form-label">Nomor Telepon:</label>
+                                        <input type="number" name="nomorTelfon" class="form-control" id="tambahstok" value="<?= $suppliers['No_Telp'] ?>">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                    <button type="submit" name="edit" class="btn btn-primary">Simpan</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+
+            <!-- modal hapus -->
+            <?php foreach ($tampilSupp as $suppliers) : ?>
+                <div class="modal fade zoomIn" id="hapusSupp<?= $suppliers['ID_Supplier'] ?>" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mt-2 text-center">
+                                    <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                                        <h4>Anda Yakin ?</h4>
+                                        <p class="text-muted mx-4 mb-0">Anda Yakin Mau Menghapus Data Ini ?</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                                    <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Batal</button>
+                                    <form action="" method="POST" style="display: inline;">
+                                        <input type="hidden" value="<?= $suppliers['ID_Supplier'] ?>" name="id">
+                                        <button type="submit" name="hapus_barang" class="btn w-sm btn-danger">Ya, Hapus!</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
@@ -103,64 +202,100 @@
     <script src="assets/demo/chart-bar-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="js/datatables-simple-demo.js"></script>
+    <script src="sweetalert/sweetalert2.all.min.js"></script>
 </body>
 </html>
 
+<?php 
 
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Selamat Datang <?php echo $email; ?></h1>
-    <h1>Selamat Datang <?php echo $sesName; ?></h1>
-    <table border="1">
-        <tr style="text-align: center;">
-            <td>No</td>
-            <td>Email</td>
-            <td>Nama</td>
-            <td>Edit</td>
-        </tr>
-        <?php
+// tambah supplier
+if (isset($_POST["submit"])) {
+    if (tambahSupplier($_POST) > 0) {
+        
+        echo "
+            <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Data gagal ditambahkan'
+            }).then(function (){
+                document.location.href = 'data-supplier.php';
+            });
+            </script>
+        ";
+    } else {
+        echo "
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Data berhasil ditambahkan'
+                }).then(function (){
+                    document.location.href = 'data-supplier.php';
+                });
+            </script>
+        ";
+    }
+}
 
-            $query = "SELECT * FROM user";
-            $result = mysqli_query($koneksi, $query);
-            $no = 1;
+// edit supplier
+if (isset($_POST["edit"])) {
+    if (edit_supplier($_POST)) {
+        echo "
+            <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Data gagal diubah'
+            }).then(function (){
+                document.location.href = 'data-supplier.php';
+            });
+            </script>
+        ";
+    } else {
+        echo "
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Data berhasil diubah'
+                }).then(function (){
+                    document.location.href = 'data-supplier.php';
+                });
+            </script>
+        ";
+        
+    }
+}
 
-            if ($sesLvl == 1) {
+// hapus data barang
+if (isset($_POST["hapus_barang"])) {
+    $id = $_POST["id"];
+    if (hapusSupplier($id) > 0) {
+        echo "
+        <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: 'Data barang berhasil dihapus'
+        }).then(function () {
+            document.location.href = 'data-supplier.php';
+        });
+        </script> 
+    ";
+    } else {
+        echo "
+        <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'data barang gagal di hapus!'
+        }).then(function () {
+            document.location.href = 'data-supplier.php'; 
+        });
+        </script>
+    ";
+    }
+}
 
-                $dis = "";
-            } else {
-
-                $dis = "disabled";
-            }
-            
-            while ($row = mysqli_fetch_array($result)) {
-                    
-                $userMail = $row['username'];
-                $userName = $row['Nama'];
-
-        ?>
-
-        <tr>
-            <td><?php echo $no; ?></td>
-            <td><?php echo $userMail; ?></td>
-            <td><?php echo $userName; ?></td>
-            <td><a href="edit.php?id=<?php echo $row['User_ID'];?>"
-                style="text-decoration: none; color:black;">
-                <input type="button" value="edit" <?php echo $dis; ?>></a>
-                <a href="hapus.php?id=<?php echo $row['User_ID'];?>"
-                style="text-decoration: none; color:black;">
-                <input type="button" value="hapus" <?php echo $dis; ?>></a>
-            </td>
-        </tr>
-        <?php
-        $no++;
-            }
-        ?>
-    </table>
-    <br>
-    <p><a href="logout.php">Log out</a></p>
-</body>
-</html> -->
+?>

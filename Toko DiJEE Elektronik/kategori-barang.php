@@ -59,7 +59,7 @@ $kategories = tampil_kategori("SELECT * FROM kategori");
                             </button>
                             </div>
                             <div class="table-responsive">
-                                <table id="datatablesSimple4">
+                                <table id="datatablesSimple">
                                     <thead>
                                         <tr>
                                             <th>ID</th>
