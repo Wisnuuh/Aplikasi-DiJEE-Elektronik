@@ -50,7 +50,7 @@ $akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
                 <!-- Hak akses pemilik dan karyawan -->
                 <div <?php  echo $akses2; ?>>
                 <div class="container-fluid px-4">
-                    <iframe title="aplikasidijee" width="1030" height="700" src="https://app.powerbi.com/view?r=eyJrIjoiNmRjYjFhNTktZTgyYS00NWY2LWFmNDgtMzk3OTNhNmM2NDU4IiwidCI6IjUyNjNjYzgxLTU5MTItNDJjNC1hYmMxLWQwZjFiNjY4YjUzMCIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
+                <iframe title="Report Section" width="980" height="700" src="https://app.powerbi.com/view?r=eyJrIjoiMjJjNjViM2UtOTFmMi00NzE3LTlkYzMtYzU5NTBkYzU4M2QwIiwidCI6IjUyNjNjYzgxLTU5MTItNDJjNC1hYmMxLWQwZjFiNjY4YjUzMCIsImMiOjEwfQ%3D%3D" frameborder="0" allowFullScreen="true"></iframe>
                 </div>
                 </div>
                 <div <?php  echo $akses; ?>>
