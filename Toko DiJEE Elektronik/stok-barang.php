@@ -14,7 +14,6 @@ $sesID = $_SESSION['id'];
 $sesName = $_SESSION['name'];
 $sesLvl = $_SESSION['level'];
 
-
 $kategories = tampil_kategori("SELECT * FROM kategori");
 $suppliers = tampil_kategori("SELECT * FROM supplier");
 $barangs = tampil_barang("SELECT Barang_ID, barang.Kategori_ID, barang.ID_Supplier ,barang.Nama as 'barang', Jumlah, Garansi, HargaBeli, HargaJual, kategori.Nama as 'kategori', supplier.Nama_Supplier as 'supplier'
@@ -103,7 +102,7 @@ if (isset($_POST['tambah'])) {
                         <div class="card-body">
                             <div class="d-flex justify-content-end mb-3">
                                 <button type="button" class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                                    tambah barang
+                                    Tambah Barang
                                 </button>
                             </div>
                             <div class="table-responsive">
@@ -400,35 +399,35 @@ if (isset($_POST["edit"])) {
     }
 }
 
-    // hapus data barang
-    if (isset($_POST["hapus_barang"])) {
-        $id = $_POST["id"];
-        if (hapusBarang($id) > 0) {
-            echo "
-            <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil',
-                text: 'Data barang berhasil dihapus'
-            }).then(function () {
-                document.location.href = 'stok-barang.php';
-            });
-            </script> 
-        ";
-        } else {
-            echo "
-            <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Gagal',
-                text: 'data barang gagal di hapus!'
-            }).then(function () {
-                document.location.href = 'stok-barang.php'; 
-            });
-            </script>
-        ";
-        }
+// hapus data barang
+if (isset($_POST["hapus_barang"])) {
+    $id = $_POST["id"];
+    if (hapusBarang($id) > 0) {
+        echo "
+        <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: 'Data barang berhasil dihapus'
+        }).then(function () {
+            document.location.href = 'stok-barang.php';
+        });
+        </script> 
+    ";
+    } else {
+        echo "
+        <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: 'data barang gagal di hapus!'
+        }).then(function () {
+            document.location.href = 'stok-barang.php'; 
+        });
+        </script>
+    ";
     }
+}
 
 
 ?>

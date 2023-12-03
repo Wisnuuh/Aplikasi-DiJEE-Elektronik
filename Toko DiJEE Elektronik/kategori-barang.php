@@ -55,7 +55,7 @@ $kategories = tampil_kategori("SELECT * FROM kategori");
                         <div class="card-body">
                             <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                                tambah Kategori barang
+                                Tambah Kategori
                             </button>
                             </div>
                             <div class="table-responsive">
@@ -113,17 +113,17 @@ $kategories = tampil_kategori("SELECT * FROM kategori");
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Kategori</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="" method="post">
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="kategori" class="form-label">kategori barang</label>
+                            <label for="kategori" class="form-label">Nama Kategori:</label>
                             <input type="name" name="kategori" class="form-control" id="kategori" required>
                         </div>
                         <div class="mb-3">
-                            <label for="deskripsi" class="form-label">deskripsi</label>
+                            <label for="deskripsi" class="form-label">Deskripsi:</label>
                             <input type="text" name="deskripsi" class="form-control" id="deskripsi" required>
                         </div>
                     </div>
@@ -142,24 +142,24 @@ $kategories = tampil_kategori("SELECT * FROM kategori");
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Update Barang</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Update Kategori</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <form action="" method="post">
                         <div class="modal-body">
                             <input type="hidden" name="ID" value="<?= $kategori["Kategori_ID"] ?>">
                             <div class="mb-3">
-                                <label for="kategori" class="form-label">kategori barang</label>
+                                <label for="kategori" class="form-label">Nama Kategori:</label>
                                 <input type="name" name="kategori" class="form-control" id="kategori" value="<?= $kategori["Nama"] ?>" required>
                             </div>
                             <div class="mb-3">
-                                <label for="deskripsi" class="form-label">deskripsi</label>
+                                <label for="deskripsi" class="form-label">Deskripsi:</label>
                                 <input type="text" name="deskripsi" class="form-control" id="deskripsi" value="<?= $kategori["Deskripsi"] ?>" required>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" name="edit_kategori" class="btn btn-primary">Save changes</button>
+                            <button type="submit" name="edit_kategori" class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
                 </div>

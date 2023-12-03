@@ -198,7 +198,7 @@
                                                                             FROM pembelian 
                                                                             JOIN detailpembelian ON pembelian.Pembelian_ID = detailpembelian.Pembelian_ID
                                                                             JOIN barang ON detailpembelian.Barang_ID = barang.Barang_ID
-                                                                            ORDER BY pembelian.Tanggal_Pembelian DESC");
+                                                                            ORDER BY pembelian.Pembelian_ID DESC");
                                     }
 
                                     $no = 1;

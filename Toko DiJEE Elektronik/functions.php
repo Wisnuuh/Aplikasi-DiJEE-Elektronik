@@ -86,7 +86,6 @@ function hapuskaryawan($id)
     return mysqli_affected_rows($koneksi);
 }
 
-
 function tampil_kategori($query)
 {
     global $koneksi;

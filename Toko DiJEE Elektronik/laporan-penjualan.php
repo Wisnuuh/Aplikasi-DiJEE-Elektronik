@@ -71,7 +71,7 @@
                                     <div class="card-header">
                                         <h5 class="">Cari Laporan Per Bulan</h5>
                                     </div>
-                                        <form method="post" action="laporan.php?page=laporan&cari=ok">
+                                        <form method="post" action="laporan-penjualan.php?page=laporan&cari=ok">
                                             <table class="table table-striped">
                                                 <tr>
                                                     <th>
@@ -121,7 +121,7 @@
                                                 </tr>
                                             </table>
                                         </form>
-                                        <form method="post" action="laporan.php?page=laporan&hari=cek">
+                                        <form method="post" action="laporan-penjualan.php?page=laporan&hari=cek">
                                             <table class="table table-striped">
                                                 <tr>
                                                     <th>
@@ -143,7 +143,7 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <a href="laporan.php?page=laporan" class="btn btn-success">
+                                            <a href="laporan-penjualan.php?page=laporan" class="btn btn-success">
                                                 <i class="fa fa-refresh"></i> Refresh
                                             </a>
                                         </form>
@@ -182,7 +182,7 @@
                                                                             FROM penjualan 
                                                                             JOIN user ON penjualan.User_ID = user.User_ID
                                                                             WHERE MONTH(penjualan.Tgl_Penjualan) = '$bulan' AND YEAR(penjualan.Tgl_Penjualan) = '$tahun'
-                                                                            ORDER BY penjualan.Tgl_Penjualan DESC");
+                                                                            ORDER BY penjualan.ID_Penjualan DESC");
                                     } elseif (isset($_GET['hari']) && $_GET['hari'] == 'cek') {
                                         $tanggal = $_POST['hari'];
 
@@ -190,27 +190,27 @@
                                                                             FROM penjualan 
                                                                             JOIN user ON penjualan.User_ID = user.User_ID  
                                                                             WHERE DATE(penjualan.Tgl_Penjualan) = '$tanggal'
-                                                                            ORDER BY penjualan.Tgl_Penjualan DESC");
+                                                                            ORDER BY penjualan.ID_Penjualan DESC");
                                     } else {
                                         $tampil = mysqli_query($koneksi, "SELECT penjualan.ID_Penjualan, DATE_FORMAT(penjualan.Tgl_Penjualan, '%d %M %Y') as formatted_date, penjualan.total, user.Nama 
                                                                             FROM penjualan 
                                                                             JOIN user ON penjualan.User_ID = user.User_ID
-                                                                            ORDER BY penjualan.Tgl_Penjualan DESC");
+                                                                            ORDER BY penjualan.ID_Penjualan DESC");
                                     }
 
                                     $no = 1;
                                     while ($data = mysqli_fetch_array($tampil)):
 
                                     ?>
-                                    <tr>
-                                        <td><?= $data['ID_Penjualan'] ?></td>
-                                        <td><?= $data['formatted_date'] ?></td>
-                                        <td><?= $data['total'] ?></td>
-                                        <td><?= $data['Nama'] ?></td>
-                                        <td>
-                                            <a href="lihatnota.php?id=<?= $data['ID_Penjualan'] ?>" class="btn btn-primary" target="_blank">Lihat</a>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td><?= $data['ID_Penjualan'] ?></td>
+                                            <td><?= $data['formatted_date'] ?></td>
+                                            <td><?= $data['total'] ?></td>
+                                            <td><?= $data['Nama'] ?></td>
+                                            <td>
+                                                <a href="lihatnota.php?id=<?= $data['ID_Penjualan'] ?>" class="btn btn-primary" target="_blank">Lihat</a>
+                                            </td>
+                                        </tr>
                                     <?php
 
                                     $no++;
