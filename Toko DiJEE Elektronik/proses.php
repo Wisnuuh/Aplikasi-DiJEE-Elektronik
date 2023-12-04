@@ -65,7 +65,7 @@ if(isset($_POST['proses'])) {
         $kurangiStok = mysqli_query($koneksi, "UPDATE barang SET Jumlah = '$minStok' WHERE Barang_ID = '$idbarang'");
     }
 
-    echo '<script>window.open("print.php", "_blank"); window.location.href = "home.php";</script>';
+    echo '<script>window.open("print.php", "_blank"); window.location.href = "index.php";</script>';
 
     // Redirect setelah selesai mengolah data
     // header('Location: home.php');
@@ -92,7 +92,7 @@ if(isset($_POST['proses'])) {
     <nav class="sb-topnav navbar navbar-expand maincol">
         <!-- Navbar Brand-->
         <img class="ms-3" src="assets/img/logo dijee.png" alt="" style="width: 40px;">
-        <a class="h4 namatoko" href="home.php">Toko DiJEE</a>
+        <a class="h4 namatoko" href="index.php">Toko DiJEE</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 p" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar Search-->

@@ -36,8 +36,8 @@ $akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
 
 <body class="sb-nav-fixed">
 
-<!-- Memanggil navbar -->
-<?php require_once "navbar.php"; ?>
+    <!-- Memanggil navbar -->
+    <?php require_once "navbar.php"; ?>
 
         <div id="layoutSidenav_content">
             <main>

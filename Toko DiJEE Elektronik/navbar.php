@@ -32,7 +32,7 @@ $akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
                 <div class="sb-sidenav-menu">
                     <div class="nav grid gap-3">
                         <div class="sb-sidenav-menu-heading textcolor">Utama</div>
-                        <a class="nav-link textcolor" href="home.php">
+                        <a class="nav-link textcolor" href="index.php">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-house fa-lg iconcolor"></i></div>
                             Dashboard
                         </a>

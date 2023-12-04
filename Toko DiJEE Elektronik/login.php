@@ -33,7 +33,7 @@
                     $_SESSION['id'] = $id;
                     $_SESSION['name'] = $userName;
                     $_SESSION['level'] = $level;
-                    header('Location: home.php');
+                    header('Location: index.php');
                 } else {
 
                     $error = 'user atau password salah!!';
