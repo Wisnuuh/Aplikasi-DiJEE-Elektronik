@@ -322,3 +322,15 @@ function hapusSupplier($id)
 
     return mysqli_affected_rows($koneksi);
 }
+
+function tambahRetur($data) {
+
+    global $koneksi;
+
+    $idBarang = $data['pilihBarang'];
+    $jumlah = $data['jumlah'];
+    $akhirGaransi = $data['akhirGaransi'];
+    $keterangan = $data['keterangan'];
+
+    $query = mysqli_query($koneksi, "INSERT INTO incomingclaim VALUES ('', '$idBarang', '$jumlah', '$akhirGaransi', '$keterangan')");
+}

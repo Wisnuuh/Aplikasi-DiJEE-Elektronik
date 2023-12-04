@@ -1,6 +1,7 @@
 <?php
 
     require ("koneksi.php");
+    require_once "functions.php";
     // $email = isset($_GET['user_fullname']) ? $_GET['user_fullname'] : "";
 
     session_start();
@@ -12,6 +13,8 @@
     $sesID = $_SESSION ['id'];
     $sesName = $_SESSION ['name'];
     $sesLvl = $_SESSION ['level'];
+
+    $barangs = tampil_barang("SELECT * FROM barang");
 
 ?>
 
@@ -48,37 +51,37 @@
                         Data Retur Barang
                     </div>
                     <div class="card-body">
+                        <div class="d-flex justify-content-end mb-3">
+                            <button type="button" class="btn btn-primary p-2" data-bs-toggle="modal" data-bs-target="#modalTambahData">
+                                Tambah Data Retur
+                            </button>
+                        </div>
                         <table id="datatablesSimple">
                             <thead>
                                 <tr>
-                                    <th>No</th>
                                     <th>ID Retur</th>
                                     <th>Tanggal Pengembalian</th>
                                     <th>Nama Barang</th>
                                     <th>Jumlah</th>
-                                    <th>Akhir Garansi</th>
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
 
-                                $query = "SELECT Klaim_ID, nama_Barang, Jumlah, Tgl_Pengembalian, akhir_Garansi, Keterangan FROM incomingclaim;";
+                                $query = "SELECT incomingclaim.Klaim_ID, incomingclaim.Jumlah, incomingclaim.Tgl_Pengembalian, incomingclaim.Keterangan, barang.Nama FROM incomingclaim JOIN barang ON incomingclaim.Barang_ID = barang.Barang_ID;";
                                 $result = mysqli_query($koneksi, $query);
-                                $no = 1;
                                 
                                 while ($row = mysqli_fetch_array($result)) {
                                         
                                 echo "<tr>";
-                                echo     "<td>" . $no . "</td>";
                                 echo     "<td>" . $row['Klaim_ID'] . "</td>";
                                 echo     "<td>" . $row['Tgl_Pengembalian'] . "</td>";
-                                echo     "<td>" . $row['nama_Barang'] . "</td>";
+                                echo     "<td>" . $row['Nama'] . "</td>";
                                 echo     "<td>" . $row['Jumlah'] . "</td>";
-                                echo     "<td>" . $row['akhir_Garansi'] . "</td>";
                                 echo     "<td>" . $row['Keterangan'] . "</td>";
                                 echo "</tr>";
-                                    $no++; }
+                                }
                                 ?>
                                 
                             </tbody>
@@ -101,6 +104,56 @@
             </footer>
         </div>
     </div>
+    <!-- modal tambah barang -->
+    <div class="modal fade" id="modalTambahData" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Tambah Barang</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" method="post">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="pilihBarang">Pilih Barang:</label>
+                            <select name="pilihBarang" class="form-select" id="pilihBarang" required>
+                                <option>Pilih Barang</option>
+                                <?php foreach ($barangs as $barang) : ?>
+                                    <option value="<?= $barang["Barang_ID"] ?>"><?= $barang["Nama"] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jumlah" class="form-label">Jumlah:</label>
+                            <input type="number" name="jumlah" class="form-control" id="jumlah" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="akhirGaransi" class="form-label">Akhir Garansi:</label>
+                            <input type="date" name="akhirGaransi" class="form-control" id="akhirGaransi">
+                        </div>
+                        <div class="mb-3">
+                            <label for="keterangan" class="form-label">Keterangan:</label>
+                            <input type="text" name="keterangan" class="form-control" id="keterangan" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button type="submit" name="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Mendapatkan elemen input berdasarkan ID
+        var inputTanggal = document.getElementById('akhirGaransi');
+
+        // Mendapatkan tanggal saat ini dalam format YYYY-MM-DD
+        var tanggalSekarang = new Date().toISOString().split('T')[0];
+
+        // Mengatur nilai input tanggal ke tanggal saat ini
+        inputTanggal.value = tanggalSekarang;
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
@@ -111,61 +164,35 @@
 </body>
 </html>
 
+<?php 
 
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Selamat Datang <?php echo $email; ?></h1>
-    <h1>Selamat Datang <?php echo $sesName; ?></h1>
-    <table border="1">
-        <tr style="text-align: center;">
-            <td>No</td>
-            <td>Email</td>
-            <td>Nama</td>
-            <td>Edit</td>
-        </tr>
-        <?php
+// tambah barang
+if (isset($_POST["submit"])) {
+    if (tambahRetur($_POST) > 0) {
+        echo "
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Data berhasil ditambahkan'
+                }).then(function () {
+                    document.location.href = 'stok-barang.php';
+                });
+            </script>
+        ";
+    } else {
+        echo "
+            <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: 'Data gagal ditambahkan'
+            }).then(function () {
+                document.location.href = 'stok-barang.php';
+            });
+            </script>
+        ";
+    }
+}
 
-            $query = "SELECT * FROM user";
-            $result = mysqli_query($koneksi, $query);
-            $no = 1;
-
-            if ($sesLvl == 1) {
-
-                $dis = "";
-            } else {
-
-                $dis = "disabled";
-            }
-            
-            while ($row = mysqli_fetch_array($result)) {
-                    
-                $userMail = $row['username'];
-                $userName = $row['Nama'];
-
-        ?>
-
-        <tr>
-            <td><?php echo $no; ?></td>
-            <td><?php echo $userMail; ?></td>
-            <td><?php echo $userName; ?></td>
-            <td><a href="edit.php?id=<?php echo $row['User_ID'];?>"
-                style="text-decoration: none; color:black;">
-                <input type="button" value="edit" <?php echo $dis; ?>></a>
-                <a href="hapus.php?id=<?php echo $row['User_ID'];?>"
-                style="text-decoration: none; color:black;">
-                <input type="button" value="hapus" <?php echo $dis; ?>></a>
-            </td>
-        </tr>
-        <?php
-        $no++;
-            }
-        ?>
-    </table>
-    <br>
-    <p><a href="logout.php">Log out</a></p>
-</body>
-</html> -->
+?>

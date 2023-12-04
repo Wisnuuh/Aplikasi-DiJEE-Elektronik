@@ -63,6 +63,9 @@ if (isset($_POST['tambah'])) {
     );
 }
 
+$akses = ($sesLvl != 1) ? 'style=""' : 'style="display: none;"';
+$akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
+
 ?>
 
 <!DOCTYPE html>
@@ -106,7 +109,7 @@ if (isset($_POST['tambah'])) {
                                 </button>
                             </div>
                             <div class="table-responsive">
-                                <table id="datatablesSimple">
+                                <table id="datatablesSimple" >
                                     <thead>
                                         <tr>
                                             <th>No ID</th>
@@ -115,7 +118,7 @@ if (isset($_POST['tambah'])) {
                                             <th>Nama Barang</th>
                                             <th>Stok</th>
                                             <th>Garansi</th>
-                                            <th>Harga Beli</th>
+                                            <th >Harga Beli</th>
                                             <th>Harga Jual</th>
                                             <th>Action</th>
                                         </tr>
@@ -133,7 +136,7 @@ if (isset($_POST['tambah'])) {
                                             echo     "<td>" . $row['barang'] . "</td>";
                                             echo     "<td>" . $row['Jumlah'] . "</td>";
                                             echo     "<td>" . $row['Garansi'] . "</td>";
-                                            echo     "<td>" . $row['HargaBeli'] . "</td>";
+                                            echo     $aksesKaryawan = ($sesLvl == 1) ? "<td>" . $row['HargaBeli'] . "</td>" : "<td>-</td>";
                                             echo     "<td>" . $row['HargaJual'] . "</td>";
                                             echo     "<td>";
                                             echo         '<ul class="list-inline">';
@@ -253,7 +256,7 @@ if (isset($_POST['tambah'])) {
                                 <label for="garansi" class="form-label">Garansi:</label>
                                 <input type="text" name="garansi" class="form-control" id="garansi" value="<?= $barang['Garansi']  ?>" >
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" <?php echo $akses2; ?>>
                                 <label for="harga_beli" class="form-label">Harga Beli:</label>
                                 <input type="number" name="harga_beli" class="form-control" id="harga_beli" value="<?= $barang['HargaBeli']  ?>" required>
                             </div>
