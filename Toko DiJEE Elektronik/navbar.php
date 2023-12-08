@@ -61,10 +61,12 @@ $akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-shopping fa-lg iconcolor"></i></div>
                             Laporan Pembelian
                         </a>
-                        <a class="nav-link textcolor" href="logout.php">
-                            <div class="sb-nav-link-icon"><i class="fa-solid fa-right-from-bracket fa-lg iconcolor"></i></div>
-                            Logout
-                        </a>
+                        <div class="d-flex align-items-end">
+                            <a class="nav-link textcolor" href="logout.php">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-right-from-bracket fa-lg iconcolor"></i></div>
+                                Logout
+                            </a>
+                        </div>
                     </div>
                 </div>
             </nav>
