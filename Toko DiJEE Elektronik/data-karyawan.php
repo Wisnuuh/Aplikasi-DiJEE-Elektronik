@@ -48,22 +48,24 @@ $jenisKaryawans = tampil_jenisKaryawan("SELECT * FROM jenis_user");
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Data Karyawan</h1>
                     <ol class="breadcrumb mb-4">
-                        <a class="breadcrumb-item active" href="home.php">
+                        <a class="breadcrumb-item active" href="index.php">
                             <li>Dashboard</li>
                         </a>
                         <li class="breadcrumb-item active">Data Karyawan</li>
                     </ol>
                 </div>
-                <div class="container">
+                <div class="container-fluid px-4">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fa-solid fa-money-bill-transfer"></i>
+                            <i class="fa-solid fa-user-group"></i>
                             Data Karyawan
                         </div>
                         <div class="card-body">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                                tambah karyawan
-                            </button>
+                            <div class="py-3">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                                    tambah karyawan
+                                </button>
+                            </div>
                             <table id="datatablesSimple" class="table">
                                 <thead>
                                     <tr>
@@ -103,20 +105,49 @@ $jenisKaryawans = tampil_jenisKaryawan("SELECT * FROM jenis_user");
                             </table>
                         </div>
                     </div>
-                </div>
-            </main>
-            <footer class="py-4 bg-light mt-auto">
-                <div class="container-fluid px-4">
-                    <div class="d-flex align-items-center justify-content-between small">
-                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                        <div>
-                            <a href="#">Privacy Policy</a>
-                            &middot;
-                            <a href="#">Terms &amp; Conditions</a>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fa-solid fa-user-group"></i>
+                            Aktivitas login
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple2" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Tanggal</th>
+                                        <th>Waktu</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                    
+                                    $tampilRiwayat = mysqli_query($koneksi, "SELECT user.Nama as namaUser, DATE_FORMAT(riwayataktivitas.tanggal, '%d %M %Y') as tggl, TIME(riwayataktivitas.tanggal) as waktu, riwayataktivitas.status
+                                                                                FROM riwayataktivitas
+                                                                                INNER JOIN user ON riwayataktivitas.User_ID = user.User_ID");
+
+                                    while ($row = mysqli_fetch_array($tampilRiwayat)) {
+                                        
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $row['namaUser']; ?></td>
+                                        <td><?php echo $row['tggl']; ?></td>
+                                        <td><?php echo $row['waktu']; ?></td>
+                                        <td><?php echo $row['status']; ?></td>
+                                    </tr>
+
+                                    <?php 
+                                    
+                                    }
+                                    
+                                    ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            </footer>
+            </main>
         </div>
     </div>
 

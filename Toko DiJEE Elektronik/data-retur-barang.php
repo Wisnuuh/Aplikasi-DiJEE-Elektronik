@@ -117,7 +117,7 @@
                         <div class="mb-3">
                             <label for="pilihBarang">Pilih Barang:</label>
                             <select name="pilihBarang" class="form-select" id="pilihBarang" required>
-                                <option>Pilih Barang</option>
+                                <option selected disabled>Pilih Barang</option>
                                 <?php foreach ($barangs as $barang) : ?>
                                     <option value="<?= $barang["Barang_ID"] ?>"><?= $barang["Nama"] ?></option>
                                 <?php endforeach; ?>

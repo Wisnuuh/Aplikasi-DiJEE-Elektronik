@@ -1,8 +1,9 @@
 <?php
 
     require ('koneksi.php');
-
+    
     session_start();
+    date_default_timezone_set('Asia/Jakarta');
     
     if(isset($_POST['submit'])){
 
@@ -33,6 +34,10 @@
                     $_SESSION['id'] = $id;
                     $_SESSION['name'] = $userName;
                     $_SESSION['level'] = $level;
+                    $iduser = $_SESSION['id'];
+                    $tanggalRiwayat = date("Y-m-d H:i:s");
+                    $insertRiwayat = "INSERT INTO riwayataktivitas VALUES ('', '$iduser', '$tanggalRiwayat', 'Login')";
+                    $insertQuery = mysqli_query($koneksi, $insertRiwayat);
                     header('Location: index.php');
                 } else {
 
@@ -45,7 +50,6 @@
         }
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 

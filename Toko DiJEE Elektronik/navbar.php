@@ -3,7 +3,7 @@ $akses = ($sesLvl != 1) ? 'style=""' : 'style="display: none;"';
 $akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
 ?>
 
-<nav class="sb-topnav navbar navbar-expand maincol">
+    <nav class="sb-topnav navbar navbar-expand maincol">
         <!-- Navbar Brand-->
         <img class="ms-3" src="assets/img/logo dijee.png" alt="" style="width: 40px;">
         <a class="h4 namatoko" href="home.php">Toko DiJEE</a>
@@ -11,18 +11,22 @@ $akses2 = ($sesLvl != 2) ? 'style=""' : 'style="display: none;"';
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 p" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <!-- Navbar-->
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <ul class="navbar-nav">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user fa-2xl"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="akun-karyawan.php">Profil</a></li>
-                        <li>
-                            <hr class="dropdown-divider" />
+            <div class="row">
+                <div class="col">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-user fa-2xl"></i></a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="akun-karyawan.php">Profil</a></li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                            </ul>
                         </li>
-                        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
                     </ul>
-                </li>
-            </ul>
+                </div>
+            </div>
         </form>
         
     </nav>
