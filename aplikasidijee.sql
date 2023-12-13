@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2023 at 03:15 PM
+-- Generation Time: Dec 13, 2023 at 10:48 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -43,7 +43,7 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`Barang_ID`, `Nama`, `Jumlah`, `Garansi`, `HargaBeli`, `HargaJual`, `Kategori_ID`, `ID_Supplier`) VALUES
-(1, 'Lampu Led Maxxis 20W', 1, '', 15000, 17500, 1, 1),
+(1, 'Lampu Led Maxxis 20W', 4, '', 15000, 17500, 1, 1),
 (2, 'Lampu Philips Led 10W', 2, '1 hari', 45000, 50000, 1, 2),
 (3, 'Aper Lebar Lubang Besar', 3, '2 bulan', 2000, 5000, 2, 5),
 (4, 'Aper Lubang Besar', 2, '', 3000, 5000, 2, 5),
@@ -54,16 +54,16 @@ INSERT INTO `barang` (`Barang_ID`, `Nama`, `Jumlah`, `Garansi`, `HargaBeli`, `Ha
 (9, 'Aqua Air Galon', 4, '', 18200, 20000, 3, 3),
 (10, 'Aqua Galon Kosong', 5, '', 30000, 35000, 3, 3),
 (11, 'Aqua Gelas 240ml', 10, '', 21700, 25000, 3, 3),
-(12, 'Arde Besar', 5, '', 27500, 32000, 4, 4),
-(13, 'Arde Kecil', 2, '', 9000, 15000, 4, 4),
+(12, 'Arde Besar', 4, '', 27500, 32000, 4, 4),
+(13, 'Arde Kecil', 0, '', 9000, 15000, 4, 4),
 (14, 'Arde Tanggung', 5, '', 13500, 17500, 4, 4),
 (15, 'Arpus Soder', 3, '', 2500, 4000, 5, 6),
 (16, 'Arpus Soder Kuning', 5, '', 3000, 5000, 5, 6),
 (17, 'Avr Genset Specktek', 4, '', 38000, 100000, 6, 7),
 (18, 'Avr Genset Yamamoto', 5, '', 45000, 125000, 6, 7),
 (19, 'Box Adaptor 1A', 9, '', 3750, 6000, 7, 8),
-(20, 'Box Adaptor 3A', 10, '', 6500, 10000, 7, 8),
-(21, 'Box Adaptor 5A', 3, '', 7000, 12500, 7, 8),
+(20, 'Box Adaptor 3A', 9, '', 6500, 10000, 7, 8),
+(21, 'Box Adaptor 5A', 1, '', 7000, 12500, 7, 8),
 (22, 'Box Ampli AG 02', 4, '', 46000, 60000, 8, 8),
 (23, 'Box Ampli AG 03', 3, '', 47000, 60000, 8, 8),
 (24, 'Box Ampli AG 04', 5, '', 46000, 60000, 8, 8),
@@ -120,7 +120,9 @@ INSERT INTO `detailpembelian` (`ID_DetailPembelian`, `Barang_ID`, `Pembelian_ID`
 (26, 26, 26, 5, 350000),
 (27, 27, 27, 2, 340000),
 (28, 28, 28, 5, 320000),
-(29, 29, 29, 5, 25000);
+(29, 29, 29, 5, 25000),
+(30, 1, 30, 2, 30000),
+(31, 1, 31, 1, 15000);
 
 --
 -- Triggers `detailpembelian`
@@ -173,7 +175,11 @@ INSERT INTO `detailpenjualan` (`ID_detailPenjualan`, `ID_Penjualan`, `Barang_ID`
 (18, 12, 29, 2, 20000),
 (19, 13, 27, 1, 200000),
 (20, 14, 1, 1, 17500),
-(21, 15, 1, 1, 17500);
+(21, 15, 1, 1, 17500),
+(22, 16, 12, 1, 32000),
+(23, 17, 13, 2, 30000),
+(24, 18, 20, 1, 10000),
+(25, 18, 21, 2, 25000);
 
 --
 -- Triggers `detailpenjualan`
@@ -196,10 +202,8 @@ DELIMITER ;
 CREATE TABLE `incomingclaim` (
   `Klaim_ID` int(11) NOT NULL,
   `Barang_ID` int(11) NOT NULL,
-  `nama_Barang` varchar(100) NOT NULL,
   `Jumlah` int(11) NOT NULL,
   `Tgl_Pengembalian` date NOT NULL,
-  `akhir_Garansi` varchar(60) DEFAULT NULL,
   `Keterangan` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -207,8 +211,9 @@ CREATE TABLE `incomingclaim` (
 -- Dumping data for table `incomingclaim`
 --
 
-INSERT INTO `incomingclaim` (`Klaim_ID`, `Barang_ID`, `nama_Barang`, `Jumlah`, `Tgl_Pengembalian`, `akhir_Garansi`, `Keterangan`) VALUES
-(1, 3, 'Aper Lebar Lubang Besar', 1, '2023-05-23', '2023-07-23', 'barang rusak dan kabel putus');
+INSERT INTO `incomingclaim` (`Klaim_ID`, `Barang_ID`, `Jumlah`, `Tgl_Pengembalian`, `Keterangan`) VALUES
+(1, 3, 1, '2023-05-23', 'barang rusak dan kabel putus'),
+(2, 1, 1, '2023-12-04', 'rusak');
 
 -- --------------------------------------------------------
 
@@ -302,7 +307,9 @@ INSERT INTO `pembelian` (`Pembelian_ID`, `Tanggal_Pembelian`, `Total_Pembayaran`
 (26, '2023-12-03', 350000),
 (27, '2023-12-03', 340000),
 (28, '2023-12-03', 320000),
-(29, '2023-12-03', 25000);
+(29, '2023-12-03', 25000),
+(30, '2023-12-03', 30000),
+(31, '2023-12-03', 15000);
 
 -- --------------------------------------------------------
 
@@ -338,7 +345,41 @@ INSERT INTO `penjualan` (`ID_Penjualan`, `Tgl_Penjualan`, `total`, `pembayaran`,
 (12, '2023-12-02', 20000, 50000, 30000, 2),
 (13, '2023-12-18', 200000, 200000, 0, 2),
 (14, '2023-12-19', 17500, 20000, 2500, 2),
-(15, '2023-12-20', 17500, 20000, 2500, 2);
+(15, '2023-12-20', 17500, 20000, 2500, 2),
+(16, '2023-12-03', 32000, 50000, 18000, 3),
+(17, '2023-12-04', 30000, 50000, 20000, 3),
+(18, '2023-12-04', 35000, 50000, 15000, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `riwayataktivitas`
+--
+
+CREATE TABLE `riwayataktivitas` (
+  `ID_Riwayat` int(11) NOT NULL,
+  `User_ID` int(11) NOT NULL,
+  `tanggal` datetime NOT NULL,
+  `status` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `riwayataktivitas`
+--
+
+INSERT INTO `riwayataktivitas` (`ID_Riwayat`, `User_ID`, `tanggal`, `status`) VALUES
+(1, 2, '2023-12-12 23:20:51', 'Login'),
+(2, 2, '2023-12-12 23:21:19', 'Logout'),
+(3, 3, '2023-12-12 23:21:23', 'Login'),
+(4, 3, '2023-12-12 23:22:07', 'Logout'),
+(5, 1, '2023-12-12 23:22:10', 'Login'),
+(6, 1, '2023-12-12 23:38:47', 'Logout'),
+(7, 3, '2023-12-12 23:38:51', 'Login'),
+(8, 3, '2023-12-12 23:47:06', 'Logout'),
+(9, 1, '2023-12-12 23:47:10', 'Login'),
+(10, 1, '2023-12-13 00:27:35', 'Logout'),
+(11, 1, '2023-12-13 16:27:42', 'Login'),
+(12, 1, '2023-12-13 16:42:59', 'Logout');
 
 -- --------------------------------------------------------
 
@@ -453,6 +494,13 @@ ALTER TABLE `penjualan`
   ADD KEY `User_ID` (`User_ID`);
 
 --
+-- Indexes for table `riwayataktivitas`
+--
+ALTER TABLE `riwayataktivitas`
+  ADD PRIMARY KEY (`ID_Riwayat`),
+  ADD KEY `User_ID` (`User_ID`);
+
+--
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
@@ -473,19 +521,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `Barang_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `Barang_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `detailpembelian`
 --
 ALTER TABLE `detailpembelian`
-  MODIFY `ID_DetailPembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `ID_DetailPembelian` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `detailpenjualan`
 --
 ALTER TABLE `detailpenjualan`
-  MODIFY `ID_detailPenjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `ID_detailPenjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `incomingclaim`
+--
+ALTER TABLE `incomingclaim`
+  MODIFY `Klaim_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jenis_user`
@@ -497,13 +551,19 @@ ALTER TABLE `jenis_user`
 -- AUTO_INCREMENT for table `pembelian`
 --
 ALTER TABLE `pembelian`
-  MODIFY `Pembelian_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `Pembelian_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `ID_Penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ID_Penjualan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `riwayataktivitas`
+--
+ALTER TABLE `riwayataktivitas`
+  MODIFY `ID_Riwayat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `supplier`
@@ -553,6 +613,12 @@ ALTER TABLE `incomingclaim`
 --
 ALTER TABLE `penjualan`
   ADD CONSTRAINT `penjualan_ibfk_5` FOREIGN KEY (`User_ID`) REFERENCES `user` (`User_ID`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `riwayataktivitas`
+--
+ALTER TABLE `riwayataktivitas`
+  ADD CONSTRAINT `riwayatUserID` FOREIGN KEY (`User_ID`) REFERENCES `user` (`User_ID`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `user`
