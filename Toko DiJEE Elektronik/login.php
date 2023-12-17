@@ -85,10 +85,9 @@
                             <input class="form-control rounded-5" type="password" placeholder="password" name="txt_pass" />
                             <label for="inputPassword">Password</label>
                         </div>
-                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                            <a class="small" href="password.html">Lupa Password?</a>
-                            <button class="btn maincol rounded-5" type="submit" name="submit">Login</button>
-                        </div>
+                        <div class="d-flex align-items-center justify-content-center mt-4 mb-0">
+    <button class="btn maincol rounded-5" type="submit" name="submit">Login</button>
+</div>
                         <a class="btn maincol mt-2 rounded-5" href="register.php">Buat akun</a>
                     </form>
                 </div>
